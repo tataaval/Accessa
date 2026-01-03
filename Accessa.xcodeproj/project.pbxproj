@@ -14,7 +14,7 @@
 		D0DDD1D72F07DCC200459A05 /* Exceptions for "Accessa" folder in "Accessa" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Resources/Info.plist,
 			);
 			target = D0DDD1C42F07DCC100459A05 /* Accessa */;
 		};
@@ -147,7 +147,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S29F8MPSS8;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Accessa/Info.plist;
+				INFOPLIST_FILE = Accessa/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -178,7 +178,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S29F8MPSS8;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Accessa/Info.plist;
+				INFOPLIST_FILE = Accessa/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
