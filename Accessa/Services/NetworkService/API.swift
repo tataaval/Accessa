@@ -16,7 +16,7 @@ enum API {
 extension API: Endpoint {
    
     var baseURL: URL {
-        guard let url = URL(string: "https://api.tbc-bareminimum.xyz") else {
+        guard let url = URL(string: "https://api.eyc.artmedia.space") else {
             fatalError("Invalid base URL")
         }
         return url
