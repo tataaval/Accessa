@@ -9,59 +9,128 @@ import UIKit
 
 final class LoginViewController: UIViewController {
 
+    //MARK: - Callbacks
     var onLoginSuccess: (() -> Void)?
     var onRegister: (() -> Void)?
     var onForgot: (() -> Void)?
 
-    private let loginButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Login", for: .normal)
-        return button
+    private var viewModel: LoginViewModelType
+
+    //MARK: - UI Components
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Accessa"
+        label.font = .app(size: .xl, weight: .bold)
+        label.textColor = .colorPrimary
+        return label
     }()
 
-    private let registerButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Register", for: .normal)
-        return button
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Sign in to access your Accessa Card"
+        label.font = .app(size: .base)
+        label.textColor = .colorGray500
+        label.numberOfLines = 0
+        return label
     }()
 
-    private let forgotButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Forgot password?", for: .normal)
-        button.titleLabel?.font = .app(size: .base, weight: .semibold)
-        button.tintColor = .colorPrimary
-        return button
+    private let forgotButton = TextButton(title: "Forgot password?")
+    private let formInputs = FormInputs()
+    private let loginButton = PrimaryButton(title: "Login")
+
+    private let footerContainer: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        return stackView
     }()
 
+    private let footerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Don't have an account?"
+        label.font = .app(size: .base, weight: .semibold)
+        label.textColor = .colorGray500
+        return label
+    }()
+
+    private let registerButton = TextButton(title: "Create account")
+
+    // MARK: - Init
+    init(viewModel: LoginViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    //MARK: - Lifesycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "Login"
         setupUI()
+        setupBindings()
         setupActions()
-
     }
 
+    //MARK: - Setup Methods
     private func setupUI() {
+        setupFormFooterUI()
+        setupFormStackUI()
+    }
+
+    private func setupFormFooterUI() {
+        footerContainer.addArrangedSubview(footerLabel)
+        footerContainer.addArrangedSubview(registerButton)
+    }
+
+    private func setupFormStackUI() {
+
         let stackView = UIStackView(arrangedSubviews: [
-            loginButton, registerButton, forgotButton,
+            titleLabel, descriptionLabel, formInputs, forgotButton,
+            loginButton, footerContainer,
         ])
+
+        forgotButton.contentHorizontalAlignment = .right
+
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.spacing = 20
+        stackView.distribution = .fill
+        stackView.spacing = 10
 
         view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: 30
+            ),
+            stackView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: 20
+            ),
+            stackView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -20
+            ),
+
+            loginButton.heightAnchor.constraint(equalToConstant: 54),
+
         ])
+    }
+
+    private func setupBindings() {
+        viewModel.output = self
     }
 
     private func setupActions() {
         loginButton.addAction(
             UIAction { [weak self] _ in
-                self?.onLoginSuccess?()
+                guard let self else { return }
+                self.viewModel.input.login(
+                    id: self.formInputs.idNumber.text,
+                    password: self.formInputs.password.text
+                )
             },
             for: .touchUpInside
         )
@@ -80,4 +149,30 @@ final class LoginViewController: UIViewController {
             for: .touchUpInside
         )
     }
+    
+    private func showError(_ message: String) {
+       let alert = UIAlertController(title: "Login Failed", message: message, preferredStyle: .alert)
+       alert.addAction(UIAlertAction(title: "OK", style: .default))
+       present(alert, animated: true)
+   }
+}
+
+extension LoginViewController: LoginViewModelOutput {
+    func setLoading(_ isLoading: Bool) {
+        loginButton.setLoading(isLoading)
+    }
+    
+    func loginDidSucceed() {
+        self.onLoginSuccess?()
+    }
+
+    func loginDidFail(error: String) {
+        showError(error)
+    }
+
+    func onValidationError(errors: [String: String]) {
+        formInputs.resetErrors()
+        formInputs.setErrors(errors)
+    }
+
 }

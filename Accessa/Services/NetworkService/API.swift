@@ -8,7 +8,7 @@
 import Foundation
 
 enum API {
-    case login(IdNumber: Int, password: String)
+    case login(IdNumber: String, password: String)
     
     case discounts
 }

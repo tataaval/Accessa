@@ -23,7 +23,8 @@ final class AuthCoordinator: Coordinator {
     }
     
     private func showLogin() {
-        let vc = LoginViewController()
+        let vm = LoginViewModel()
+        let vc = LoginViewController(viewModel: vm)
         vc.onLoginSuccess = { [weak self] in
             self?.appCoordinator?.showMain()
         }

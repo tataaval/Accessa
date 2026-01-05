@@ -9,7 +9,7 @@
 import Foundation
 
 struct ErrorResponse: Decodable {
-    let error: String
+    let message: String
 }
 
 enum NetworkError: Error {

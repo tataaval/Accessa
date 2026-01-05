@@ -41,7 +41,7 @@ final class NetworkService: NetworkServiceProtocol {
     
     private func validateResponse(_ response: HTTPURLResponse, data: Data) throws {
 
-        let errorMessage = (try? JSONDecoder().decode(ErrorResponse.self, from: data))?.error
+        let errorMessage = (try? JSONDecoder().decode(ErrorResponse.self, from: data))?.message
 
         switch response.statusCode {
 

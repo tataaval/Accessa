@@ -44,7 +44,7 @@ final class ProfileCoordinator: Coordinator, ProfileRouter {
     }
 
     func logout() {
-        appCoordinator?.showAuth()
+        appCoordinator?.logout()
     }
 
     private func push<V: View>(_ view: V) {
