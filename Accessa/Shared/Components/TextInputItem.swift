@@ -57,7 +57,7 @@ final class TextInputItem: UIStackView {
             string: placeholder,
             attributes: [
                 .foregroundColor: UIColor.colorGray500,
-                .font: UIFont.systemFont(ofSize: 14, weight: .regular),
+                .font: UIFont.app(size: .sm),
             ]
         )
 
@@ -85,7 +85,7 @@ final class TextInputItem: UIStackView {
             textField.layer.borderColor = UIColor.colorError.cgColor
         } else {
             errorLabel.text = " "
-            textField.layer.borderColor = UIColor.colorGray500.cgColor
+            textField.layer.borderColor = UIColor.colorGray300.cgColor
         }
     }
 }

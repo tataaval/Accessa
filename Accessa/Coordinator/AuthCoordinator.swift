@@ -39,7 +39,8 @@ final class AuthCoordinator: Coordinator {
     }
     
     private func showRegister() {
-        navigationController.pushViewController(RegisterViewController(), animated: true)
+        let vm = RegisterViewModel()
+        navigationController.pushViewController(RegisterViewController(viewModel: vm), animated: true)
     }
     
     private func showForgot() {

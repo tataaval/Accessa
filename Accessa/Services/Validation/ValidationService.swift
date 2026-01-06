@@ -13,6 +13,7 @@ enum ValidationError: LocalizedError {
     case shortPassword
     case passwordsDontMatch
     case invalidIdNumber
+    case invalidPhoneNumber
 
     var errorDescription: String? {
         switch self {
@@ -26,21 +27,33 @@ enum ValidationError: LocalizedError {
             return "Passwords do not match"
         case .invalidIdNumber:
             return "ID number must contain exactly 11 digits"
+        case .invalidPhoneNumber:
+            return "Phone number must contain exactly 9 digits"
         }
+
     }
 }
 
-
 protocol ValidationServiceProtocol {
+    func validateEmptyValue(_ text: String) -> ValidationError?
     func validateIdNumber(_ text: String) -> ValidationError?
+    func validatePhoneNumber(_ text: String) -> ValidationError?
     func validateFullName(_ text: String) -> ValidationError?
     func validateEmail(_ text: String) -> ValidationError?
     func validatePassword(_ text: String) -> ValidationError?
-    func validateRepeatPassword(_ text: String, password: String) -> ValidationError?
+    func validateRepeatPassword(_ text: String, password: String)
+        -> ValidationError?
 }
 
-
 final class ValidationService: ValidationServiceProtocol {
+    
+    func validateEmptyValue(_ text: String) -> ValidationError? {
+        if text.isEmptyOrWhitespace {
+            return .empty
+        }
+
+        return nil
+    }
 
     func validateIdNumber(_ text: String) -> ValidationError? {
         if text.isEmptyOrWhitespace {
@@ -50,6 +63,19 @@ final class ValidationService: ValidationServiceProtocol {
         let digitsOnly = text.allSatisfy(\.isNumber)
         if !digitsOnly || text.count != 11 {
             return .invalidIdNumber
+        }
+
+        return nil
+    }
+
+    func validatePhoneNumber(_ text: String) -> ValidationError? {
+        if text.isEmptyOrWhitespace {
+            return .empty
+        }
+
+        let digitsOnly = text.allSatisfy(\.isNumber)
+        if !digitsOnly || text.count != 9 {
+            return .invalidPhoneNumber
         }
 
         return nil
@@ -87,7 +113,9 @@ final class ValidationService: ValidationServiceProtocol {
         return nil
     }
 
-    func validateRepeatPassword(_ text: String, password: String) -> ValidationError? {
+    func validateRepeatPassword(_ text: String, password: String)
+        -> ValidationError?
+    {
         if text.isEmptyOrWhitespace {
             return .empty
         }

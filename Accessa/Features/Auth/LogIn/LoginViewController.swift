@@ -14,6 +14,7 @@ final class LoginViewController: UIViewController {
     var onRegister: (() -> Void)?
     var onForgot: (() -> Void)?
 
+    //MARK: - Viewmodel
     private var viewModel: LoginViewModelType
 
     //MARK: - UI Components

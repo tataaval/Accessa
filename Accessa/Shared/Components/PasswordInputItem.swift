@@ -59,7 +59,7 @@ final class PasswordInputItem: UIStackView {
             string: placeholder,
             attributes: [
                 .foregroundColor: UIColor.colorGray500,
-                .font: UIFont.systemFont(ofSize: 16, weight: .regular),
+                .font: UIFont.app(size: .sm),
             ]
         )
 
@@ -118,7 +118,7 @@ final class PasswordInputItem: UIStackView {
             textField.layer.borderColor = UIColor.colorError.cgColor
         } else {
             errorLabel.text = " "
-            textField.layer.borderColor = UIColor.gray.cgColor
+            textField.layer.borderColor = UIColor.colorGray300.cgColor
         }
     }
 }

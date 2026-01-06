@@ -48,16 +48,15 @@ final class LoginViewModel: LoginViewModelType {
 }
 
 extension LoginViewModel: LoginViewModelInput {
-
     func login(id: String, password: String) {
         var errors: [String: String] = [:]
 
-        if let e = validationService.validateIdNumber(id) {
-            errors["idNumber"] = e.errorDescription
+        if let error = validationService.validateIdNumber(id) {
+            errors["idNumber"] = error.errorDescription
         }
 
-        if let e = validationService.validatePassword(password) {
-            errors["password"] = e.errorDescription
+        if let error = validationService.validatePassword(password) {
+            errors["password"] = error.errorDescription
         }
 
         if !errors.isEmpty {
@@ -75,7 +74,6 @@ extension LoginViewModel: LoginViewModelInput {
             } catch {
                 self.output?.setLoading(false)
                 self.output?.loginDidFail(error: error.localizedDescription)
-                print(error.localizedDescription)
             }
         }
         
