@@ -17,7 +17,6 @@ protocol LoginViewModelInput {
     func login(id: String, password: String)
 }
 
-@MainActor
 protocol LoginViewModelOutput: AnyObject {
     func loginDidSucceed()
     func loginDidFail(error: String)

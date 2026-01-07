@@ -21,7 +21,7 @@ final class PrimaryButton: UIButton {
 
     private func configure(title: String) {
         setTitle(title, for: .normal)
-        titleLabel?.font = .app(size: .lg)
+        titleLabel?.font = .app(size: .lg, weight: .semibold)
         setTitleColor(.white, for: .normal)
         backgroundColor = .colorPrimary
         layer.cornerRadius = 14

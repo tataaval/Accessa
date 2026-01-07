@@ -17,7 +17,6 @@ protocol RegisterViewModelInput {
     func register(name: String, IdNumber: String, phone: String, birthDate: String, email: String, password: String, repeatPassword: String)
 }
 
-@MainActor
 protocol RegisterViewModelOutput: AnyObject {
     func registerDidSucceed()
     func registerDidFail(error: String)
@@ -87,6 +86,20 @@ extension RegisterViewModel: RegisterViewModelInput {
         if !errorMessages.isEmpty {
             output?.onValidationError(errors: errorMessages)
             return
+        }
+        
+        output?.setLoading(true)
+        
+        Task {
+            do {
+                let _: RegisterResponseModel = try await networkService.fetch(from: API.register(name: name, IdNumber: IdNumber, phone: phone, birthDate: birthDate, email: email, password: password, repeatPassword: repeatPassword))
+                self.output?.setLoading(false)
+                output?.registerDidSucceed()
+            } catch {
+                self.output?.setLoading(false)
+                self.output?.registerDidFail(error: error.localizedDescription)
+                print(error)
+            }
         }
         
     }

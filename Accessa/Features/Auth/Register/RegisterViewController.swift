@@ -36,6 +36,9 @@ final class RegisterViewController: UIViewController {
 
     private let registerForm = RegisterFormInputs()
     private let registerButton = PrimaryButton(title: "Create Account")
+    private lazy var successView = SuccessStateView(
+        message: "Registration was successful. You can log in now."
+    )
 
     // MARK: - Init
     init(viewModel: RegisterViewModelType) {
@@ -61,6 +64,7 @@ final class RegisterViewController: UIViewController {
         setupScrollViewUI()
         setupContentViewUI()
         setupFormStackUI()
+        setupSuccessView()
     }
 
     private func setupScrollViewUI() {
@@ -137,6 +141,25 @@ final class RegisterViewController: UIViewController {
         ])
     }
 
+    private func setupSuccessView() {
+        contentView.addSubview(successView)
+        successView.translatesAutoresizingMaskIntoConstraints = false
+        successView.isHidden = true
+
+        NSLayoutConstraint.activate([
+            successView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            successView.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor
+            ),
+            successView.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor
+            ),
+            successView.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor
+            ),
+        ])
+    }
+
     private func setupBindings() {
         viewModel.output = self
     }
@@ -158,17 +181,38 @@ final class RegisterViewController: UIViewController {
             for: .touchUpInside
         )
     }
-    
+
     private func showError(_ message: String) {
-       let alert = UIAlertController(title: "Registration Failed", message: message, preferredStyle: .alert)
-       alert.addAction(UIAlertAction(title: "OK", style: .default))
-       present(alert, animated: true)
-   }
+        let alert = UIAlertController(
+            title: "Registration Failed",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
+    private func transitionToSuccessState() {
+        scrollView.isScrollEnabled = false
+        scrollView.showsVerticalScrollIndicator = false
+        
+        successView.isHidden = false
+        successView.alpha = 0
+
+        UIView.animate(withDuration: 0.25) {
+            self.formStack.alpha = 0
+            self.successView.alpha = 1
+        }
+
+        self.formStack.isHidden = true
+    }
+
 }
 
 extension RegisterViewController: RegisterViewModelOutput {
     func registerDidSucceed() {
         registerForm.resetErrors()
+        transitionToSuccessState()
     }
 
     func registerDidFail(error: String) {

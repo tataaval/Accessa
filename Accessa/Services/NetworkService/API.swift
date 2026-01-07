@@ -18,6 +18,7 @@ enum API {
         password: String,
         repeatPassword: String
     )
+    case forgotPassword(email: String)
 
     case discounts
 }
@@ -37,6 +38,8 @@ extension API: Endpoint {
             return "api/v1/auth/login"
         case .register:
             return "api/v1/registration/reg"
+        case .forgotPassword:
+            return "api/v1/password-forgot"
         case .discounts:
             return "api/v1/discounts"
         }
@@ -44,20 +47,21 @@ extension API: Endpoint {
 
     var method: HTTPMethod {
         switch self {
-        case .login, .register:
+        case .login, .register, .forgotPassword:
             return .post
         default:
             return .get
         }
     }
 
+    //TODO: - გადახედე ამას
     var headers: [String: String]? {
         nil
     }
 
     var requiresAuth: Bool {
         switch self {
-        case .login, .register:
+        case .login, .register, .forgotPassword:
             return false
         default:
             return true
@@ -86,6 +90,8 @@ extension API: Endpoint {
                 "repeat_password": repeatPassword,
                 "birth_date": birthDate,
             ]
+        case .forgotPassword(let email):
+            return ["email": email]
 
         default:
             return nil

@@ -18,7 +18,9 @@ protocol Endpoint {
 
 extension Endpoint {
     func urlRequest() throws -> URLRequest {
-        let urlString = baseURL.absoluteString.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        let urlString = baseURL.absoluteString.trimmingCharacters(
+            in: CharacterSet(charactersIn: "/")
+        )
         let pathString = path.hasPrefix("/") ? path : "/\(path)"
         guard let url = URL(string: urlString + pathString) else {
             throw NetworkError.invalidResponse
@@ -27,24 +29,24 @@ extension Endpoint {
         request.httpMethod = method.rawValue
 
         var finalHeaders = headers ?? [:]
-
-        //TODO: getting token from keychain and maybe implement refreshtoken logic here too
-//        if requiresAuth {
-//            finalHeaders["Authorization"] = "Bearer \(token)"
-//        }
-
+        finalHeaders["Accept"] = "application/json"
         finalHeaders["Content-Type"] = "application/json"
         request.allHTTPHeaderFields = finalHeaders
 
         if let parameters = parameters {
             if method == .get {
-                var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                var components = URLComponents(
+                    url: url,
+                    resolvingAgainstBaseURL: false
+                )
                 components?.queryItems = parameters.map {
                     URLQueryItem(name: $0.key, value: "\($0.value)")
                 }
                 request.url = components?.url
             } else {
-                request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+                request.httpBody = try JSONSerialization.data(
+                    withJSONObject: parameters
+                )
             }
         }
 

@@ -23,27 +23,28 @@ final class AuthCoordinator: Coordinator {
     }
     
     private func showLogin() {
-        let vm = LoginViewModel()
-        let vc = LoginViewController(viewModel: vm)
-        vc.onLoginSuccess = { [weak self] in
+        let viewModel = LoginViewModel()
+        let viewContoller = LoginViewController(viewModel: viewModel)
+        viewContoller.onLoginSuccess = { [weak self] in
             self?.appCoordinator?.showMain()
         }
-        vc.onRegister = { [weak self] in
+        viewContoller.onRegister = { [weak self] in
             self?.showRegister()
         }
-        vc.onForgot = { [weak self] in
+        viewContoller.onForgot = { [weak self] in
             self?.showForgot()
         }
         
-        navigationController.setViewControllers([vc], animated: false)
+        navigationController.setViewControllers([viewContoller], animated: false)
     }
     
     private func showRegister() {
-        let vm = RegisterViewModel()
-        navigationController.pushViewController(RegisterViewController(viewModel: vm), animated: true)
+        let viewModel = RegisterViewModel()
+        navigationController.pushViewController(RegisterViewController(viewModel: viewModel), animated: true)
     }
     
     private func showForgot() {
-        navigationController.pushViewController(ForgotPasswordViewController(), animated: true)
+        let viewModel = ForgotPasswordViewModel()
+        navigationController.pushViewController(ForgotPasswordViewController(viewModel: viewModel), animated: true)
     }
 }

@@ -23,16 +23,16 @@ final class DateInputItem: UIStackView {
     }()
 
     let textField: UITextField = {
-        let tf = UITextField()
-        tf.font = .app(size: .base)
-        tf.textColor = .colorGray500
-        tf.layer.cornerRadius = 10
-        tf.layer.borderWidth = 1
-        tf.layer.borderColor = UIColor.colorGray300.cgColor
-        tf.setLeftPadding(16)
-        tf.heightAnchor.constraint(equalToConstant: 53).isActive = true
-        tf.tintColor = .clear
-        return tf
+        let textField = UITextField()
+        textField.font = .app(size: .base)
+        textField.textColor = .colorGray500
+        textField.layer.cornerRadius = 10
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.colorGray300.cgColor
+        textField.setLeftPadding(16)
+        textField.heightAnchor.constraint(equalToConstant: 53).isActive = true
+        textField.tintColor = .clear
+        return textField
     }()
 
     private let calendarButton: UIButton = {

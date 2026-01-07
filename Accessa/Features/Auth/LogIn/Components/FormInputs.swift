@@ -38,7 +38,7 @@ final class FormInputs: UIStackView {
     }
 
     func setErrors(_ errors: [String: String]) {
-        if let e = errors["idNumber"] { idNumber.setError(e) }
-        if let e = errors["password"] { password.setError(e) }
+        if let error = errors["idNumber"] { idNumber.setError(error) }
+        if let error = errors["password"] { password.setError(error) }
     }
 }
