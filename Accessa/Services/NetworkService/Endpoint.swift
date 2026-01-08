@@ -12,6 +12,7 @@ protocol Endpoint {
     var path: String { get }
     var method: HTTPMethod { get }
     var headers: [String: String]? { get }
+    var hasQueryParameters: Bool { get }
     var parameters: [String: Any]? { get }
     var requiresAuth: Bool { get }
 }
@@ -34,7 +35,7 @@ extension Endpoint {
         request.allHTTPHeaderFields = finalHeaders
 
         if let parameters = parameters {
-            if method == .get {
+            if hasQueryParameters {
                 var components = URLComponents(
                     url: url,
                     resolvingAgainstBaseURL: false
