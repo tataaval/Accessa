@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrganizationsSection: View {
     //MARK: - Properties
-    let organisations: [OrganisationItemModel]
+    let organizations: [OrganizationItemModel]
     let seeOrganizationList: () -> Void
     let seeOrganizationDetails: (_ OrganizationId: Int) -> Void
 
@@ -20,7 +20,7 @@ struct OrganizationsSection: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             sectionHeader
-            organisationsSection
+            organizationsSection
         }
     }
 }
@@ -40,11 +40,11 @@ private extension OrganizationsSection {
         .padding(.horizontal)
     }
 
-    var organisationsSection: some View {
+    var organizationsSection: some View {
         LazyVGrid(columns: columns, spacing: 16) {
-            ForEach(organisations) { organisation in
-                OrganisationCard(
-                    organisation: organisation,
+            ForEach(organizations) { organization in
+                OrganizationCard(
+                    organization: organization,
                     seeOrganizationDetails: seeOrganizationDetails
                 )
             }

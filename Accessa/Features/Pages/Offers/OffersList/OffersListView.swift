@@ -16,6 +16,6 @@ struct OffersListView: View {
                 router.openOffer(id: 1)
             }
         }
-        .navigationTitle("Offers")
+        .navigationTitle("All Offers")
     }
 }

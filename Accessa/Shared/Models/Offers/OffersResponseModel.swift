@@ -1,5 +1,5 @@
 //
-//  PinnedOffersResponseModel 2.swift
+// OffersResponseModel.swift
 //  Accessa
 //
 //  Created by Tatarella on 09.01.26.

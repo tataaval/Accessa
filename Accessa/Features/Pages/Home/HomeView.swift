@@ -35,12 +35,12 @@ struct HomeView: View {
                     }
                 )
                 OrganizationsSection(
-                    organisations: viewModel.organisations,
+                    organizations: viewModel.organizations,
                     seeOrganizationList: {
-                        router.openOrganisations()
+                        router.openOrganizations()
                     },
                     seeOrganizationDetails: { id in
-                        router.openOrganisation(id: id)
+                        router.openOrganization(id: id)
                     }
                 )
                 LastChanceSection(offers: viewModel.lastChanceOffers) { id in

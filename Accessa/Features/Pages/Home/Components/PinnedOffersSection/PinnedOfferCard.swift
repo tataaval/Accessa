@@ -76,7 +76,7 @@ private extension PinnedOfferCard {
                 .font(.app(size: .base, weight: .bold))
                 .foregroundColor(.colorGray900)
 
-            Text(offer.organisationTitle)
+            Text(offer.organizationTitle)
                 .font(.app(size: .sm))
                 .foregroundColor(.colorGray500)
 

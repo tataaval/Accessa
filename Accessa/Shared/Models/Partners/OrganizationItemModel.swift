@@ -1,28 +1,28 @@
 //
-//  OrganisationItemModel.swift
+//  OrganizationItemModel.swift
 //  Accessa
 //
 //  Created by Tatarella on 08.01.26.
 //
 
 
-struct OrganisationItemModel: Decodable, Identifiable {
+struct OrganizationItemModel: Decodable, Identifiable {
     let id: Int
-    let organisationPageItemId: Int
+    let organizationPageItemId: Int
     let companyName: String
     let image: Media?
     let city: String
 
     enum CodingKeys: String, CodingKey {
         case id
-        case organisationPageItemId = "organisation_page_item_id"
+        case organizationPageItemId = "organisation_page_item_id"
         case companyName = "company_name"
         case image
         case city
     }
 }
 
-extension OrganisationItemModel{
+extension OrganizationItemModel{
     var imageUrl: String? {
         image?.url
     }

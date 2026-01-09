@@ -55,7 +55,7 @@ private extension LastChanceCard {
                 .foregroundStyle(.colorGray900)
                 .lineLimit(2)
 
-            Text(offer.organisationTitle)
+            Text(offer.organizationTitle)
                 .font(.app(size: .xs))
                 .foregroundStyle(.colorGray500)
 

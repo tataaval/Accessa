@@ -11,7 +11,7 @@ struct OfferModel: Decodable, Identifiable {
     let discount: Int
     let endDate: String
     let image: Media?
-    let organisation: Organisation
+    let organisation: Organization
 
     enum CodingKeys: String, CodingKey {
         case id = "item_id"
@@ -28,7 +28,7 @@ extension OfferModel {
         "\(discount)% Off"
     }
 
-    var organisationTitle: String {
+    var organizationTitle: String {
         organisation.title
     }
 

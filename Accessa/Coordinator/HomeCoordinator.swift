@@ -11,8 +11,8 @@ import SwiftUI
 
 protocol HomeRouter {
     func openOffer(id: Int)
-    func openOrganisations()
-    func openOrganisation(id: Int)
+    func openOrganizations()
+    func openOrganization(id: Int)
 }
 
 final class HomeCoordinator: Coordinator, HomeRouter {
@@ -34,11 +34,11 @@ final class HomeCoordinator: Coordinator, HomeRouter {
         push(OfferDetailView(id: id))
     }
 
-    func openOrganisations() {
+    func openOrganizations() {
         push(PartnerListView(router: self))
     }
 
-    func openOrganisation(id: Int) {
+    func openOrganization(id: Int) {
         push(PartnerDetailView(id: id))
     }
 

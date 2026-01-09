@@ -13,7 +13,7 @@ struct PartnerListView: View {
     var body: some View {
         VStack {
             Button("Partner 1") {
-                router.openOrganisation(id: 1)
+                router.openOrganization(id: 1)
             }
         }
         .navigationTitle("Partners")

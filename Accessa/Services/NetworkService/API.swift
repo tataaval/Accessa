@@ -23,7 +23,7 @@ enum API {
     case discounts(limit: Int)
     case pinnedOffers(limit: Int)
 
-    case organisations(limit: Int)
+    case organizations(limit: Int)
 }
 
 extension API: Endpoint {
@@ -47,14 +47,14 @@ extension API: Endpoint {
             return "api/v1/discounts"
         case .pinnedOffers:
             return "api/v1/discounts/pinned_discounts"
-        case .organisations:
+        case .organizations:
             return "api/v1/organisations"
         }
     }
 
     var method: HTTPMethod {
         switch self {
-            case .login, .register, .forgotPassword, .pinnedOffers, .organisations, .discounts:
+            case .login, .register, .forgotPassword, .pinnedOffers, .organizations, .discounts:
             return .post
         default:
             return .get
@@ -69,7 +69,7 @@ extension API: Endpoint {
     //TODO: - აპის მეთოდები თითქმის ყველა Post-ია, თუ გაასწორებენ ეს წაშალე
     var hasQueryParameters: Bool {
         switch self {
-        case .pinnedOffers, .organisations, .discounts:
+        case .pinnedOffers, .organizations, .discounts:
             return true
         default:
             return false
@@ -113,7 +113,7 @@ extension API: Endpoint {
             case .pinnedOffers(let limit):
                 return ["limit": limit]
                 
-            case .organisations(let limit):
+            case .organizations(let limit):
                 return ["pager_limit": limit]
                 
             case .discounts(let limit):

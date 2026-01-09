@@ -8,12 +8,11 @@
 import Combine
 import Foundation
 
-@MainActor
 final class HomeViewModel: ObservableObject {
 
     // MARK: - Published Properties
     @Published var pinnedOffers: [OfferModel] = []
-    @Published var organisations: [OrganisationItemModel] = []
+    @Published var organizations: [OrganizationItemModel] = []
     @Published var lastChanceOffers: [OfferModel] = []
 
     @Published var isLoading = false
@@ -34,11 +33,11 @@ final class HomeViewModel: ObservableObject {
 
         do {
             async let pinned = fetchPinnedOffers()
-            async let orgs = fetchOrganisations()
+            async let orgs = fetchOrganizations()
             async let lastChance = fetchLastChanceOffers()
 
             pinnedOffers = try await pinned
-            organisations = try await orgs
+            organizations = try await orgs
             lastChanceOffers = try await lastChance
         } catch {
             errorMessage = error.localizedDescription
@@ -53,14 +52,14 @@ final class HomeViewModel: ObservableObject {
         return response.data
     }
 
-    func fetchOrganisations() async throws -> [OrganisationItemModel] {
-        let response: OrganisationsResponseModel =
-            try await networkService.fetch(from: API.organisations(limit: 6))
+    func fetchOrganizations() async throws -> [OrganizationItemModel] {
+        let response: OrganizationsResponseModel =
+            try await networkService.fetch(from: API.organizations(limit: 6))
         return response.data
     }
 
     func fetchLastChanceOffers() async throws -> [OfferModel] {
-        let response: PinnedOffersResponseModel =
+        let response: OffersResponseModel =
             try await networkService.fetch(from: API.discounts(limit: 6))
         return response.data
     }
