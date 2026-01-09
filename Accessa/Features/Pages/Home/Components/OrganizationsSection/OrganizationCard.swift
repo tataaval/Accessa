@@ -1,5 +1,5 @@
 //
-//  OrganisationCard.swift
+//  OrganizationCard.swift
 //  Accessa
 //
 //  Created by Tatarella on 08.01.26.
@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct OrganisationCard: View {
+struct OrganizationCard: View {
 
     //MARK: - Properties
-    let organisation: OrganisationItemModel
+    let organization: OrganizationItemModel
     let seeOrganizationDetails: (_ OrganizationId: Int) -> Void
 
     //MARK: - Body
     var body: some View {
         Button {
-            seeOrganizationDetails(organisation.id)
+            seeOrganizationDetails(organization.id)
         } label: {
             VStack {
                 imageSection
@@ -32,10 +32,10 @@ struct OrganisationCard: View {
     }
 }
 
-private extension OrganisationCard {
+private extension OrganizationCard {
     @ViewBuilder
     var imageSection: some View {
-        if let imageUrl = organisation.imageUrl, !imageUrl.isEmpty {
+        if let imageUrl = organization.imageUrl, !imageUrl.isEmpty {
             ImageItem(image: imageUrl)
                 .scaledToFit()
                 .frame(width: 64, height: 64)
@@ -48,7 +48,7 @@ private extension OrganisationCard {
     }
     
     var nameSection: some View {
-        Text(organisation.companyName)
+        Text(organization.companyName)
             .font(.app(size: .xs, weight: .bold))
             .foregroundStyle(.colorGray900)
             .multilineTextAlignment(.center)
