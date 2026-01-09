@@ -53,19 +53,21 @@ struct HomeView: View {
         }
         .ignoresSafeArea(edges: .top)
         .background(.colorGray200)
-        .alert("Error", isPresented: Binding(
-            get: { viewModel.errorMessage != nil },
-            set: { _ in viewModel.errorMessage = nil }
-        )) {
+        .alert(
+            "Error",
+            isPresented: Binding(
+                get: { viewModel.errorMessage != nil },
+                set: { _ in viewModel.errorMessage = nil }
+            )
+        ) {
             Button("Retry") {
                 Task {
                     await viewModel.loadAllData()
                 }
             }
-            Button("OK", role: .cancel) { }
+            Button("OK", role: .cancel) {}
         } message: {
             Text(viewModel.errorMessage ?? "An unknown error occurred")
         }
     }
 }
-

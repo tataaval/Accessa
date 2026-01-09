@@ -8,4 +8,5 @@
 
 struct OffersResponseModel: Decodable {
     let data: [OfferModel]
+    let meta: PaginationMetaModel
 }

@@ -145,7 +145,7 @@ final class DateInputItem: UIStackView {
 
         let done = UIBarButtonItem(
             title: "Done",
-            style: .prominent,
+            style: .plain,
             target: self,
             action: #selector(doneTapped)
         )

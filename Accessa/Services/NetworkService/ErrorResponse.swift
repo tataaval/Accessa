@@ -13,7 +13,7 @@ struct ErrorResponse: Decodable {
 }
 
 extension ErrorResponse {
-    var combinedErrorMessage: String {
+    nonisolated var combinedErrorMessage: String {
         guard let errors else { return message }
 
         return errors

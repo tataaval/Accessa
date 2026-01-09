@@ -33,11 +33,11 @@ final class HomeViewModel: ObservableObject {
 
         do {
             async let pinned = fetchPinnedOffers()
-            async let orgs = fetchOrganizations()
+            async let organizationList = fetchOrganizations()
             async let lastChance = fetchLastChanceOffers()
 
             pinnedOffers = try await pinned
-            organizations = try await orgs
+            organizations = try await organizationList
             lastChanceOffers = try await lastChance
         } catch {
             errorMessage = error.localizedDescription
@@ -46,19 +46,19 @@ final class HomeViewModel: ObservableObject {
         isLoading = false
     }
 
-    func fetchPinnedOffers() async throws -> [OfferModel] {
+    private func fetchPinnedOffers() async throws -> [OfferModel] {
         let response: PinnedOffersResponseModel =
             try await networkService.fetch(from: API.pinnedOffers(limit: 5))
         return response.data
     }
 
-    func fetchOrganizations() async throws -> [OrganizationItemModel] {
+    private func fetchOrganizations() async throws -> [OrganizationItemModel] {
         let response: OrganizationsResponseModel =
             try await networkService.fetch(from: API.organizations(limit: 6))
         return response.data
     }
 
-    func fetchLastChanceOffers() async throws -> [OfferModel] {
+    private func fetchLastChanceOffers() async throws -> [OfferModel] {
         let response: OffersResponseModel =
             try await networkService.fetch(from: API.discounts(limit: 6))
         return response.data
