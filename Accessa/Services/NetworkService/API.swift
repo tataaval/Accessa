@@ -27,11 +27,16 @@ enum API {
         organisationId: Int? = nil,
         categoryId: Int? = nil
     )
+
+    case discountDetails(id: Int)
+
     case pinnedOffers(limit: Int)
 
     case organizations(limit: Int)
 
     case categories
+
+    case mediaItems(id: Int)
 }
 
 extension API: Endpoint {
@@ -53,12 +58,16 @@ extension API: Endpoint {
             return "api/v1/password-forgot"
         case .discounts:
             return "api/v1/discounts"
+        case .discountDetails(let id):
+            return "api/v1/discounts/\(id)"
         case .pinnedOffers:
             return "api/v1/discounts/pinned_discounts"
         case .organizations:
             return "api/v1/organisations"
         case .categories:
             return "api/v1/categories"
+        case .mediaItems:
+            return "api/v1/media/get-attached-images"
         }
     }
 
@@ -66,7 +75,7 @@ extension API: Endpoint {
         switch self {
         case .login, .register, .forgotPassword, .pinnedOffers, .organizations,
             .categories,
-            .discounts:
+            .discounts, .discountDetails, .mediaItems:
             return .post
         default:
             return .get
@@ -156,6 +165,11 @@ extension API: Endpoint {
             }
 
             return params
+        case .mediaItems(let id):
+            return [
+                "reference_id": id,
+                "reference_type": "1",
+            ]
         default:
             return nil
         }

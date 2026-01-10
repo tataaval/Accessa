@@ -28,7 +28,7 @@ final class OffersCoordinator: Coordinator, OffersRouter {
 
     func openOffer(id: Int) {
         navigationController.pushViewController(
-            UIHostingController(rootView: OfferDetailView(id: id)),
+            UIHostingController(rootView: OfferDetailView(offerId: id)),
             animated: true
         )
     }

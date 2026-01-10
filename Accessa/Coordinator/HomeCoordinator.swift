@@ -31,7 +31,7 @@ final class HomeCoordinator: Coordinator, HomeRouter {
     }
 
     func openOffer(id: Int) {
-        push(OfferDetailView(id: id))
+        push(OfferDetailView(offerId: id))
     }
 
     func openOrganizations() {

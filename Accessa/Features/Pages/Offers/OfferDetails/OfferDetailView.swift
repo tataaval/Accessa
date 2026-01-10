@@ -8,10 +8,75 @@
 import SwiftUI
 
 struct OfferDetailView: View {
-    let id: Int
-    
+    //MARK: - StateObject
+    @StateObject private var viewModel: OfferDetailViewModel
+
+    //MARK: - Init
+    init(offerId: Int) {
+        _viewModel = StateObject(
+            wrappedValue: OfferDetailViewModel(
+                offerId: offerId,
+                networkService: NetworkService.shared
+            )
+        )
+    }
+
+    //MARK: - Body
     var body: some View {
-        Text("Offer \(id)")
-            .navigationTitle("Offer Detail")
+        ZStack {
+            // Background color for the whole screen
+            Color.white.ignoresSafeArea()
+
+            if let offer = viewModel.offer {
+                ScrollView {
+                    LazyVStack(alignment: .leading) {
+                        OfferDetailsCarouselView(
+                            images: viewModel.media,
+                            discount: offer.discountText
+                        )
+                        CustomDivider()
+                        DetailView(
+                            title: offer.title,
+                            organization: offer.organizationTitle,
+                            endDate: offer.endDate,
+                            location: offer.cityNames
+                        )
+                        CustomDivider()
+                        AboutView(text: viewModel.attributedDescription)
+                    }
+                }
+            } else {
+                VStack {
+                    ProgressView()
+                        .scaleEffect(1.2)
+                        .tint(.colorPrimary)
+                    Text("Loading offer...")
+                        .font(.app(size: .sm))
+                        .foregroundColor(.gray)
+                        .padding(.top, 8)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+        .background(.white)
+        .task {
+            await viewModel.loadAllData()
+        }
+        .alert(
+            "Error",
+            isPresented: Binding(
+                get: { viewModel.errorMessage != nil },
+                set: { _ in viewModel.errorMessage = nil }
+            )
+        ) {
+            Button("Retry") {
+                Task {
+                    await viewModel.loadAllData()
+                }
+            }
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(viewModel.errorMessage ?? "An unknown error occurred")
+        }
     }
 }

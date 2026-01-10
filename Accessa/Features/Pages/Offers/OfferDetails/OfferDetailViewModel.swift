@@ -1,0 +1,69 @@
+//
+//  OfferDetailViewModel.swift
+//  Accessa
+//
+//  Created by Tatarella on 10.01.26.
+//
+
+import Combine
+import Foundation
+
+final class OfferDetailViewModel: ObservableObject {
+
+    // MARK: - Published Properties
+    @Published var offer: OfferDetailModel?
+    @Published var media: [MediaItem] = []
+    @Published var attributedDescription: AttributedString?
+
+    @Published var isLoading = false
+    @Published var errorMessage: String?
+
+    // MARK: - Private Properties
+    private let offerId: Int
+    private let networkService: NetworkServiceProtocol
+
+    // MARK: - Init
+    init(offerId: Int, networkService: NetworkServiceProtocol) {
+        self.offerId = offerId
+        self.networkService = networkService
+    }
+
+    // MARK: - Load Functions
+    func loadAllData() async {
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            async let fetchedOffer = fetchOfferDetails()
+            async let fetchedMedia = fetchMediaItems()
+
+            let (offerResult, mediaResult) = try await (fetchedOffer, fetchedMedia)
+            
+            let description = offerResult.descriptionHTML.htmlToAttributedString
+
+            self.offer = offerResult
+            self.media = mediaResult
+            self.attributedDescription = description
+            
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+
+        isLoading = false
+    }
+
+    private func fetchOfferDetails() async throws -> OfferDetailModel {
+        let response: OfferDetailModel =
+            try await networkService.fetch(
+                from: API.discountDetails(id: offerId)
+            )
+        return response
+    }
+
+    private func fetchMediaItems() async throws -> [MediaItem] {
+        let response: MediaResponse =
+            try await networkService.fetch(from: API.mediaItems(id: offerId))
+        return response.data
+    }
+
+}

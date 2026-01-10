@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct OffersListView: View {
-    //MARK: - StateObject
+    // MARK: - StateObject
     @StateObject private var viewModel: OffersListViewModel
 
-    //MARK: - Properties
+    // MARK: - Properties
     let router: OffersRouter
 
-    //MARK: - Init
+    // MARK: - Init
     init(router: OffersRouter) {
         self.router = router
         _viewModel = StateObject(
@@ -24,35 +24,27 @@ struct OffersListView: View {
         )
     }
 
-    //MARK: - Body
+    // MARK: - Body
     var body: some View {
-        VStack(alignment: .leading) {
-            SearchField(
-                text: $viewModel.searchText,
-                placeholder: "Search offers..."
-            )
-            .padding(.horizontal)
-            CategoriesSection(
-                categories: viewModel.categories,
-                selectedCategoryId: viewModel.selectedCategoryId
-            ) { id in
-                viewModel.selectCategory(id: id)
-            }
+        VStack(alignment: .leading, spacing: 0) {
+            headerSection
             Divider()
-            if !viewModel.offers.isEmpty {
-                Text("\(viewModel.offers.count) offers found")
-                    .font(.app(size: .sm, weight: .semibold))
-                    .foregroundStyle(.colorPrimary)
-                    .multilineTextAlignment(.leading)
-                    .padding(.horizontal)
-            }
-            ScrollView {
-                content
+            ZStack {
+                if !viewModel.offers.isEmpty {
+                    resultsListView
+                }
+                else if !viewModel.isLoading {
+                    emptyStateView
+                }
+                
+                if viewModel.isLoading && viewModel.offers.isEmpty {
+                    initialLoadingView
+                }
             }
         }
         .navigationTitle("All Offers")
         .toolbarColorScheme(.light, for: .navigationBar)
-        .background(.colorGray200)
+        .background(Color.colorGray200)
         .task {
             await viewModel.loadInitialData()
         }
@@ -64,9 +56,7 @@ struct OffersListView: View {
             )
         ) {
             Button("Retry") {
-                Task {
-                    await viewModel.loadData()
-                }
+                Task { await viewModel.loadData() }
             }
             Button("OK", role: .cancel) {}
         } message: {
@@ -74,45 +64,88 @@ struct OffersListView: View {
         }
     }
 
-    //MARK: - Helper View
-    @ViewBuilder
-    private var content: some View {
-        if viewModel.isLoading && viewModel.offers.isEmpty {
-            ProgressView()
-                .frame(maxWidth: .infinity)
-        } else if viewModel.offers.isEmpty && !viewModel.isLoading {
-            Text("No offers found")
-                .font(.app(size: .lg, weight: .semibold))
-                .foregroundStyle(.colorPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.top, 40)
-        } else {
-            VStack(spacing: 16) {
+    // MARK: - Helper Views
+    private var headerSection: some View {
+        VStack(spacing: 12) {
+            SearchField(
+                text: $viewModel.searchText,
+                placeholder: "Search offers..."
+            )
+            .padding(.horizontal)
+
+            CategoriesSection(
+                categories: viewModel.categories,
+                selectedCategoryId: viewModel.selectedCategoryId
+            ) { id in
+                viewModel.selectCategory(id: id)
+            }
+        }
+        .padding(.vertical, 12)
+        .background(Color.white)
+    }
+
+    private var resultsListView: some View {
+        ScrollView {
+            LazyVStack(spacing: 16) {
+                HStack {
+                    Text("\(viewModel.offers.count) offers found")
+                        .font(.app(size: .sm, weight: .semibold))
+                        .foregroundStyle(.colorPrimary)
+                    Spacer()
+                }
+                .padding(.horizontal)
+
                 OffersList(offers: viewModel.offers) { id in
                     router.openOffer(id: id)
                 }
-
                 if viewModel.canLoadMore {
-                    Button {
-                        viewModel.loadNextPage()
-                    } label: {
-                        if viewModel.isLoading {
-                            ProgressView()
-                                .padding()
-                        } else {
-                            Text("Load more")
-                                .font(.app(size: .lg, weight: .semibold))
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                        }
-                    }
-                    .disabled(viewModel.isLoading)
-                    .background(.colorPrimary)
-                    .foregroundStyle(.white)
-                    .cornerRadius(12)
-                    .padding(.horizontal)
+                    loadMoreButtonView
                 }
             }
+            .padding(.vertical, 16)
         }
     }
+
+    private var loadMoreButtonView: some View {
+        Button {
+            viewModel.loadNextPage()
+        } label: {
+            ZStack {
+                Text("Load more")
+                    .font(.app(size: .lg, weight: .semibold))
+                    .opacity(viewModel.isLoading ? 0 : 1)
+
+                if viewModel.isLoading {
+                    ProgressView().tint(.white)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 54)
+        }
+        .background(Color.colorPrimary)
+        .foregroundStyle(.white)
+        .cornerRadius(12)
+        .padding(.horizontal)
+        .disabled(viewModel.isLoading)
+    }
+
+    private var initialLoadingView: some View {
+        VStack {
+            ProgressView().scaleEffect(1.2)
+            Text("Loading offers...")
+                .font(.app(size: .sm))
+                .foregroundColor(.gray)
+                .padding(.top, 8)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.colorGray200)
+    }
+
+    private var emptyStateView: some View {
+        Text("No offers found")
+            .font(.app(size: .lg, weight: .semibold))
+            .foregroundStyle(.colorPrimary)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
 }

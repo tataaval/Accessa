@@ -28,17 +28,20 @@ final class HomeViewModel: ObservableObject {
 
     // MARK: - Load Functions
     func loadAllData() async {
-        isLoading = true
+        if pinnedOffers.isEmpty { isLoading = true }
         errorMessage = nil
 
         do {
-            async let pinned = fetchPinnedOffers()
-            async let organizationList = fetchOrganizations()
-            async let lastChance = fetchLastChanceOffers()
+            async let pinnedTask = fetchPinnedOffers()
+            async let orgTask = fetchOrganizations()
+            async let lastChanceTask = fetchLastChanceOffers()
 
-            pinnedOffers = try await pinned
-            organizations = try await organizationList
-            lastChanceOffers = try await lastChance
+            let (pinned, orgs, lastChance) = try await (pinnedTask, orgTask, lastChanceTask)
+            
+            self.pinnedOffers = pinned
+            self.organizations = orgs
+            self.lastChanceOffers = lastChance
+            
         } catch {
             errorMessage = error.localizedDescription
         }

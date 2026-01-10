@@ -41,8 +41,25 @@ final class OffersListViewModel: ObservableObject {
     // MARK: - Load Functions
     func loadInitialData() async {
         guard offers.isEmpty else { return }
-        await loadCategories()
-        await loadData()
+
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            async let categoriesTask = fetchCategories()
+            async let offersTask = fetchOffers(reset: true)
+
+            let (fetchedCategories, fetchedOffers) = try await (
+                categoriesTask, offersTask
+            )
+
+            self.categories = fetchedCategories
+            self.offers = fetchedOffers
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+
+        isLoading = false
     }
 
     func loadData(reset: Bool = true) async {
@@ -50,7 +67,6 @@ final class OffersListViewModel: ObservableObject {
 
         if reset {
             currentPage = 1
-            offers.removeAll()
         }
 
         isLoading = true
@@ -58,7 +74,11 @@ final class OffersListViewModel: ObservableObject {
 
         do {
             let newOffers = try await fetchOffers(reset: reset)
-            offers.append(contentsOf: newOffers)
+            if reset {
+                offers = newOffers
+            } else {
+                offers.append(contentsOf: newOffers)
+            }
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -86,17 +106,9 @@ final class OffersListViewModel: ObservableObject {
         return response.data
     }
 
-    private func loadCategories() async {
-        guard categories.isEmpty else { return }
-
-        do {
-            let response: CategoriesResponseModel =
-                try await networkService.fetch(from: API.categories)
-
-            categories = response.data
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+    private func fetchCategories() async throws -> [CategoryModel] {
+        let response: CategoriesResponseModel = try await networkService.fetch(from: API.categories)
+        return response.data
     }
 
     //MARK: - textfield binding
