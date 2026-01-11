@@ -34,10 +34,10 @@ final class OfferDetailViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            async let fetchedOffer = fetchOfferDetails()
-            async let fetchedMedia = fetchMediaItems()
+            async let offerTask = fetchOfferDetails()
+            async let mediaTask = fetchMediaItems()
 
-            let (offerResult, mediaResult) = try await (fetchedOffer, fetchedMedia)
+            let (offerResult, mediaResult) = try await (offerTask, mediaTask)
             
             let description = offerResult.descriptionHTML.htmlToAttributedString
 

@@ -1,20 +1,18 @@
 //
-//  OffersListViewModel.swift
+//  PartnerListViewModel.swift
 //  Accessa
 //
-//  Created by Tatarella on 09.01.26.
+//  Created by Tatarella on 11.01.26.
 //
 
 import Combine
 import Foundation
 
-final class OffersListViewModel: ObservableObject {
+final class PartnerListViewModel: ObservableObject {
     // MARK: - Published Properties
-    @Published var offers: [OfferModel] = []
-    @Published var categories: [CategoryModel] = []
+    @Published var organizations: [OrganizationItemModel] = []
 
     @Published var searchText: String = ""
-    @Published var selectedCategoryId: Int?
 
     @Published var isLoading = false
     @Published var errorMessage: String?
@@ -40,21 +38,17 @@ final class OffersListViewModel: ObservableObject {
 
     // MARK: - Load Functions
     func loadInitialData() async {
-        guard offers.isEmpty else { return }
+        guard organizations.isEmpty else { return }
 
         isLoading = true
         errorMessage = nil
 
         do {
-            async let categoriesTask = fetchCategories()
-            async let offersTask = fetchOffers(reset: true)
+            async let organizationsTask = fetchOrganizations(reset: true)
 
-            let (fetchedCategories, fetchedOffers) = try await (
-                categoriesTask, offersTask
-            )
+            let organizationsResult = try await organizationsTask
+            self.organizations = organizationsResult
 
-            self.categories = fetchedCategories
-            self.offers = fetchedOffers
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -67,18 +61,18 @@ final class OffersListViewModel: ObservableObject {
 
         if reset {
             currentPage = 1
-            offers.removeAll()
+            organizations.removeAll()
         }
 
         isLoading = true
         errorMessage = nil
 
         do {
-            let newOffers = try await fetchOffers(reset: reset)
+            let newOrganizations = try await fetchOrganizations(reset: reset)
             if reset {
-                offers = newOffers
+                organizations = newOrganizations
             } else {
-                offers.append(contentsOf: newOffers)
+                organizations.append(contentsOf: newOrganizations)
             }
         } catch {
             errorMessage = error.localizedDescription
@@ -87,28 +81,23 @@ final class OffersListViewModel: ObservableObject {
         isLoading = false
     }
 
-    private func fetchOffers(reset: Bool) async throws -> [OfferModel] {
+    private func fetchOrganizations(reset: Bool) async throws
+        -> [OrganizationItemModel]
+    {
         let page = reset ? 1 : currentPage
 
-        let response: OffersResponseModel =
+        let response: OrganizationsResponseModel =
             try await networkService.fetch(
-                from: API.discounts(
+                from: API.organizations(
                     limit: 12,
                     page: page,
                     searchKeyword: searchText.isEmpty ? nil : searchText,
-                    organisationId: nil,
-                    categoryId: selectedCategoryId
                 )
             )
 
         meta = response.meta
         currentPage = response.meta.currentPage + 1
 
-        return response.data
-    }
-
-    private func fetchCategories() async throws -> [CategoryModel] {
-        let response: CategoriesResponseModel = try await networkService.fetch(from: API.categories)
         return response.data
     }
 
@@ -128,17 +117,6 @@ final class OffersListViewModel: ObservableObject {
     }
 
     //MARK: - Helper functions
-    func selectCategory(id: Int?) {
-        if id == -1 {
-            selectedCategoryId = nil
-        } else {
-            selectedCategoryId = id
-        }
-        Task {
-            await loadData()
-        }
-    }
-
     func loadNextPage() {
         guard canLoadMore else { return }
 

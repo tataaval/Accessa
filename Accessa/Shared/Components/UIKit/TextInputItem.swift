@@ -13,12 +13,12 @@ final class TextInputItem: UIStackView {
         get {
             textField.text ?? ""
         }
-        
+
         set {
             textField.text = newValue
         }
     }
-    
+
     //MARK: - UI Components
     let inputLabel: UILabel = {
         let label = UILabel()
@@ -77,7 +77,7 @@ final class TextInputItem: UIStackView {
         addArrangedSubview(textField)
         addArrangedSubview(errorLabel)
     }
-    
+
     //MARK: - Public Methods
     func setError(_ message: String?) {
         if let message = message {

@@ -32,7 +32,11 @@ enum API {
 
     case pinnedOffers(limit: Int)
 
-    case organizations(limit: Int)
+    case organizations(
+        limit: Int,
+        page: Int? = nil,
+        searchKeyword: String? = nil
+    )
 
     case categories
 
@@ -134,8 +138,24 @@ extension API: Endpoint {
         case .pinnedOffers(let limit):
             return ["limit": limit]
 
-        case .organizations(let limit):
-            return ["pager_limit": limit]
+        case .organizations(
+            let limit,
+            let page,
+            let searchKeyword
+        ):
+            var params: [String: Any] = [
+                "pager_limit": limit
+            ]
+
+            if let page {
+                params["page"] = page
+            }
+
+            if let searchKeyword, !searchKeyword.isEmpty {
+                params["search_keyword"] = searchKeyword
+            }
+
+            return params
 
         case .discounts(
             let limit,
@@ -165,6 +185,7 @@ extension API: Endpoint {
             }
 
             return params
+
         case .mediaItems(let id):
             return [
                 "reference_id": id,
