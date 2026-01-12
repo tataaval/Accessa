@@ -39,7 +39,7 @@ final class OfferDetailViewModel: ObservableObject {
 
             let (offerResult, mediaResult) = try await (offerTask, mediaTask)
             
-            let description = offerResult.descriptionHTML.htmlToAttributedString
+            let description = offerResult.descriptionHTML?.htmlToAttributedString
 
             self.offer = offerResult
             self.media = mediaResult

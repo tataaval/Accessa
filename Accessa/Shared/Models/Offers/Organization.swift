@@ -7,5 +7,5 @@
 
 struct Organization: Decodable {
     let title: String
-    let image: Media
+    let image: Media?
 }

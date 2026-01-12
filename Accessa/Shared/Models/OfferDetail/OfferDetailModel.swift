@@ -13,7 +13,7 @@ struct OfferDetailModel: Decodable, Identifiable {
     let id: Int
     let title: String
     let discount: Int
-    let descriptionHTML: String
+    let descriptionHTML: String?
     let cities: [City]
     let organisation: Organisation
     let endDate: String

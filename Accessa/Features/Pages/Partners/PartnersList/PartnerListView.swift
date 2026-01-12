@@ -74,12 +74,18 @@ struct PartnerListView: View {
     //TODO: - ამის გაჯენერიქებაც შეიძლება ვიუბილდერით, ოფერების ლისტიც მსაგვსია
     private var resultsListView: some View {
         VStack {
-            FoundResultsText(text: "\(viewModel.organizations.count) organizations found")
+            FoundResultsText(
+                text: "\(viewModel.organizations.count) organizations found"
+            )
             ScrollView {
                 LazyVStack(spacing: 16) {
                     OrganizationsList(organizations: viewModel.organizations) {
-                        id in
-                        router.openOrganization(id: id)
+                        organizationPageId,
+                        organizationItemId in
+                        router.openOrganization(
+                            organizationPageId: organizationPageId,
+                            organizationItemId: organizationItemId
+                        )
                     }
                     if viewModel.canLoadMore {
                         LoadMoreButton(

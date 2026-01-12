@@ -11,7 +11,7 @@ struct OrganizationsSection: View {
     //MARK: - Properties
     let organizations: [OrganizationItemModel]
     let seeOrganizationList: () -> Void
-    let seeOrganizationDetails: (_ OrganizationId: Int) -> Void
+    let seeOrganizationDetails: (_ organizationPageId: Int, _ organizationItemId: Int) -> Void
 
     //MARK: - Grid Layout
     let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)

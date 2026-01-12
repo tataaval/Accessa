@@ -37,6 +37,8 @@ enum API {
         page: Int? = nil,
         searchKeyword: String? = nil
     )
+    
+    case organizationDetails(id: Int)
 
     case categories
 
@@ -68,6 +70,8 @@ extension API: Endpoint {
             return "api/v1/discounts/pinned_discounts"
         case .organizations:
             return "api/v1/organisations"
+        case .organizationDetails(let id):
+            return "api/v1/organisations/\(id)"
         case .categories:
             return "api/v1/categories"
         case .mediaItems:
@@ -79,7 +83,7 @@ extension API: Endpoint {
         switch self {
         case .login, .register, .forgotPassword, .pinnedOffers, .organizations,
             .categories,
-            .discounts, .discountDetails, .mediaItems:
+            .discounts, .discountDetails, .mediaItems, .organizationDetails:
             return .post
         default:
             return .get

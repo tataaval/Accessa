@@ -11,7 +11,7 @@ struct OrganizationsList: View {
 
     //MARK: - Properties
     let organizations: [OrganizationItemModel]
-    let seeDetails: (_ organizationId: Int) -> Void
+    let seeDetails: (_ organizationPageId: Int, _ organizationItemId: Int) -> Void
 
     //MARK: - Body
     var body: some View {

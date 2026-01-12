@@ -11,12 +11,12 @@ struct OrganizationListCard: View {
 
     //MARK: - Properties
     let organization: OrganizationItemModel
-    let seeDetails: (_ organizationId: Int) -> Void
+    let seeDetails: (_ organizationPageId: Int, _ organizationItemId: Int) -> Void
 
     //MARK: - Body
     var body: some View {
         Button {
-            seeDetails(organization.organizationPageItemId)
+            seeDetails(organization.organizationPageItemId, organization.id)
         } label: {
             HStack(spacing: 16) {
 

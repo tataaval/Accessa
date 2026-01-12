@@ -50,8 +50,8 @@ struct HomeView: View {
                         OrganizationsSection(
                             organizations: viewModel.organizations,
                             seeOrganizationList: { router.openOrganizations() },
-                            seeOrganizationDetails: { id in
-                                router.openOrganization(id: id)
+                            seeOrganizationDetails: { organizationPageId, organizationItemId in
+                                router.openOrganization(organizationPageId: organizationPageId, organizationItemId: organizationItemId)
                             }
                         )
 

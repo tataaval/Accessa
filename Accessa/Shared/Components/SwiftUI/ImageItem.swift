@@ -11,6 +11,7 @@ import SwiftUI
 struct ImageItem: View {
     //MARK: - Properties
     let image: String
+    var targetSize: CGSize = CGSize(width: 400, height: 400)
     @State private var didFail = false
 
     //MARK: - Body
@@ -20,16 +21,16 @@ struct ImageItem: View {
                 ImagePlaceholder()
             } else {
                 KFImage(URL(string: image))
-                    .placeholder {
-                        loadingView
-                    }
+                    .setProcessor(DownsamplingImageProcessor(size: targetSize))
+                    .scaleFactor(UIScreen.main.scale)
+                    .serialize(by: DefaultCacheSerializer.default)
                     .retry(maxCount: 1, interval: .seconds(2))
-                    .onFailure { _ in
-                        didFail = true
-                    }
                     .fade(duration: 0.3)
+                    .onFailure { _ in didFail = true }
+                    .placeholder { loadingView }
                     .resizable()
                     .scaledToFill()
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     .clipped()
             }
         }

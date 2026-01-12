@@ -24,12 +24,11 @@ struct OfferDetailView: View {
     //MARK: - Body
     var body: some View {
         ZStack {
-            // Background color for the whole screen
             Color.white.ignoresSafeArea()
 
             if let offer = viewModel.offer {
                 ScrollView {
-                    LazyVStack(alignment: .leading) {
+                    VStack(alignment: .leading) {
                         OfferDetailsCarouselView(
                             images: viewModel.media,
                             discount: offer.discountText
@@ -58,7 +57,6 @@ struct OfferDetailView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .background(.white)
         .task {
             await viewModel.loadAllData()
         }

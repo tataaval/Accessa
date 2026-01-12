@@ -11,12 +11,12 @@ struct OrganizationCard: View {
 
     //MARK: - Properties
     let organization: OrganizationItemModel
-    let seeOrganizationDetails: (_ OrganizationId: Int) -> Void
+    let seeOrganizationDetails: (_ organizationPageId: Int, _ organizationItemId: Int) -> Void
 
     //MARK: - Body
     var body: some View {
         Button {
-            seeOrganizationDetails(organization.id)
+            seeOrganizationDetails(organization.organizationPageItemId, organization.id)
         } label: {
             VStack {
                 imageSection
@@ -40,10 +40,9 @@ private extension OrganizationCard {
                 .scaledToFit()
                 .frame(width: 64, height: 64)
         } else {
-            Image(systemName: "photo")
-                .scaledToFit()
-                .foregroundStyle(.colorPrimary)
+            ImagePlaceholder()
                 .frame(width: 64, height: 64)
+                .clipped()
         }
     }
     
