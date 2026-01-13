@@ -33,7 +33,7 @@ struct OrganizationInfoView: View {
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(color: .black.opacity(0.1), radius: 10, y: 4)
-        .padding()
+        .padding(.horizontal)
     }
 }
 

@@ -10,7 +10,6 @@ import SwiftUI
 struct OrganizationsSection: View {
     //MARK: - Properties
     let organizations: [OrganizationItemModel]
-    let seeOrganizationList: () -> Void
     let seeOrganizationDetails: (_ organizationPageId: Int, _ organizationItemId: Int) -> Void
 
     //MARK: - Grid Layout
@@ -28,14 +27,10 @@ struct OrganizationsSection: View {
 private extension OrganizationsSection {
     var sectionHeader: some View {
         HStack {
-            Text("Organization Organizations")
+            Text("Partner Organizations")
                 .font(.app(size: .lg, weight: .semibold))
                 .foregroundColor(.colorGray900)
             Spacer()
-
-            Button("See All") { seeOrganizationList() }
-                .font(.app(size: .sm, weight: .semibold))
-                .foregroundColor(.colorPrimary)
         }
         .padding(.horizontal)
     }

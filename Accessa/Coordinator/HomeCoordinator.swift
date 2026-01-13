@@ -11,11 +11,10 @@ import SwiftUI
 
 protocol HomeRouter {
     func openOffer(id: Int)
-    func openOrganizations()
     func openOrganization(organizationPageId: Int, organizationItemId: Int)
 }
 
-final class HomeCoordinator: Coordinator, HomeRouter {
+final class HomeCoordinator: Coordinator, HomeRouter, OfferRouting {
 
     var childCoordinators: [Coordinator] = []
     private let navigationController: UINavigationController
@@ -34,12 +33,8 @@ final class HomeCoordinator: Coordinator, HomeRouter {
         push(OfferDetailView(offerId: id))
     }
 
-    func openOrganizations() {
-        push(PartnerListView(router: self))
-    }
-
     func openOrganization(organizationPageId: Int, organizationItemId: Int) {
-        push(PartnerDetailView(organizationPageId: organizationPageId, organizationItemId: organizationItemId))
+        push(PartnerDetailView(organizationPageId: organizationPageId, organizationItemId: organizationItemId, router: self))
     }
 
     private func push<V: View>(_ view: V) {

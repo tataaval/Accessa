@@ -12,10 +12,10 @@ struct OffersListView: View {
     @StateObject private var viewModel: OffersListViewModel
 
     // MARK: - Properties
-    let router: OffersRouter
+    let router: OfferRouting
 
     // MARK: - Init
-    init(router: OffersRouter) {
+    init(router: OfferRouting) {
         self.router = router
         _viewModel = StateObject(
             wrappedValue: OffersListViewModel(

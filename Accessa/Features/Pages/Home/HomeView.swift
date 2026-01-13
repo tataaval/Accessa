@@ -49,7 +49,6 @@ struct HomeView: View {
 
                         OrganizationsSection(
                             organizations: viewModel.organizations,
-                            seeOrganizationList: { router.openOrganizations() },
                             seeOrganizationDetails: { organizationPageId, organizationItemId in
                                 router.openOrganization(organizationPageId: organizationPageId, organizationItemId: organizationItemId)
                             }

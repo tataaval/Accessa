@@ -21,6 +21,7 @@ final class MainTabCoordinator: Coordinator {
         tabBarController.viewControllers = [
             makeHome(),
             makeOffers(),
+            makePartners(),
             makeProfile(),
         ]
     }
@@ -49,6 +50,20 @@ final class MainTabCoordinator: Coordinator {
             title: "Offers",
             image: UIImage(systemName: "gift"),
             tag: 1
+        )
+        return navigationContoller
+    }
+    
+    private func makePartners() -> UIViewController {
+        let navigationContoller = UINavigationController()
+        let coordinator = PartnersCoordinator(navigationController: navigationContoller)
+        childCoordinators.append(coordinator)
+        coordinator.start()
+
+        navigationContoller.tabBarItem = UITabBarItem(
+            title: "Partners",
+            image: UIImage(systemName: "building.2"),
+            tag: 2
         )
         return navigationContoller
     }
