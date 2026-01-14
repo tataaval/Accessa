@@ -37,12 +37,16 @@ enum API {
         page: Int? = nil,
         searchKeyword: String? = nil
     )
-    
+
     case organizationDetails(id: Int)
 
     case categories
 
     case mediaItems(id: Int)
+
+    case deleteProfile
+
+    case cardInfo
 }
 
 extension API: Endpoint {
@@ -76,6 +80,10 @@ extension API: Endpoint {
             return "api/v1/categories"
         case .mediaItems:
             return "api/v1/media/get-attached-images"
+        case .deleteProfile:
+            return "api/v1/student-profile/deactivation"
+        case .cardInfo:
+            return "api/v1/card-page"
         }
     }
 
@@ -83,7 +91,7 @@ extension API: Endpoint {
         switch self {
         case .login, .register, .forgotPassword, .pinnedOffers, .organizations,
             .categories,
-            .discounts, .discountDetails, .mediaItems, .organizationDetails:
+            .discounts, .discountDetails, .mediaItems, .organizationDetails, .cardInfo, .deleteProfile:
             return .post
         default:
             return .get

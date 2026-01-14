@@ -27,7 +27,7 @@ final class NetworkService: NetworkServiceProtocol {
 
     func fetch<T: Decodable>(from endpoint: Endpoint) async throws -> T {
         var request = try endpoint.urlRequest()
-        
+
         if endpoint.requiresAuth,
             let token = sessionService.token
         {
@@ -77,7 +77,14 @@ final class NetworkService: NetworkServiceProtocol {
         case 401:
             let message = (try? decoder.decode(ErrorResponse.self, from: data))?
                 .message
-            // TODO: logout / refresh token logic
+
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(
+                    name: .unauthorized,
+                    object: nil
+                )
+            }
+
             throw NetworkError.clientError(401, message: message)
 
         case 400...499:

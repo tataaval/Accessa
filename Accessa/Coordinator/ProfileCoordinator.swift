@@ -46,7 +46,7 @@ final class ProfileCoordinator: Coordinator, ProfileRouter {
     func logout() {
         appCoordinator?.logout()
     }
-
+    
     private func push<V: View>(_ view: V) {
         navigationController.pushViewController(
             UIHostingController(rootView: view),

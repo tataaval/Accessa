@@ -28,7 +28,9 @@ final class HomeViewModel: ObservableObject {
 
     // MARK: - Load Functions
     func loadAllData() async {
-        if pinnedOffers.isEmpty { isLoading = true }
+        guard pinnedOffers.isEmpty else { return }
+        
+        isLoading = true
         errorMessage = nil
 
         do {
