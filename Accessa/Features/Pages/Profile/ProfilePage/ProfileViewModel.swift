@@ -60,8 +60,6 @@ final class ProfileViewModel: ObservableObject {
             cardInfo = nil
         } catch {
             errorMessage = error.localizedDescription
-            print(error)
-
         }
         isLoading = false
 

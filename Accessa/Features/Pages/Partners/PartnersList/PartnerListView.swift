@@ -88,7 +88,8 @@ struct PartnerListView: View {
                         )
                     }
                     if viewModel.canLoadMore {
-                        LoadMoreButton(
+                        AppButton(
+                            title: "Load More",
                             isLoading: viewModel.isLoading
                         ) {
                             viewModel.loadNextPage()

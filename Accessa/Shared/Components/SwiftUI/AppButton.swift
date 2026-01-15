@@ -1,5 +1,5 @@
 //
-//  LoadMoreButton.swift
+//  AppButton.swift
 //  Accessa
 //
 //  Created by Tatarella on 11.01.26.
@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct LoadMoreButton: View {
+struct AppButton: View {
     //MARK: - Properties
+    let title: String
     let isLoading: Bool
     let action: () -> Void
 
@@ -16,7 +17,7 @@ struct LoadMoreButton: View {
     var body: some View {
         Button(action: action) {
             ZStack {
-                Text("Load more")
+                Text(title)
                     .font(.app(size: .lg, weight: .semibold))
                     .opacity(isLoading ? 0 : 1)
 

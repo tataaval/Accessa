@@ -86,7 +86,8 @@ struct OffersListView: View {
                         router.openOffer(id: id)
                     }
                     if viewModel.canLoadMore {
-                        LoadMoreButton(
+                        AppButton(
+                            title: "Load More",
                             isLoading: viewModel.isLoading
                         ) {
                             viewModel.loadNextPage()

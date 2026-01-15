@@ -47,6 +47,12 @@ enum API {
     case deleteProfile
 
     case cardInfo
+
+    case resetPassword(
+        curentPassword: String,
+        password: String,
+        repeatPassword: String
+    )
 }
 
 extension API: Endpoint {
@@ -84,6 +90,8 @@ extension API: Endpoint {
             return "api/v1/student-profile/deactivation"
         case .cardInfo:
             return "api/v1/card-page"
+        case .resetPassword:
+            return "api/v1/student-profile/update-password"
         }
     }
 
@@ -91,7 +99,8 @@ extension API: Endpoint {
         switch self {
         case .login, .register, .forgotPassword, .pinnedOffers, .organizations,
             .categories,
-            .discounts, .discountDetails, .mediaItems, .organizationDetails, .cardInfo, .deleteProfile:
+            .discounts, .discountDetails, .mediaItems, .organizationDetails,
+            .cardInfo, .deleteProfile, .resetPassword:
             return .post
         default:
             return .get
@@ -202,6 +211,17 @@ extension API: Endpoint {
             return [
                 "reference_id": id,
                 "reference_type": "1",
+            ]
+
+        case .resetPassword(
+            let curentPassword,
+            let password,
+            let repeatPassword
+        ):
+            return [
+                "current_password": curentPassword,
+                "password": password,
+                "repeat_password": repeatPassword,
             ]
         default:
             return nil

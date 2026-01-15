@@ -15,8 +15,3 @@ struct CardInfoModel: Decodable {
         case expirationDate = "expiration_date"
     }
 }
-
-
-struct DeleteProfileResponseModel: Decodable {
-    let message: String
-}
