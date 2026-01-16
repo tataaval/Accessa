@@ -53,6 +53,12 @@ enum API {
         password: String,
         repeatPassword: String
     )
+
+    case profileInfo
+
+    case updateMobile(mobile: String)
+
+    case verifyMobile(mobile: String, code: String)
 }
 
 extension API: Endpoint {
@@ -92,6 +98,12 @@ extension API: Endpoint {
             return "api/v1/card-page"
         case .resetPassword:
             return "api/v1/student-profile/update-password"
+        case .profileInfo:
+            return "api/v1/whoami"
+        case .updateMobile:
+            return "api/v1/student-profile/update-mobile"
+        case .verifyMobile:
+            return "api/v1/student-profile/verify-mobile"
         }
     }
 
@@ -100,7 +112,7 @@ extension API: Endpoint {
         case .login, .register, .forgotPassword, .pinnedOffers, .organizations,
             .categories,
             .discounts, .discountDetails, .mediaItems, .organizationDetails,
-            .cardInfo, .deleteProfile, .resetPassword:
+            .cardInfo, .deleteProfile, .resetPassword, .profileInfo, .updateMobile, .verifyMobile:
             return .post
         default:
             return .get
@@ -186,7 +198,8 @@ extension API: Endpoint {
             let categoryId
         ):
             var params: [String: Any] = [
-                "pager_limit": limit
+                "pager_limit": limit,
+                "type": 1,
             ]
 
             if let page {
@@ -222,6 +235,22 @@ extension API: Endpoint {
                 "current_password": curentPassword,
                 "password": password,
                 "repeat_password": repeatPassword,
+            ]
+
+        case .updateMobile(
+            let mobile
+        ):
+            return [
+                "mobile": mobile
+            ]
+
+        case .verifyMobile(
+            let mobile,
+            let code
+        ):
+            return [
+                "mobile": mobile,
+                "verification_code": code,
             ]
         default:
             return nil

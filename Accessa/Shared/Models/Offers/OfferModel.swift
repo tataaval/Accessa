@@ -8,7 +8,7 @@
 struct OfferModel: Decodable, Identifiable {
     let id: Int
     let title: String
-    let discount: Int
+    let discount: Int?
     let endDate: String
     let image: Media?
     let organisation: Organization
@@ -25,7 +25,7 @@ struct OfferModel: Decodable, Identifiable {
 
 extension OfferModel {
     var discountText: String {
-        "\(discount)% Off"
+        "\(discount ?? 0)% Off"
     }
 
     var organizationTitle: String {

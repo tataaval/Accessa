@@ -13,6 +13,7 @@ struct InputItemView: View {
     let placeholder: String
     var hint: String? = nil
     var error: String? = nil
+    var disabled: Bool = false
     @Binding var value: String
 
     //MARK: - Body
@@ -24,7 +25,7 @@ struct InputItemView: View {
 
             TextField(placeholder, text: $value)
                 .padding()
-                .background(.colorGray200)
+                .background(disabled ? .colorGray300 : .colorGray200)
                 .cornerRadius(14)
                 .overlay(
                     RoundedRectangle(cornerRadius: 14)
@@ -33,6 +34,7 @@ struct InputItemView: View {
                             lineWidth: 1
                         )
                 )
+                .disabled(disabled)
 
             if let hint {
                 Text(hint)

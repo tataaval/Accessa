@@ -51,9 +51,10 @@ struct ChangePasswordView: View {
         }
     }
 
+    //MARK: Helper View
     var formView: some View {
         VStack(alignment: .leading, spacing: 24) {
-            FormHeader()
+            FormHeader(title: "Change Password", subtitle: "Keep your account secure by updating your password regularly.")
             InputItemView(
                 title: "Old Password",
                 placeholder: "Enter old password",
