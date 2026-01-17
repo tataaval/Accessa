@@ -14,13 +14,13 @@ protocol RegisterViewModelType {
 }
 
 protocol RegisterViewModelInput {
-    func register(name: String, IdNumber: String, phone: String, birthDate: String, email: String, password: String, repeatPassword: String)
+    func register(formData: RegisterRequestModel)
 }
 
 protocol RegisterViewModelOutput: AnyObject {
     func registerDidSucceed()
     func registerDidFail(error: String)
-    func onValidationError(errors: [String: String])
+    func onValidationError(errors: [RegistrationInputField: String])
     func setLoading(_ isLoading: Bool)
 }
 
@@ -44,55 +44,71 @@ final class RegisterViewModel: RegisterViewModelType {
         self.networkService = networkService
     }
     // MARK: - Validation Helper
-    private func validateInputs(name: String, IdNumber: String, phone: String, birthDate: String, email: String, password: String, repeatPassword: String) -> [String: String] {
-        var errors: [String: String] = [:]
-        
-        if let error = validationService.validateEmptyValue(name) {
-            errors["name"] = error.errorDescription
-        }
-        
-        if let error = validationService.validateIdNumber(IdNumber) {
-            errors["idNumber"] = error.errorDescription
-        }
-        
-        if let error = validationService.validatePhoneNumber(phone) {
-            errors["phone"] = error.errorDescription
-        }
-        
-        if let error = validationService.validateEmptyValue(birthDate) {
-            errors["birthDate"] = error.errorDescription
-        }
-        
-        if let error = validationService.validateEmail(email) {
-            errors["email"] = error.errorDescription
+    private func validateInputs(inputs: RegisterRequestModel)
+        -> [RegistrationInputField: String]
+    {
+
+        var errors: [RegistrationInputField: String] = [:]
+
+        if let error = validationService.validateEmptyValue(inputs.name) {
+            errors[.name] = error.errorDescription
         }
 
-        if let error = validationService.validatePassword(password) {
-            errors["password"] = error.errorDescription
+        if let error = validationService.validateIdNumber(inputs.idNumber) {
+            errors[.idNumber] = error.errorDescription
         }
-        
-        if let error = validationService.validateRepeatPassword(repeatPassword, password: password) {
-            errors["repeatPassword"] = error.errorDescription
+
+        if let error = validationService.validatePhoneNumber(inputs.phone) {
+            errors[.phone] = error.errorDescription
         }
-        
+
+        if let error = validationService.validateEmptyValue(inputs.birthDate) {
+            errors[.birthDate] = error.errorDescription
+        }
+
+        if let error = validationService.validateEmail(inputs.email) {
+            errors[.email] = error.errorDescription
+        }
+
+        if let error = validationService.validatePassword(inputs.password) {
+            errors[.password] = error.errorDescription
+        }
+
+        if let error = validationService.validateRepeatPassword(
+            inputs.repeatPassword,
+            password: inputs.password
+        ) {
+            errors[.repeatPassword] = error.errorDescription
+        }
+
         return errors
     }
 }
 
 extension RegisterViewModel: RegisterViewModelInput {
-    func register(name: String, IdNumber: String, phone: String, birthDate: String, email: String, password: String, repeatPassword: String) {
-        let errorMessages = validateInputs(name: name, IdNumber: IdNumber, phone: phone, birthDate: birthDate, email: email, password: password, repeatPassword: repeatPassword)
-        
+    func register(formData: RegisterRequestModel) {
+        let errorMessages = validateInputs(inputs: formData)
+
         if !errorMessages.isEmpty {
             output?.onValidationError(errors: errorMessages)
             return
         }
-        
+
         output?.setLoading(true)
-        
+
         Task {
             do {
-                let _: RegisterResponseModel = try await networkService.fetch(from: API.register(name: name, IdNumber: IdNumber, phone: phone, birthDate: birthDate, email: email, password: password, repeatPassword: repeatPassword))
+                let _: RegisterResponseModel = try await networkService.fetch(
+                    from: API.register(
+                        name: formData.name,
+                        IdNumber: formData.idNumber,
+                        phone: formData.phone,
+                        birthDate: formData.birthDate,
+                        email: formData.email,
+                        password: formData.password,
+                        repeatPassword: formData.repeatPassword
+                    )
+                )
                 self.output?.setLoading(false)
                 output?.registerDidSucceed()
             } catch {
@@ -101,6 +117,6 @@ extension RegisterViewModel: RegisterViewModelInput {
                 print(error)
             }
         }
-        
+
     }
 }

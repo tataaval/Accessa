@@ -171,7 +171,7 @@ extension LoginViewController: LoginViewModelOutput {
         showError(error)
     }
 
-    func onValidationError(errors: [String: String]) {
+    func onValidationError(errors: [LoginInputField: String]) {
         formInputs.resetErrors()
         formInputs.setErrors(errors)
     }

@@ -165,9 +165,9 @@ extension ForgotPasswordViewController: ForgotPasswordViewModelOutput {
         showError(error)
     }
 
-    func onValidationError(errors: [String: String]) {
+    func onValidationError(errors: [ForgotPasswordInputField: String]) {
         email.setError(nil)
-        if let error = errors["email"] { email.setError(error) }
+        if let error = errors[.email] { email.setError(error) }
     }
 
     func setLoading(_ isLoading: Bool) {

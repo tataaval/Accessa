@@ -168,15 +168,17 @@ final class RegisterViewController: UIViewController {
         registerButton.addAction(
             UIAction { [weak self] _ in
                 guard let self else { return }
-                self.viewModel.input.register(
-                    name: self.registerForm.name.text,
-                    IdNumber: self.registerForm.idNumber.text,
-                    phone: self.registerForm.phone.text,
-                    birthDate: self.registerForm.birthDate.text,
-                    email: self.registerForm.email.text,
-                    password: self.registerForm.password.text,
-                    repeatPassword: self.registerForm.repeatPassword.text
+                let formData = RegisterRequestModel(
+                    name: registerForm.name.text,
+                    idNumber: registerForm.idNumber.text,
+                    phone: registerForm.phone.text,
+                    birthDate: registerForm.birthDate.text,
+                    email: registerForm.email.text,
+                    password: registerForm.password.text,
+                    repeatPassword: registerForm.repeatPassword.text
                 )
+                
+                self.viewModel.input.register(formData: formData)
             },
             for: .touchUpInside
         )
@@ -219,7 +221,7 @@ extension RegisterViewController: RegisterViewModelOutput {
         showError(error)
     }
 
-    func onValidationError(errors: [String: String]) {
+    func onValidationError(errors: [RegistrationInputField: String]) {
         registerForm.resetErrors()
         registerForm.setErrors(errors)
     }

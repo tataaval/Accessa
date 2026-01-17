@@ -7,10 +7,6 @@
 
 import UIKit
 
-enum RegistrationField: String {
-    case name, idNumber, phone, birthDate, email, password, repeatPassword
-}
-
 final class RegisterFormInputs: UIStackView {
 
     // MARK: - UI Components
@@ -80,26 +76,13 @@ final class RegisterFormInputs: UIStackView {
         repeatPassword.setError(nil)
     }
 
-    func setErrors(_ errors: [String: String]) {
-        errors.forEach { key, message in
-            switch key {
-            case RegistrationField.name.rawValue:
-                self.name.setError(message)
-            case RegistrationField.idNumber.rawValue:
-                self.idNumber.setError(message)
-            case RegistrationField.phone.rawValue:
-                self.phone.setError(message)
-            case RegistrationField.birthDate.rawValue:
-                self.birthDate.setError(message)
-            case RegistrationField.email.rawValue:
-                self.email.setError(message)
-            case RegistrationField.password.rawValue:
-                self.password.setError(message)
-            case RegistrationField.repeatPassword.rawValue:
-                self.repeatPassword.setError(message)
-            default:
-                break
-            }
-        }
+    func setErrors(_ errors: [RegistrationInputField: String]) {
+        if let error = errors[.name] { name.setError(error) }
+        if let error = errors[.idNumber] { idNumber.setError(error) }
+        if let error = errors[.phone] { phone.setError(error) }
+        if let error = errors[.birthDate] { birthDate.setError(error) }
+        if let error = errors[.email] { email.setError(error) }
+        if let error = errors[.password] { password.setError(error) }
+        if let error = errors[.repeatPassword] { repeatPassword.setError(error) }
     }
 }

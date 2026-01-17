@@ -20,7 +20,7 @@ protocol LoginViewModelInput {
 protocol LoginViewModelOutput: AnyObject {
     func loginDidSucceed()
     func loginDidFail(error: String)
-    func onValidationError(errors: [String: String])
+    func onValidationError(errors: [LoginInputField: String])
     func setLoading(_ isLoading: Bool)
 }
 
@@ -37,9 +37,11 @@ final class LoginViewModel: LoginViewModelType {
     private let sessionService: SessionServiceProtocol
 
     // MARK: - Init
-    init(validationService: ValidationServiceProtocol = ValidationService(),
-         networkService: NetworkServiceProtocol = NetworkService.shared,
-         sessionService: SessionServiceProtocol = SessionService()) {
+    init(
+        validationService: ValidationServiceProtocol = ValidationService(),
+        networkService: NetworkServiceProtocol = NetworkService.shared,
+        sessionService: SessionServiceProtocol = SessionService()
+    ) {
         self.validationService = validationService
         self.networkService = networkService
         self.sessionService = sessionService
@@ -48,25 +50,29 @@ final class LoginViewModel: LoginViewModelType {
 
 extension LoginViewModel: LoginViewModelInput {
     func login(id: String, password: String) {
-        var errors: [String: String] = [:]
+        var errors: [LoginInputField: String] = [:]
 
         if let error = validationService.validateIdNumber(id) {
-            errors["idNumber"] = error.errorDescription
+            errors[.idNumber] = error.errorDescription
         }
 
         if let error = validationService.validatePassword(password) {
-            errors["password"] = error.errorDescription
+            errors[.password] = error.errorDescription
         }
 
         if !errors.isEmpty {
             output?.onValidationError(errors: errors)
             return
         }
+
         output?.setLoading(true)
-        
+
         Task {
             do {
-                let response: LoginResponseModel = try await networkService.fetch(from: API.login(IdNumber: id, password: password))
+                let response: LoginResponseModel =
+                    try await networkService.fetch(
+                        from: API.login(IdNumber: id, password: password)
+                    )
                 self.output?.setLoading(false)
                 try sessionService.saveToken(response.token)
                 output?.loginDidSucceed()
@@ -75,6 +81,6 @@ extension LoginViewModel: LoginViewModelInput {
                 self.output?.loginDidFail(error: error.localizedDescription)
             }
         }
-        
     }
+
 }

@@ -5,7 +5,6 @@
 //  Created by Tatarella on 06.01.26.
 //
 
-
 import Foundation
 
 //MARK: - protocols
@@ -21,7 +20,7 @@ protocol ForgotPasswordViewModelInput {
 protocol ForgotPasswordViewModelOutput: AnyObject {
     func sendInstructionsDidComplete()
     func sendInstructionsDidFail(error: String)
-    func onValidationError(errors: [String: String])
+    func onValidationError(errors: [ForgotPasswordInputField: String])
     func setLoading(_ isLoading: Bool)
 }
 
@@ -48,30 +47,35 @@ final class ForgotPasswordViewModel: ForgotPasswordViewModelType {
 
 extension ForgotPasswordViewModel: ForgotPasswordViewModelInput {
     func sendInstructions(email: String) {
-        var errors: [String: String] = [:]
-        
+        var errors: [ForgotPasswordInputField: String] = [:]
+
         if let error = validationService.validateEmail(email) {
-            errors["email"] = error.errorDescription
+            errors[.email] = error.errorDescription
         }
-        
+
         if !errors.isEmpty {
             output?.onValidationError(errors: errors)
             return
         }
-        
+
         output?.setLoading(true)
-        
+
         Task {
             do {
-                let _: ForgotPasswordResponseModel = try await networkService.fetch(from: API.forgotPassword(email: email))
+                let _: ForgotPasswordResponseModel =
+                    try await networkService.fetch(
+                        from: API.forgotPassword(email: email)
+                    )
                 self.output?.setLoading(false)
                 output?.sendInstructionsDidComplete()
             } catch {
                 self.output?.setLoading(false)
-                self.output?.sendInstructionsDidFail(error: error.localizedDescription)
+                self.output?.sendInstructionsDidFail(
+                    error: error.localizedDescription
+                )
                 print(error)
             }
         }
-        
+
     }
 }

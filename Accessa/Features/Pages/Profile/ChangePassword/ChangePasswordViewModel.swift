@@ -8,19 +8,20 @@
 import Combine
 import Foundation
 
-enum inputField {
-    case oldPassword
-    case newPassword
-    case confirmPassword
-}
-
 final class ChangePasswordViewModel: ObservableObject {
+    
+    enum InputField {
+        case oldPassword
+        case newPassword
+        case confirmPassword
+    }
+    
     // MARK: - Published Properties
     @Published var oldPassword = ""
     @Published var newPassword = ""
     @Published var confirmPassword = ""
 
-    @Published var errors: [inputField: String] = [:]
+    @Published var errors: [InputField: String] = [:]
     @Published var isLoading = false
     @Published var isSuccess = false
     @Published var apiError: String?

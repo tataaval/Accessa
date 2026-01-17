@@ -69,7 +69,13 @@ final class DateInputItem: UIStackView {
     init(title: String, placeholder: String) {
         super.init(frame: .zero)
         inputLabel.text = title
-        textField.placeholder = placeholder
+        textField.attributedPlaceholder = NSAttributedString(
+            string: placeholder,
+            attributes: [
+                .foregroundColor: UIColor.colorGray500,
+                .font: UIFont.app(size: .sm),
+            ]
+        )
 
         setupUI()
         setupDatePicker()
