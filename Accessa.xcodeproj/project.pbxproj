@@ -19,6 +19,7 @@
 		D0DDD1D72F07DCC200459A05 /* Exceptions for "Accessa" folder in "Accessa" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Config/App.xcconfig,
 				Resources/Info.plist,
 			);
 			target = D0DDD1C42F07DCC100459A05 /* Accessa */;
@@ -153,6 +154,8 @@
 /* Begin XCBuildConfiguration section */
 		D0DDD1D92F07DCC200459A05 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = D0DDD1C72F07DCC100459A05 /* Accessa */;
+			baseConfigurationReferenceRelativePath = Config/App.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -185,6 +188,8 @@
 		};
 		D0DDD1DA2F07DCC200459A05 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = D0DDD1C72F07DCC100459A05 /* Accessa */;
+			baseConfigurationReferenceRelativePath = Config/App.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -63,13 +63,6 @@ enum API {
 
 extension API: Endpoint {
 
-    var baseURL: URL {
-        guard let url = URL(string: "https://api.eyc.artmedia.space") else {
-            fatalError("Invalid base URL")
-        }
-        return url
-    }
-
     var path: String {
         switch self {
         case .login:

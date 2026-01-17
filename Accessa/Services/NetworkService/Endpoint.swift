@@ -8,7 +8,6 @@
 import Foundation
 
 protocol Endpoint {
-    var baseURL: URL { get }
     var path: String { get }
     var method: HTTPMethod { get }
     var headers: [String: String]? { get }
@@ -18,6 +17,11 @@ protocol Endpoint {
 }
 
 extension Endpoint {
+
+    var baseURL: URL {
+        AppConfig.baseURL
+    }
+
     func urlRequest() throws -> URLRequest {
         let urlString = baseURL.absoluteString.trimmingCharacters(
             in: CharacterSet(charactersIn: "/")
