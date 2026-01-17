@@ -42,7 +42,7 @@ private extension LastChanceCard {
                 .font(.app(size: .xs, weight: .semibold))
                 .padding(6)
                 .background(.colorError)
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .cornerRadius(8)
                 .padding(8)
         }
@@ -75,7 +75,7 @@ private extension LastChanceCard {
                 .padding(8)
                 .background(.colorError)
                 .font(.app(size: .sm, weight: .semibold))
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .cornerRadius(12)
         }
     }

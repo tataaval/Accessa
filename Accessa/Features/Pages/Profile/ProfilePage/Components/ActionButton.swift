@@ -21,7 +21,7 @@ struct ActionButton: View {
                 Text(title)
                     .font(.app(size: .base, weight: .semibold))
             }
-            .foregroundColor(.colorError)
+            .foregroundStyle(.colorError)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
             .background(.colorError.opacity(0.08))

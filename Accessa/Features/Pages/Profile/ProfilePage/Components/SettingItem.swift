@@ -19,13 +19,13 @@ struct SettingItem: View {
             HStack(spacing: 16) {
                 Image(systemName: icon)
                     .frame(width: 24)
-                    .foregroundColor(.colorGray500)
+                    .foregroundStyle(.colorGray500)
                 Text(title)
                     .font(.app(size: .base, weight: .semibold))
-                    .foregroundColor(.colorGray900)
+                    .foregroundStyle(.colorGray900)
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .foregroundColor(.colorGray500)
+                    .foregroundStyle(.colorGray500)
             }
             .padding()
         }

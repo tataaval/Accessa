@@ -29,10 +29,18 @@ struct ProfileInputItemView: View {
             HStack(spacing: 12) {
 
                 if isEditable {
-                    TextField(placeholder, text: $value)
-                        .padding()
-                        .background(.colorGray200)
-                        .cornerRadius(14)
+                    TextField(
+                        "",
+                        text: $value,
+                        prompt: Text(placeholder)
+                            .font(.app(size: .sm))
+                            .foregroundStyle(.colorGray500)
+                    )
+                    .font(.app(size: .sm))
+                    .foregroundStyle(.colorGray900)
+                    .padding()
+                    .background(.colorGray200)
+                    .cornerRadius(14)
                 } else {
                     Text(value.isEmpty ? placeholder : value)
                         .font(.app(size: .sm))
@@ -61,7 +69,7 @@ struct ProfileInputItemView: View {
             if let error {
                 Text(error)
                     .font(.app(size: .sm))
-                    .foregroundColor(.colorError)
+                    .foregroundStyle(.colorError)
             }
         }
         .padding()

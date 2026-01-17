@@ -17,11 +17,11 @@ struct MembershipCard: View {
 
             Text("Cardholder Name")
                 .font(.app(size: .sm, weight: .semibold))
-                .foregroundColor(.white.opacity(0.8))
+                .foregroundStyle(.white.opacity(0.8))
 
             Text(cardInfo.fullName)
                 .font(.app(size: .lg, weight: .semibold))
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
 
             Spacer()
 
@@ -29,11 +29,11 @@ struct MembershipCard: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Valid Until")
                         .font(.app(size: .sm, weight: .semibold))
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundStyle(.white.opacity(0.8))
 
                     Text(cardInfo.expirationDate)
                         .font(.app(size: .lg, weight: .semibold))
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                 }
 
                 Spacer()
@@ -45,7 +45,7 @@ struct MembershipCard: View {
 
                     Text("ACTIVE")
                         .font(.app(size: .base, weight: .semibold))
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)

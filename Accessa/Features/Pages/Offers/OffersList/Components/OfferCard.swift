@@ -45,7 +45,7 @@ private extension OfferCard {
                 .font(.app(size: .xs, weight: .semibold))
                 .padding(6)
                 .background(.colorError)
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .cornerRadius(8)
                 .padding(8)
         }

@@ -16,19 +16,25 @@ struct SearchField: View {
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-                .foregroundColor(.colorGray500)
+                .foregroundStyle(.colorGray500)
 
-            TextField(placeholder, text: $text)
-                .textInputAutocapitalization(.never)
-                .disableAutocorrection(true)
-                .font(.app(size: .base))
+            TextField(
+                "",
+                text: $text,
+                prompt: Text(placeholder)
+                    .foregroundStyle(.colorGray500)
+            )
+            .foregroundStyle(.colorGray900)
+            .textInputAutocapitalization(.never)
+            .disableAutocorrection(true)
+            .font(.app(size: .base))
 
             if !text.isEmpty {
                 Button {
                     text = ""
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.colorGray900)
+                        .foregroundStyle(.colorGray900)
                 }
             }
         }

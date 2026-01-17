@@ -16,7 +16,7 @@ struct CategoryItem: View {
     var body: some View {
         Text(title)
             .font(.app(size: .sm, weight: .semibold))
-            .foregroundColor(isSelected ? .white : .colorGray900)
+            .foregroundStyle(isSelected ? .white : .colorGray900)
             .padding(.horizontal, 20)
             .padding(.vertical, 10)
             .background(

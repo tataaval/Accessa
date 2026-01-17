@@ -13,11 +13,13 @@ struct OrganizationInfoView: View {
     let title: String
     let desc: String?
     let address: String?
+    let email: String?
+    let phone: String?
 
     //MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
-            HStack(spacing: 16) {
+            HStack(alignment: .top, spacing: 16) {
                 logoView
                 organizationInfo
 
@@ -37,43 +39,63 @@ struct OrganizationInfoView: View {
     }
 }
 
-private extension OrganizationInfoView {
+extension OrganizationInfoView {
     @ViewBuilder
     private var logoView: some View {
         if let imageURL = logo {
             ImageItem(image: imageURL)
-                .frame(width: 56, height: 56)
+                .frame(width: 70, height: 70)
                 .clipped()
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         } else {
             ImagePlaceholder()
-                .frame(width: 56, height: 56)
+                .frame(width: 70, height: 70)
                 .clipped()
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }
     }
-    
+
     private var organizationInfo: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 12) {
             Text(title)
                 .font(.app(size: .lg, weight: .bold))
                 .foregroundStyle(.colorGray900)
-            location
+            locationInfo
+            phoneInfo
+            emailInfo
         }
     }
-    
+
     @ViewBuilder
-    private var location: some View {
+    private var locationInfo: some View {
         if let address {
-            HStack(alignment: .top, spacing: 6) {
-                Image(systemName: "location.north.circle")
-                    .font(.system(size: 14))
-                    .foregroundStyle(.colorGray500)
-                
-                Text(address)
-                    .font(.app(size: .xs))
-                    .foregroundStyle(.colorGray500)
-            }
+            infoItem(icon: "location.north.circle", text: address)
+        }
+    }
+
+    @ViewBuilder
+    private var phoneInfo: some View {
+        if let phone {
+            infoItem(icon: "phone", text: phone)
+        }
+    }
+
+    @ViewBuilder
+    private var emailInfo: some View {
+        if let email {
+            infoItem(icon: "envelope", text: email)
+        }
+    }
+
+    private func infoItem(icon: String, text: String) -> some View {
+        HStack(alignment: .top, spacing: 6) {
+            Image(systemName: icon)
+                .font(.system(size: 14))
+                .foregroundStyle(.colorGray500)
+
+            Text(text)
+                .font(.app(size: .xs))
+                .foregroundStyle(.colorGray500)
         }
     }
 }

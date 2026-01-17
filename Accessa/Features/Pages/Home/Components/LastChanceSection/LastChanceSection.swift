@@ -34,7 +34,7 @@ private extension LastChanceSection {
 
             Image(systemName: "clock.fill")
                 .resizable()
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .padding(6)
                 .frame(width: 24, height: 24)
                 .background(.colorError)

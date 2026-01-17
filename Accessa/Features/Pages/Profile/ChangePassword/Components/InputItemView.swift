@@ -23,28 +23,37 @@ struct InputItemView: View {
                 .font(.app(size: .sm, weight: .semibold))
                 .foregroundStyle(.colorGray900)
 
-            TextField(placeholder, text: $value)
-                .padding()
-                .background(disabled ? .colorGray300 : .colorGray200)
-                .cornerRadius(14)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 14)
-                        .stroke(
-                            error != nil ? Color.colorError : .clear,
-                            lineWidth: 1
-                        )
-                )
-                .disabled(disabled)
+            TextField(
+                "",
+                text: $value,
+                prompt: Text(placeholder)
+                    .foregroundStyle(.colorGray500)
+                    .font(.app(size: .sm))
+            )
+            .foregroundStyle(.colorGray900)
+            .font(.app(size: .sm))
+            .padding()
+            .background(disabled ? .colorGray300 : .colorGray200)
+            .cornerRadius(14)
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .stroke(
+                        error != nil ? Color.colorError : .clear,
+                        lineWidth: 1
+                    )
+            )
+            .disabled(disabled)
+            
 
             if let hint {
                 Text(hint)
                     .font(.app(size: .sm))
-                    .foregroundColor(.colorGray500)
+                    .foregroundStyle(.colorGray500)
             }
             if let error {
                 Text(error)
                     .font(.app(size: .sm))
-                    .foregroundColor(.colorError)
+                    .foregroundStyle(.colorError)
             }
         }
         .padding()

@@ -16,12 +16,12 @@ struct FormHeader: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .font(.app(size: .xl, weight: .bold))
-                .foregroundColor(.colorGray900)
+                .foregroundStyle(.colorGray900)
 
             if let subtitle {
                 Text(subtitle)
                     .font(.app(size: .base))
-                    .foregroundColor(.colorGray500)
+                    .foregroundStyle(.colorGray500)
             }
         }
         .padding(.horizontal)

@@ -51,7 +51,7 @@ extension PinnedOffersSection {
             HStack {
                 Text("Pinned Offers")
                     .font(.app(size: .lg, weight: .semibold))
-                    .foregroundColor(.colorGray900)
+                    .foregroundStyle(.colorGray900)
 
                 Spacer()
 
@@ -71,7 +71,7 @@ extension PinnedOffersSection {
                 .background(.white)
                 .clipShape(Circle())
                 .shadow(radius: 2)
-                .foregroundColor(isFirst ? .gray : .colorPrimary)
+                .foregroundStyle(isFirst ? .gray : .colorPrimary)
         }
         .disabled(isFirst)
     }
@@ -85,7 +85,7 @@ extension PinnedOffersSection {
                 .background(.white)
                 .clipShape(Circle())
                 .shadow(radius: 2)
-                .foregroundColor(isLast ? .gray : .colorPrimary)
+                .foregroundStyle(isLast ? .gray : .colorPrimary)
         }
         .disabled(isLast)
     }

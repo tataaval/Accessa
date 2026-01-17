@@ -29,7 +29,7 @@ private extension OrganizationsSection {
         HStack {
             Text("Partner Organizations")
                 .font(.app(size: .lg, weight: .semibold))
-                .foregroundColor(.colorGray900)
+                .foregroundStyle(.colorGray900)
             Spacer()
         }
         .padding(.horizontal)

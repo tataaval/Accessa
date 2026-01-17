@@ -26,7 +26,7 @@ struct TabItem: View {
         } label: {
             Text(title)
                 .font(.app(size: .sm, weight: .bold))
-                .foregroundColor(isSelected ? .colorPrimary : .colorGray500)
+                .foregroundStyle(isSelected ? .colorPrimary : .colorGray500)
                 .padding(.bottom, 16)
                 .overlay(alignment: .bottom) {
                     Rectangle()

@@ -51,7 +51,7 @@ struct OfferDetailView: View {
                         .tint(.colorPrimary)
                     Text("Loading offer...")
                         .font(.app(size: .sm))
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .padding(.top, 8)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -19,9 +19,10 @@ struct OrganizationOffer: View {
             HStack {
                 Text(offer.title)
                     .font(.app(size: .base, weight: .semibold))
+                    .foregroundStyle(.colorGray900)
                 Spacer()
                 Image(systemName: "gift")
-                    .foregroundColor(.colorGray900)
+                    .foregroundStyle(.colorGray900)
             }
 
             Divider()
@@ -29,10 +30,14 @@ struct OrganizationOffer: View {
             HStack(spacing: 10) {
                 VStack(alignment: .leading, spacing: 6) {
                     Label("valid until \(offer.endDate)", systemImage: "clock")
+                        .font(.app(size: .xs, weight: .semibold))
+                        .foregroundStyle(.colorGray500)
                     Label(note, systemImage: "info.circle")
+                        .font(.app(size: .xs, weight: .semibold))
+                        .foregroundStyle(.colorGray500)
                 }
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
 
                 Spacer()
 
@@ -41,7 +46,7 @@ struct OrganizationOffer: View {
                     .padding(.horizontal, 10)
                     .padding(.vertical, 10)
                     .background(.colorPrimary)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             }
         }

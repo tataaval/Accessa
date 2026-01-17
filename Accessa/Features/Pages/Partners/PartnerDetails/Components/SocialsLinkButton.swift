@@ -31,11 +31,11 @@ private extension SocialsLinkButton {
         VStack(spacing: 8) {
             Image(icon)
                 .renderingMode(.template)
-                .foregroundColor(.colorPrimary)
+                .foregroundStyle(.colorPrimary)
 
             Text(title)
                 .font(.app(size: .sm, weight: .bold))
-                .foregroundColor(.colorPrimary)
+                .foregroundStyle(.colorPrimary)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 16)

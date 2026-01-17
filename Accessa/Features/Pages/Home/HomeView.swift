@@ -32,7 +32,7 @@ struct HomeView: View {
                         .tint(.colorPrimary)
                     Text("Loading...")
                         .font(.app(size: .sm))
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .padding(.top, 8)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

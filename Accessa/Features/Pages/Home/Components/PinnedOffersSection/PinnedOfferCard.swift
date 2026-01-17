@@ -49,14 +49,14 @@ private extension PinnedOfferCard {
             HStack(spacing: 4) {
                 Image(systemName: "pin.fill")
                     .resizable()
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .frame(width: 10, height: 12)
                 Text("Pinned")
                     .font(.app(size: .xs, weight: .bold))
             }
             .padding(6)
             .background(Color.colorSecondary)
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .cornerRadius(8)
             .padding(8)
             Spacer()
@@ -64,7 +64,7 @@ private extension PinnedOfferCard {
                 .font(.app(size: .xs, weight: .bold))
                 .padding(6)
                 .background(Color.colorError)
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .cornerRadius(8)
                 .padding(8)
         }
@@ -74,11 +74,11 @@ private extension PinnedOfferCard {
         VStack(alignment: .leading, spacing: 12) {
             Text(offer.title)
                 .font(.app(size: .base, weight: .bold))
-                .foregroundColor(.colorGray900)
+                .foregroundStyle(.colorGray900)
 
             Text(offer.organizationTitle)
                 .font(.app(size: .sm))
-                .foregroundColor(.colorGray500)
+                .foregroundStyle(.colorGray500)
 
            seeMoreButton
         }
@@ -94,7 +94,7 @@ private extension PinnedOfferCard {
                 .padding()
                 .background(Color.colorPrimary)
                 .font(.app(size: .sm, weight: .semibold))
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .cornerRadius(12)
         }
     }

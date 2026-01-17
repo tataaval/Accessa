@@ -39,7 +39,9 @@ struct PartnerDetailView: View {
                             logo: organization.logoImage,
                             title: organization.title,
                             desc: organization.desc,
-                            address: organization.address
+                            address: organization.address,
+                            email: organization.email,
+                            phone: organization.mobile
                         )
                         SocialsView(
                             companyURL: organization.companyURL,

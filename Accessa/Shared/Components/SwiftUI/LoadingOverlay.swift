@@ -16,10 +16,11 @@ struct LoadingOverlay: View {
         VStack {
             ProgressView()
                 .scaleEffect(1.5)
+                .tint(.colorPrimary)
 
             Text(text)
                 .font(.app(size: .sm))
-                .foregroundColor(.gray)
+                .foregroundStyle(.gray)
                 .padding(.top, 8)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
