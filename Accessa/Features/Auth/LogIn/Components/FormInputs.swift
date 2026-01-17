@@ -12,7 +12,8 @@ final class FormInputs: UIStackView {
     // MARK: - UI Components
     let idNumber = TextInputItem(
         title: "ID Number",
-        placeholder: "01010101011"
+        placeholder: "01010101011",
+        type: .numeric
     )
     let password = PasswordInputItem(
         title: "Password",

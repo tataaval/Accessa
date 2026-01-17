@@ -115,6 +115,7 @@ final class OffersListViewModel: ObservableObject {
     //MARK: - textfield binding
     private func bindSearch() {
         $searchText
+            .dropFirst()
             .removeDuplicates()
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
             .sink { [weak self] _ in

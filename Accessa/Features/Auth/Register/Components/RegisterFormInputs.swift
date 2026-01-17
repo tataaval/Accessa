@@ -21,12 +21,14 @@ final class RegisterFormInputs: UIStackView {
 
     let idNumber = TextInputItem(
         title: "ID Number",
-        placeholder: "Enter your ID Number"
+        placeholder: "Enter your ID Number",
+        type: .numeric
     )
 
     let phone = TextInputItem(
         title: "Phone",
-        placeholder: "Enter your Phone Number"
+        placeholder: "Enter your Phone Number",
+        type: .numeric
     )
 
     let birthDate = DateInputItem(
@@ -36,7 +38,8 @@ final class RegisterFormInputs: UIStackView {
 
     let email = TextInputItem(
         title: "Email",
-        placeholder: "your@email.com"
+        placeholder: "your@email.com",
+        type: .email
     )
 
     let password = PasswordInputItem(

@@ -8,15 +8,16 @@
 import UIKit
 
 final class TextInputItem: UIStackView {
+    enum InputType {
+        case text
+        case email
+        case numeric
+    }
+
     //MARK: - Computed Porperty
     var text: String {
-        get {
-            textField.text ?? ""
-        }
-
-        set {
-            textField.text = newValue
-        }
+        get { textField.text ?? "" }
+        set { textField.text = newValue }
     }
 
     //MARK: - UI Components
@@ -50,7 +51,7 @@ final class TextInputItem: UIStackView {
     }()
 
     //MARK: - Initializers
-    init(title: String, placeholder: String) {
+    init(title: String, placeholder: String, type: InputType = .text) {
         super.init(frame: .zero)
         inputLabel.text = title
         textField.attributedPlaceholder = NSAttributedString(
@@ -60,7 +61,7 @@ final class TextInputItem: UIStackView {
                 .font: UIFont.app(size: .sm),
             ]
         )
-
+        applyType(type)
         setupUI()
     }
 
@@ -76,6 +77,23 @@ final class TextInputItem: UIStackView {
         addArrangedSubview(inputLabel)
         addArrangedSubview(textField)
         addArrangedSubview(errorLabel)
+    }
+
+    private func applyType(_ type: InputType) {
+        switch type {
+        case .text:
+            textField.keyboardType = .default
+            textField.autocapitalizationType = .sentences
+
+        case .email:
+            textField.keyboardType = .emailAddress
+            textField.autocapitalizationType = .none
+            textField.textContentType = .emailAddress
+
+        case .numeric:
+            textField.keyboardType = .numberPad
+            textField.autocapitalizationType = .none
+        }
     }
 
     //MARK: - Public Methods
