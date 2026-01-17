@@ -53,19 +53,19 @@ final class HomeViewModel: ObservableObject {
 
     private func fetchPinnedOffers() async throws -> [OfferModel] {
         let response: PinnedOffersResponseModel =
-            try await networkService.fetch(from: API.pinnedOffers(limit: 5))
+            try await networkService.fetch(from: DiscountsAPI.pinnedOffers(limit: 5))
         return response.data
     }
 
     private func fetchOrganizations() async throws -> [OrganizationItemModel] {
         let response: OrganizationsResponseModel =
-            try await networkService.fetch(from: API.organizations(limit: 6))
+            try await networkService.fetch(from: OrganizationsAPI.organizations(limit: 6))
         return response.data
     }
 
     private func fetchLastChanceOffers() async throws -> [OfferModel] {
         let response: OffersResponseModel =
-            try await networkService.fetch(from: API.discounts(limit: 6))
+            try await networkService.fetch(from: DiscountsAPI.discounts(limit: 6))
         return response.data
     }
 

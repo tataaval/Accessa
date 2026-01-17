@@ -64,7 +64,7 @@ extension ForgotPasswordViewModel: ForgotPasswordViewModelInput {
             do {
                 let _: ForgotPasswordResponseModel =
                     try await networkService.fetch(
-                        from: API.forgotPassword(email: email)
+                        from: AuthAPI.forgotPassword(email: email)
                     )
                 self.output?.setLoading(false)
                 output?.sendInstructionsDidComplete()

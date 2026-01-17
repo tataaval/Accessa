@@ -99,9 +99,9 @@ extension RegisterViewModel: RegisterViewModelInput {
         Task {
             do {
                 let _: RegisterResponseModel = try await networkService.fetch(
-                    from: API.register(
+                    from: AuthAPI.register(
                         name: formData.name,
-                        IdNumber: formData.idNumber,
+                        idNumber: formData.idNumber,
                         phone: formData.phone,
                         birthDate: formData.birthDate,
                         email: formData.email,

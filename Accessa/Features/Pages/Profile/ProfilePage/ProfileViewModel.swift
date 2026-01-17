@@ -46,7 +46,7 @@ final class ProfileViewModel: ObservableObject {
 
     private func fetchCardInfo() async throws -> CardInfoModel {
         let response: CardInfoModel =
-            try await networkService.fetch(from: API.cardInfo)
+            try await networkService.fetch(from: CardAPI.cardInfo)
         return response
     }
 
@@ -67,6 +67,6 @@ final class ProfileViewModel: ObservableObject {
 
     private func delete() async throws {
         let _: DeleteProfileResponseModel =
-            try await networkService.fetch(from: API.deleteProfile)
+            try await networkService.fetch(from: ProfileAPI.deleteProfile)
     }
 }

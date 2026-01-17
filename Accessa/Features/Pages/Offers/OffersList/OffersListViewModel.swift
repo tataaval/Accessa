@@ -92,7 +92,7 @@ final class OffersListViewModel: ObservableObject {
 
         let response: OffersResponseModel =
             try await networkService.fetch(
-                from: API.discounts(
+                from: DiscountsAPI.discounts(
                     limit: 12,
                     page: page,
                     searchKeyword: searchText.isEmpty ? nil : searchText,
@@ -108,7 +108,7 @@ final class OffersListViewModel: ObservableObject {
     }
 
     private func fetchCategories() async throws -> [CategoryModel] {
-        let response: CategoriesResponseModel = try await networkService.fetch(from: API.categories)
+        let response: CategoriesResponseModel = try await networkService.fetch(from: CategoriesAPI.categories)
         return response.data
     }
 

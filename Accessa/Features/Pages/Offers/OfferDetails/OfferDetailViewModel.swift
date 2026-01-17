@@ -55,14 +55,14 @@ final class OfferDetailViewModel: ObservableObject {
     private func fetchOfferDetails() async throws -> OfferDetailModel {
         let response: OfferDetailModel =
             try await networkService.fetch(
-                from: API.discountDetails(id: offerId)
+                from: DiscountsAPI.discountDetails(id: offerId)
             )
         return response
     }
 
     private func fetchMediaItems() async throws -> [MediaItem] {
         let response: MediaResponse =
-            try await networkService.fetch(from: API.mediaItems(id: offerId))
+            try await networkService.fetch(from: MediaAPI.mediaItems(id: offerId))
         return response.data
     }
 

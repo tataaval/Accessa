@@ -74,7 +74,7 @@ final class ChangePasswordViewModel: ObservableObject {
 
     private func resetPass() async throws {
         let _: ChangePasswordResponseModel = try await networkService.fetch(
-            from: API.resetPassword(
+            from: ProfileAPI.resetPassword(
                 curentPassword: oldPassword,
                 password: newPassword,
                 repeatPassword: confirmPassword

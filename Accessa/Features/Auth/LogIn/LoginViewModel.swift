@@ -71,7 +71,7 @@ extension LoginViewModel: LoginViewModelInput {
             do {
                 let response: LoginResponseModel =
                     try await networkService.fetch(
-                        from: API.login(IdNumber: id, password: password)
+                        from: AuthAPI.login(idNumber: id, password: password)
                     )
                 self.output?.setLoading(false)
                 try sessionService.saveToken(response.token)

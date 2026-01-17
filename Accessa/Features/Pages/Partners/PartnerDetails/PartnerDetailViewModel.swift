@@ -60,13 +60,13 @@ final class PartnerDetailViewModel: ObservableObject {
 
     private func fetchOrganizationDetails() async throws -> OrganizationDetailModel {
         let response: OrganizationDetailModel =
-            try await networkService.fetch(from: API.organizationDetails(id: organizationPageId))
+            try await networkService.fetch(from: OrganizationsAPI.organizationDetails(id: organizationPageId))
         return response
     }
 
     private func fetchOffers() async throws -> [OfferModel] {
         let response: OffersResponseModel =
-            try await networkService.fetch(from: API.discounts( limit: 4, organisationId: organizationItemId))
+            try await networkService.fetch(from: DiscountsAPI.discounts( limit: 4, organisationId: organizationItemId))
         return response.data
     }
 

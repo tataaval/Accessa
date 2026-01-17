@@ -63,7 +63,7 @@ final class EditProfileViewModel: ObservableObject {
 
     private func fetchUserInfo() async throws -> UserProfileModel {
         let response: UserProfileModel =
-            try await networkService.fetch(from: API.profileInfo)
+            try await networkService.fetch(from: ProfileAPI.profileInfo)
         return response
     }
 
@@ -82,7 +82,7 @@ final class EditProfileViewModel: ObservableObject {
         do {
             let _: UpdateMobileResponseModel =
                 try await networkService.fetch(
-                    from: API.updateMobile(mobile: mobile)
+                    from: ProfileAPI.updateMobile(mobile: mobile)
                 )
 
             verificationCode = ""
@@ -97,7 +97,7 @@ final class EditProfileViewModel: ObservableObject {
     private func updateMobile(mobile: String) async throws {
         let _: UpdateMobileResponseModel =
             try await networkService.fetch(
-                from: API.updateMobile(mobile: mobile)
+                from: ProfileAPI.updateMobile(mobile: mobile)
             )
     }
 
@@ -123,7 +123,7 @@ final class EditProfileViewModel: ObservableObject {
     private func verify(mobile: String, verificationCode: String) async throws {
         let _: VerifyMobileResponseModel =
             try await networkService.fetch(
-                from: API.verifyMobile(mobile: mobile, code: verificationCode)
+                from: ProfileAPI.verifyMobile(mobile: mobile, code: verificationCode)
             )
     }
 

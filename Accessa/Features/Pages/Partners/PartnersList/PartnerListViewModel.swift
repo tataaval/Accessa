@@ -88,7 +88,7 @@ final class PartnerListViewModel: ObservableObject {
 
         let response: OrganizationsResponseModel =
             try await networkService.fetch(
-                from: API.organizations(
+                from: OrganizationsAPI.organizations(
                     limit: 12,
                     page: page,
                     searchKeyword: searchText.isEmpty ? nil : searchText,
