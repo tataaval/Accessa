@@ -20,7 +20,7 @@ final class PartnerListViewModel: ObservableObject {
     @Published private var meta: PaginationMetaModel?
 
     // MARK: - Private Properties
-    private let networkService: NetworkServiceProtocol
+    private let partnerService: PartnerServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     private var currentPage = 1
 
@@ -31,8 +31,8 @@ final class PartnerListViewModel: ObservableObject {
     }
 
     // MARK: - Init
-    init(networkService: NetworkServiceProtocol) {
-        self.networkService = networkService
+    init(partnerService: PartnerServiceProtocol = PartnerService()) {
+        self.partnerService = partnerService
         bindSearch()
     }
 
@@ -86,17 +86,14 @@ final class PartnerListViewModel: ObservableObject {
     {
         let page = reset ? 1 : currentPage
 
-        let response: OrganizationsResponseModel =
-            try await networkService.fetch(
-                from: OrganizationsAPI.organizations(
-                    limit: 12,
-                    page: page,
-                    searchKeyword: searchText.isEmpty ? nil : searchText,
-                )
-            )
+        let response = try await partnerService.fetchOrganizations(
+            page: page,
+            limit: 12,
+            search: searchText.isEmpty ? nil : searchText
+        )
 
-        meta = response.meta
-        currentPage = response.meta.currentPage + 1
+        self.meta = response.meta
+        self.currentPage = response.meta.currentPage + 1
 
         return response.data
     }
@@ -104,14 +101,19 @@ final class PartnerListViewModel: ObservableObject {
     //MARK: - textfield binding
     private func bindSearch() {
         $searchText
-            .dropFirst()
             .removeDuplicates()
+            .dropFirst()
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
-            .sink { [weak self] _ in
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .removeDuplicates()
+            .sink { [weak self] text in
                 guard let self else { return }
-                Task {
-                    await self.loadData()
+                if text.isEmpty {
+                    Task { await self.loadData(reset: true) }
+                    return
                 }
+                guard text.count >= 3 else { return }
+                Task { await self.loadData(reset: true) }
             }
             .store(in: &cancellables)
     }
@@ -124,5 +126,4 @@ final class PartnerListViewModel: ObservableObject {
             await loadData(reset: false)
         }
     }
-
 }

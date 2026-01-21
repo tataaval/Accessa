@@ -9,19 +9,9 @@ import SwiftUI
 
 struct ChangePasswordView: View {
     //MARK: StateObject
-    @StateObject private var viewModel: ChangePasswordViewModel
+    @StateObject private var viewModel: ChangePasswordViewModel = ChangePasswordViewModel()
 
     @Environment(\.dismiss) private var dismiss
-
-    //MARK: Init
-    init() {
-        _viewModel = StateObject(
-            wrappedValue: ChangePasswordViewModel(
-                networkService: NetworkService.shared,
-                validationService: ValidationService()
-            )
-        )
-    }
 
     //MARK: Body
     var body: some View {

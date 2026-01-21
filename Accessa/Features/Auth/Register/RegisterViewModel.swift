@@ -33,15 +33,15 @@ final class RegisterViewModel: RegisterViewModelType {
 
     // MARK: - Services
     private let validationService: ValidationServiceProtocol
-    private let networkService: NetworkServiceProtocol
+    private let authService: AuthServiceProtocol
 
     // MARK: - Init
     init(
         validationService: ValidationServiceProtocol = ValidationService(),
-        networkService: NetworkServiceProtocol = NetworkService.shared
+        authService: AuthServiceProtocol = AuthService()
     ) {
         self.validationService = validationService
-        self.networkService = networkService
+        self.authService = authService
     }
     // MARK: - Validation Helper
     private func validateInputs(inputs: RegisterRequestModel)
@@ -98,17 +98,7 @@ extension RegisterViewModel: RegisterViewModelInput {
 
         Task {
             do {
-                let _: RegisterResponseModel = try await networkService.fetch(
-                    from: AuthAPI.register(
-                        name: formData.name,
-                        idNumber: formData.idNumber,
-                        phone: formData.phone,
-                        birthDate: formData.birthDate,
-                        email: formData.email,
-                        password: formData.password,
-                        repeatPassword: formData.repeatPassword
-                    )
-                )
+                try await authService.register(data: formData)
                 self.output?.setLoading(false)
                 output?.registerDidSucceed()
             } catch {

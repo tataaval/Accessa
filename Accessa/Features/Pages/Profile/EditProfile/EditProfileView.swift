@@ -9,17 +9,7 @@ import SwiftUI
 
 struct EditProfileView: View {
     //MARK: StateObject
-    @StateObject private var viewModel: EditProfileViewModel
-
-    //MARK: Init
-    init() {
-        _viewModel = StateObject(
-            wrappedValue: EditProfileViewModel(
-                networkService: NetworkService.shared,
-                validationService: ValidationService()
-            )
-        )
-    }
+    @StateObject private var viewModel: EditProfileViewModel = EditProfileViewModel()
 
     //MARK: Body
     var body: some View {
@@ -62,6 +52,7 @@ struct EditProfileView: View {
         .sheet(isPresented: $viewModel.showMobileVerificationSheet) {
             verifyNumber
                 .padding()
+                .presentationBackground(.white)
         }
     }
 
@@ -95,6 +86,7 @@ struct EditProfileView: View {
                 placeholder: "Mobile Number",
                 error: viewModel.validationError,
                 showSaveButton: true,
+                inputType: .number,
                 onSave: {
                     Task { await viewModel.updateMobileNumber() }
                 },
@@ -115,12 +107,17 @@ struct EditProfileView: View {
             Text("Enter the verification code we sent to your number.")
                 .font(.app(size: .sm))
                 .foregroundStyle(.colorGray600)
-
+            
             TextField(
-                "Verification code",
-                text: $viewModel.verificationCode
+                "",
+                text: $viewModel.verificationCode,
+                prompt: Text("Verification code")
+                    .font(.app(size: .sm))
+                    .foregroundStyle(.colorGray500)
             )
             .keyboardType(.numberPad)
+            .font(.app(size: .sm))
+            .foregroundStyle(.colorGray900)
             .padding()
             .background(.colorGray200)
             .cornerRadius(14)

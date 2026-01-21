@@ -19,11 +19,11 @@ final class HomeViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     // MARK: - Private Properties
-    private let networkService: NetworkServiceProtocol
+    private let homeService: HomeServiceProtocol
 
     // MARK: - Init
-    init(networkService: NetworkServiceProtocol) {
-        self.networkService = networkService
+    init(homeService: HomeServiceProtocol = HomeService()) {
+        self.homeService = homeService
     }
 
     // MARK: - Load Functions
@@ -52,21 +52,14 @@ final class HomeViewModel: ObservableObject {
     }
 
     private func fetchPinnedOffers() async throws -> [OfferModel] {
-        let response: PinnedOffersResponseModel =
-            try await networkService.fetch(from: DiscountsAPI.pinnedOffers(limit: 5))
-        return response.data
+        try await homeService.fetchPinnedOffers(limit: 6)
     }
 
     private func fetchOrganizations() async throws -> [OrganizationItemModel] {
-        let response: OrganizationsResponseModel =
-            try await networkService.fetch(from: OrganizationsAPI.organizations(limit: 6))
-        return response.data
+        try await homeService.fetchTopOrganizations(limit: 6)
     }
 
     private func fetchLastChanceOffers() async throws -> [OfferModel] {
-        let response: OffersResponseModel =
-            try await networkService.fetch(from: DiscountsAPI.discounts(limit: 6))
-        return response.data
+        try await homeService.fetchLastChanceOffers(limit: 6)
     }
-
 }

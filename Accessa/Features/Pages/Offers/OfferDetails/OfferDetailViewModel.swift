@@ -20,12 +20,12 @@ final class OfferDetailViewModel: ObservableObject {
 
     // MARK: - Private Properties
     private let offerId: Int
-    private let networkService: NetworkServiceProtocol
+    private let offerDetailService: OfferDetailServiceProtocol
 
     // MARK: - Init
-    init(offerId: Int, networkService: NetworkServiceProtocol) {
+    init(offerId: Int, offerDetailService: OfferDetailServiceProtocol = OfferDetailService()) {
         self.offerId = offerId
-        self.networkService = networkService
+        self.offerDetailService = offerDetailService
     }
 
     // MARK: - Load Functions
@@ -53,17 +53,10 @@ final class OfferDetailViewModel: ObservableObject {
     }
 
     private func fetchOfferDetails() async throws -> OfferDetailModel {
-        let response: OfferDetailModel =
-            try await networkService.fetch(
-                from: DiscountsAPI.discountDetails(id: offerId)
-            )
-        return response
+        try await offerDetailService.fetchDetails(offerId: offerId)
     }
 
     private func fetchMediaItems() async throws -> [MediaItem] {
-        let response: MediaResponse =
-            try await networkService.fetch(from: MediaAPI.mediaItems(id: offerId))
-        return response.data
+        try await offerDetailService.fetchMedia(offerId: offerId)
     }
-
 }

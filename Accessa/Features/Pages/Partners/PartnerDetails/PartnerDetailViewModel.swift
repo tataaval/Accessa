@@ -21,17 +21,17 @@ final class PartnerDetailViewModel: ObservableObject {
     // MARK: - Private Properties
     private let organizationPageId: Int
     private let organizationItemId: Int
-    private let networkService: NetworkServiceProtocol
+    private let partnerDetailService: PartnerDetailServiceProtocol
 
     // MARK: - Init
     init(
         organizationPageId: Int,
         organizationItemId: Int,
-        networkService: NetworkServiceProtocol
+        partnerDetailService: PartnerDetailServiceProtocol = PartnerDetailService()
     ) {
         self.organizationPageId = organizationPageId
         self.organizationItemId = organizationItemId
-        self.networkService = networkService
+        self.partnerDetailService = partnerDetailService
     }
 
     // MARK: - Load Functions
@@ -59,15 +59,11 @@ final class PartnerDetailViewModel: ObservableObject {
     }
 
     private func fetchOrganizationDetails() async throws -> OrganizationDetailModel {
-        let response: OrganizationDetailModel =
-            try await networkService.fetch(from: OrganizationsAPI.organizationDetails(id: organizationPageId))
-        return response
+        try await partnerDetailService.fetchDetails(pageId: organizationPageId)
     }
 
     private func fetchOffers() async throws -> [OfferModel] {
-        let response: OffersResponseModel =
-            try await networkService.fetch(from: DiscountsAPI.discounts( limit: 4, organisationId: organizationItemId))
-        return response.data
+        try await partnerDetailService.fetchOffers(itemId: organizationItemId)
     }
-
 }
+

@@ -9,15 +9,12 @@ import SwiftUI
 
 struct HomeView: View {
     //MARK: - Properties
-    @StateObject private var viewModel: HomeViewModel
+    @StateObject private var viewModel: HomeViewModel = HomeViewModel()
     let router: HomeRouter
 
     //MARK: - Init
     init(router: HomeRouter) {
         self.router = router
-        _viewModel = StateObject(
-            wrappedValue: HomeViewModel(networkService: NetworkService.shared)
-        )
     }
 
     //MARK: - Body

@@ -9,20 +9,10 @@ import SwiftUI
 
 struct OffersListView: View {
     // MARK: - StateObject
-    @StateObject private var viewModel: OffersListViewModel
+    @StateObject private var viewModel = OffersListViewModel()
 
     // MARK: - Properties
     let router: OfferRouting
-
-    // MARK: - Init
-    init(router: OfferRouting) {
-        self.router = router
-        _viewModel = StateObject(
-            wrappedValue: OffersListViewModel(
-                networkService: NetworkService.shared
-            )
-        )
-    }
 
     // MARK: - Body
     var body: some View {

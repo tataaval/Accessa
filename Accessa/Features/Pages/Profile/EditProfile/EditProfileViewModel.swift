@@ -27,15 +27,15 @@ final class EditProfileViewModel: ObservableObject {
     @Published var validationError: String = ""
 
     // MARK: - Private Properties
-    private let networkService: NetworkServiceProtocol
+    private let profileService: ProfileServiceProtocol
     private let validationService: ValidationServiceProtocol
 
     // MARK: - Init
     init(
-        networkService: NetworkServiceProtocol,
-        validationService: ValidationServiceProtocol
+        profileService: ProfileServiceProtocol = ProfileService(),
+        validationService: ValidationServiceProtocol = ValidationService()
     ) {
-        self.networkService = networkService
+        self.profileService = profileService
         self.validationService = validationService
     }
 
@@ -45,9 +45,8 @@ final class EditProfileViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            async let userInfoTask = fetchUserInfo()
+            let result = try await profileService.fetchUserInfo()
 
-            let result = try await userInfoTask
             self.email = result.email
             self.mobile = result.mobile
             self.originalMobile = result.mobile
@@ -59,12 +58,6 @@ final class EditProfileViewModel: ObservableObject {
         }
 
         isLoading = false
-    }
-
-    private func fetchUserInfo() async throws -> UserProfileModel {
-        let response: UserProfileModel =
-            try await networkService.fetch(from: ProfileAPI.profileInfo)
-        return response
     }
 
     //MARK: - Update Mobile
@@ -80,10 +73,7 @@ final class EditProfileViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            let _: UpdateMobileResponseModel =
-                try await networkService.fetch(
-                    from: ProfileAPI.updateMobile(mobile: mobile)
-                )
+            try await profileService.updateMobile(mobile: mobile)
 
             verificationCode = ""
             showMobileVerificationSheet = true
@@ -94,22 +84,15 @@ final class EditProfileViewModel: ObservableObject {
 
     }
 
-    private func updateMobile(mobile: String) async throws {
-        let _: UpdateMobileResponseModel =
-            try await networkService.fetch(
-                from: ProfileAPI.updateMobile(mobile: mobile)
-            )
-    }
-
     //MARK: - Verify Code
     func verifyMobile() async {
 
         do {
-            let _ =
-                try await verify(
-                    mobile: mobile,
-                    verificationCode: verificationCode
-                )
+            try await profileService.verifyMobile(
+                mobile: mobile,
+                code: verificationCode
+            )
+
             originalMobile = mobile
             successMessage = "Mobile number was updated successfully. "
             showMobileVerificationSheet = false
@@ -119,12 +102,4 @@ final class EditProfileViewModel: ObservableObject {
         }
 
     }
-
-    private func verify(mobile: String, verificationCode: String) async throws {
-        let _: VerifyMobileResponseModel =
-            try await networkService.fetch(
-                from: ProfileAPI.verifyMobile(mobile: mobile, code: verificationCode)
-            )
-    }
-
 }

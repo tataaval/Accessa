@@ -15,8 +15,7 @@ struct OfferDetailView: View {
     init(offerId: Int) {
         _viewModel = StateObject(
             wrappedValue: OfferDetailViewModel(
-                offerId: offerId,
-                networkService: NetworkService.shared
+                offerId: offerId
             )
         )
     }

@@ -9,21 +9,11 @@ import SwiftUI
 
 struct ProfileView: View {
     // MARK: - StateObject
-    @StateObject private var viewModel: ProfileViewModel
+    @StateObject private var viewModel: ProfileViewModel = ProfileViewModel()
 
     //MARK: - properties
     @State private var showDeleteAlert = false
     let router: ProfileRouter
-
-    //MARK: - Init
-    init(router: ProfileRouter) {
-        self.router = router
-        _viewModel = StateObject(
-            wrappedValue: ProfileViewModel(
-                networkService: NetworkService.shared
-            )
-        )
-    }
 
     //MARK: - body
     var body: some View {

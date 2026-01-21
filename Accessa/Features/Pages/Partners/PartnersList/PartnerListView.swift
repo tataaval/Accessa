@@ -9,20 +9,10 @@ import SwiftUI
 
 struct PartnerListView: View {
     // MARK: - StateObject
-    @StateObject private var viewModel: PartnerListViewModel
+    @StateObject private var viewModel = PartnerListViewModel()
 
     // MARK: - Properties
     let router: PartnersRouter
-
-    // MARK: - Init
-    init(router: PartnersRouter) {
-        self.router = router
-        _viewModel = StateObject(
-            wrappedValue: PartnerListViewModel(
-                networkService: NetworkService.shared
-            )
-        )
-    }
 
     // MARK: - Body
     var body: some View {

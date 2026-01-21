@@ -9,13 +9,13 @@ import Combine
 import Foundation
 
 final class ChangePasswordViewModel: ObservableObject {
-    
+
     enum InputField {
         case oldPassword
         case newPassword
         case confirmPassword
     }
-    
+
     // MARK: - Published Properties
     @Published var oldPassword = ""
     @Published var newPassword = ""
@@ -27,15 +27,15 @@ final class ChangePasswordViewModel: ObservableObject {
     @Published var apiError: String?
 
     // MARK: - Private Properties
-    private let networkService: NetworkServiceProtocol
+    private let profileService: ProfileServiceProtocol
     private let validationService: ValidationServiceProtocol
 
     // MARK: - Init
     init(
-        networkService: NetworkServiceProtocol,
-        validationService: ValidationServiceProtocol
+        profileService: ProfileServiceProtocol = ProfileService(),
+        validationService: ValidationServiceProtocol = ValidationService()
     ) {
-        self.networkService = networkService
+        self.profileService = profileService
         self.validationService = validationService
     }
 
@@ -73,12 +73,10 @@ final class ChangePasswordViewModel: ObservableObject {
     }
 
     private func resetPass() async throws {
-        let _: ChangePasswordResponseModel = try await networkService.fetch(
-            from: ProfileAPI.resetPassword(
-                curentPassword: oldPassword,
-                password: newPassword,
-                repeatPassword: confirmPassword
-            )
+        try await profileService.changePassword(
+            current: oldPassword,
+            new: newPassword,
+            confirm: confirmPassword
         )
     }
 }

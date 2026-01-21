@@ -16,11 +16,11 @@ final class ProfileViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     // MARK: - Private Properties
-    private let networkService: NetworkServiceProtocol
+    private let profileService: ProfileServiceProtocol
 
     // MARK: - Init
-    init(networkService: NetworkServiceProtocol) {
-        self.networkService = networkService
+    init(profileService: ProfileServiceProtocol = ProfileService()) {
+        self.profileService = profileService
     }
 
     // MARK: - Load Functions
@@ -31,10 +31,7 @@ final class ProfileViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            async let cardInfoTask = fetchCardInfo()
-
-            let result = try await cardInfoTask
-            self.cardInfo = result
+            self.cardInfo = try await profileService.fetchCardInfo()
 
         } catch {
             errorMessage = error.localizedDescription
@@ -44,29 +41,18 @@ final class ProfileViewModel: ObservableObject {
         isLoading = false
     }
 
-    private func fetchCardInfo() async throws -> CardInfoModel {
-        let response: CardInfoModel =
-            try await networkService.fetch(from: CardAPI.cardInfo)
-        return response
-    }
-
     //MARK: - Profile delete
     func deleteProfile() async {
         isLoading = true
         errorMessage = nil
 
         do {
-            try await delete()
+            try await profileService.deleteAccount()
             cardInfo = nil
         } catch {
             errorMessage = error.localizedDescription
         }
         isLoading = false
 
-    }
-
-    private func delete() async throws {
-        let _: DeleteProfileResponseModel =
-            try await networkService.fetch(from: ProfileAPI.deleteProfile)
     }
 }

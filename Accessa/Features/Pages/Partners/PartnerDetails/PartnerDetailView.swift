@@ -20,8 +20,7 @@ struct PartnerDetailView: View {
         _viewModel = StateObject(
             wrappedValue: PartnerDetailViewModel(
                 organizationPageId: organizationPageId,
-                organizationItemId: organizationItemId,
-                networkService: NetworkService.shared
+                organizationItemId: organizationItemId
             )
         )
     }

@@ -33,15 +33,15 @@ final class ForgotPasswordViewModel: ForgotPasswordViewModelType {
 
     // MARK: - Services
     private let validationService: ValidationServiceProtocol
-    private let networkService: NetworkServiceProtocol
+    private let authService: AuthServiceProtocol
 
     // MARK: - Init
     init(
         validationService: ValidationServiceProtocol = ValidationService(),
-        networkService: NetworkServiceProtocol = NetworkService.shared
+        authService: AuthServiceProtocol = AuthService()
     ) {
         self.validationService = validationService
-        self.networkService = networkService
+        self.authService = authService
     }
 }
 
@@ -62,10 +62,7 @@ extension ForgotPasswordViewModel: ForgotPasswordViewModelInput {
 
         Task {
             do {
-                let _: ForgotPasswordResponseModel =
-                    try await networkService.fetch(
-                        from: AuthAPI.forgotPassword(email: email)
-                    )
+                try await authService.forgotPassword(email: email)
                 self.output?.setLoading(false)
                 output?.sendInstructionsDidComplete()
             } catch {

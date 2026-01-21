@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct ProfileInputItemView: View {
+
+    enum InputType {
+        case text
+        case number
+    }
+
     //MARK: - properties
     let title: String
     let placeholder: String
     var error: String? = nil
     var isEditable: Bool = true
     var showSaveButton: Bool = false
+    var inputType: InputType = .text
     var onSave: (() -> Void)? = nil
 
     @Binding var value: String
@@ -36,6 +43,7 @@ struct ProfileInputItemView: View {
                             .font(.app(size: .sm))
                             .foregroundStyle(.colorGray500)
                     )
+                    .keyboardType(inputType == .number ? .numberPad : .default)
                     .font(.app(size: .sm))
                     .foregroundStyle(.colorGray900)
                     .padding()

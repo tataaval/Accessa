@@ -33,17 +33,17 @@ final class LoginViewModel: LoginViewModelType {
 
     // MARK: - Services
     private let validationService: ValidationServiceProtocol
-    private let networkService: NetworkServiceProtocol
+    private let authService: AuthServiceProtocol
     private let sessionService: SessionServiceProtocol
 
     // MARK: - Init
     init(
         validationService: ValidationServiceProtocol = ValidationService(),
-        networkService: NetworkServiceProtocol = NetworkService.shared,
+        authService: AuthServiceProtocol = AuthService(),
         sessionService: SessionServiceProtocol = SessionService()
     ) {
         self.validationService = validationService
-        self.networkService = networkService
+        self.authService = authService
         self.sessionService = sessionService
     }
 }
@@ -70,9 +70,7 @@ extension LoginViewModel: LoginViewModelInput {
         Task {
             do {
                 let response: LoginResponseModel =
-                    try await networkService.fetch(
-                        from: AuthAPI.login(idNumber: id, password: password)
-                    )
+                try await authService.login(id: id, password: password)
                 self.output?.setLoading(false)
                 try sessionService.saveToken(response.token)
                 output?.loginDidSucceed()
@@ -84,3 +82,5 @@ extension LoginViewModel: LoginViewModelInput {
     }
 
 }
+
+
