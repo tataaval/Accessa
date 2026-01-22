@@ -1,1 +1,1 @@
-BASE_URL = api.eyc.artmedia.space
+BASE_URL = https:/$()/api.eyc.artmedia.space
