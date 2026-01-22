@@ -21,8 +21,9 @@ final class MainTabCoordinator: Coordinator {
         tabBarController.viewControllers = [
             makeHome(),
             makeOffers(),
+            makeMap(),
             makePartners(),
-            makeProfile(),
+            makeProfile()
         ]
     }
 
@@ -32,11 +33,7 @@ final class MainTabCoordinator: Coordinator {
         childCoordinators.append(coordinator)
         coordinator.start()
 
-        navigationContoller.tabBarItem = UITabBarItem(
-            title: "Home",
-            image: UIImage(systemName: "house"),
-            tag: 0
-        )
+        navigationContoller.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         return navigationContoller
     }
 
@@ -46,42 +43,37 @@ final class MainTabCoordinator: Coordinator {
         childCoordinators.append(coordinator)
         coordinator.start()
 
-        navigationContoller.tabBarItem = UITabBarItem(
-            title: "Offers",
-            image: UIImage(systemName: "gift"),
-            tag: 1
-        )
+        navigationContoller.tabBarItem = UITabBarItem(title: "Offers", image: UIImage(systemName: "gift"), tag: 1)
         return navigationContoller
     }
-    
+
+    private func makeMap() -> UIViewController {
+        let navigationContoller = UINavigationController()
+        let coordinator = MapCoordinator(navigationController: navigationContoller)
+        childCoordinators.append(coordinator)
+        coordinator.start()
+
+        navigationContoller.tabBarItem = UITabBarItem(title: "Map", image: UIImage(systemName: "map"), tag: 2)
+        return navigationContoller
+    }
+
     private func makePartners() -> UIViewController {
         let navigationContoller = UINavigationController()
         let coordinator = PartnersCoordinator(navigationController: navigationContoller)
         childCoordinators.append(coordinator)
         coordinator.start()
 
-        navigationContoller.tabBarItem = UITabBarItem(
-            title: "Partners",
-            image: UIImage(systemName: "building.2"),
-            tag: 2
-        )
+        navigationContoller.tabBarItem = UITabBarItem(title: "Partners", image: UIImage(systemName: "building.2"), tag: 2)
         return navigationContoller
     }
 
     private func makeProfile() -> UIViewController {
         let navigationContoller = UINavigationController()
-        let coordinator = ProfileCoordinator(
-            navigationController: navigationContoller,
-            appCoordinator: appCoordinator
-        )
+        let coordinator = ProfileCoordinator(navigationController: navigationContoller, appCoordinator: appCoordinator)
         childCoordinators.append(coordinator)
         coordinator.start()
 
-        navigationContoller.tabBarItem = UITabBarItem(
-            title: "Profile",
-            image: UIImage(systemName: "person"),
-            tag: 2
-        )
+        navigationContoller.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 2)
         return navigationContoller
     }
 }
