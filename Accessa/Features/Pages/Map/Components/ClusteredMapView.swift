@@ -12,6 +12,8 @@ struct ClusteredMapView: UIViewRepresentable {
 
     let offers: [OfferMapItem]
     var onOfferTap: ((OfferMapItem) -> Void)? = nil
+    
+    @Binding var selectedOffer: OfferMapItem?
 
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
@@ -27,6 +29,11 @@ struct ClusteredMapView: UIViewRepresentable {
     }
 
     func updateUIView(_ mapView: MKMapView, context: Context) {
+        if selectedOffer == nil {
+           if let selected = mapView.selectedAnnotations.first {
+               mapView.deselectAnnotation(selected, animated: true)
+           }
+        }
 
         let currentIDs = offers.map { $0.id }
         if context.coordinator.lastOfferIDs == currentIDs { return}

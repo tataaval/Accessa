@@ -21,11 +21,15 @@ struct MapView: View {
     //MARK: - Body
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-            ClusteredMapView(offers: viewModel.filteredOffers) { offer in
-                withAnimation(.spring()) {
-                    self.selectedOffer = offer
-                }
-            }
+            ClusteredMapView(
+                offers: viewModel.filteredOffers,
+                onOfferTap: { offer in
+                    withAnimation(.spring()) {
+                        self.selectedOffer = offer
+                    }
+                },
+                selectedOffer: $selectedOffer
+            )
             .ignoresSafeArea()
             Button {
                 showFilters = true
@@ -57,7 +61,7 @@ struct MapView: View {
                 )
                 .padding(.horizontal, 16)
                 .padding(.bottom, 16)
-                .transition(.move(edge: .bottom))
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
         .alert(
