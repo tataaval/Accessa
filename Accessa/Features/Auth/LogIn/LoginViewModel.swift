@@ -40,7 +40,7 @@ final class LoginViewModel: LoginViewModelType {
     init(
         validationService: ValidationServiceProtocol = ValidationService(),
         authService: AuthServiceProtocol = AuthService(),
-        sessionService: SessionServiceProtocol = SessionService()
+        sessionService: SessionServiceProtocol
     ) {
         self.validationService = validationService
         self.authService = authService

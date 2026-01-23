@@ -19,14 +19,16 @@ final class ProfileCoordinator: Coordinator, ProfileRouter {
 
     var childCoordinators: [Coordinator] = []
     private let navigationController: UINavigationController
-    private weak var appCoordinator: AppCoordinator?
+    private let sessionService: SessionServiceProtocol
+
+    var onLogout: (() -> Void)?
 
     init(
         navigationController: UINavigationController,
-        appCoordinator: AppCoordinator?
+        sessionService: SessionServiceProtocol
     ) {
         self.navigationController = navigationController
-        self.appCoordinator = appCoordinator
+        self.sessionService = sessionService
     }
 
     func start() {
@@ -44,9 +46,10 @@ final class ProfileCoordinator: Coordinator, ProfileRouter {
     }
 
     func logout() {
-        appCoordinator?.logout()
+        try? sessionService.clearSession()
+        onLogout?()
     }
-    
+
     private func push<V: View>(_ view: V) {
         navigationController.pushViewController(
             UIHostingController(rootView: view),
@@ -54,3 +57,4 @@ final class ProfileCoordinator: Coordinator, ProfileRouter {
         )
     }
 }
+

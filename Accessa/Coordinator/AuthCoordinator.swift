@@ -9,42 +9,52 @@
 import UIKit
 
 final class AuthCoordinator: Coordinator {
-    
+
     var childCoordinators: [Coordinator] = []
-    let navigationController = UINavigationController()
-    private weak var appCoordinator: AppCoordinator?
-    
-    init(appCoordinator: AppCoordinator) {
-        self.appCoordinator = appCoordinator
+    private let navigationController: UINavigationController
+    private let sessionService: SessionServiceProtocol
+
+    var onAuthSuccess: (() -> Void)?
+
+    init(
+        navigationController: UINavigationController,
+        sessionService: SessionServiceProtocol
+    ) {
+        self.navigationController = navigationController
+        self.sessionService = sessionService
     }
-    
+
     func start() {
         showLogin()
     }
-    
+
     private func showLogin() {
-        let viewModel = LoginViewModel()
-        let viewContoller = LoginViewController(viewModel: viewModel)
-        viewContoller.onLoginSuccess = { [weak self] in
-            self?.appCoordinator?.showMain()
+        let viewModel = LoginViewModel(sessionService: sessionService)
+
+        let vc = LoginViewController(viewModel: viewModel)
+        vc.onLoginSuccess = { [weak self] in
+            self?.onAuthSuccess?()
         }
-        viewContoller.onRegister = { [weak self] in
+
+        vc.onRegister = { [weak self] in
             self?.showRegister()
         }
-        viewContoller.onForgot = { [weak self] in
+
+        vc.onForgot = { [weak self] in
             self?.showForgot()
         }
-        
-        navigationController.setViewControllers([viewContoller], animated: false)
+
+        navigationController.setViewControllers([vc], animated: false)
     }
-    
+
     private func showRegister() {
         let viewModel = RegisterViewModel()
         navigationController.pushViewController(RegisterViewController(viewModel: viewModel), animated: true)
     }
-    
+
     private func showForgot() {
         let viewModel = ForgotPasswordViewModel()
         navigationController.pushViewController(ForgotPasswordViewController(viewModel: viewModel), animated: true)
     }
 }
+

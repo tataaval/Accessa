@@ -19,12 +19,6 @@ final class AppCoordinator {
     ) {
         self.window = window
         self.sessionService = sessionService
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleUnauthorized),
-            name: .unauthorized,
-            object: nil
-        )
     }
 
     deinit {
@@ -32,34 +26,14 @@ final class AppCoordinator {
     }
 
     func start() {
-        if sessionService.token != nil {
-            showMain()
-        } else {
-            showAuth()
-        }
+        showMain()
         window.makeKeyAndVisible()
     }
 
-    func showAuth() {
-        let auth = AuthCoordinator(appCoordinator: self)
-        childCoordinators = [auth]
-        auth.start()
-        window.rootViewController = auth.navigationController
-    }
-
     func showMain() {
-        let main = MainTabCoordinator(appCoordinator: self)
+        let main = MainTabCoordinator(appCoordinator: self, sessionService: sessionService)
         childCoordinators = [main]
         main.start()
         window.rootViewController = main.tabBarController
-    }
-
-    func logout() {
-        try? sessionService.clearSession()
-        showAuth()
-    }
-
-    @objc private func handleUnauthorized() {
-        logout()
     }
 }
