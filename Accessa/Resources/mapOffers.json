@@ -1,0 +1,143 @@
+[
+    {
+        "id": 309,
+        "title": "15% Off on Official Merchandise",
+        "discount": 15,
+        "organization": "Georgia Starts Here",
+        "coordinate": {
+            "latitude": 41.7151,
+            "longitude": 44.8271
+        }
+    },
+    {
+        "id": 285,
+        "title": "20% off on Tennis Court Rentals",
+        "discount": 20,
+        "organization": "Tennis Centre",
+        "coordinate": {
+            "latitude": 41.7325,
+            "longitude": 44.8012
+        }
+    },
+    {
+        "id": 341,
+        "title": "giorgis shetavazeba",
+        "discount": 60,
+        "organization": "giorgis kompania",
+        "coordinate": {
+            "latitude": 41.705,
+            "longitude": 44.79
+        }
+    },
+    {
+        "id": 311,
+        "title": "20-30% Off on Winter Sports & Tours",
+        "discount": 30,
+        "organization": "skiclub GE",
+        "coordinate": {
+            "latitude": 41.7202,
+            "longitude": 44.7834
+        }
+    },
+    {
+        "id": 307,
+        "title": "20% Off on Gldani-Nadzaladevi Sports Complex Services",
+        "discount": 20,
+        "organization": "Tbilisi Gldani-Nadzaladevi Sports Complex Center",
+        "coordinate": {
+            "latitude": 41.7916,
+            "longitude": 44.8337
+        }
+    },
+    {
+        "id": 305,
+        "title": "20% off on Theatre Performances",
+        "discount": 20,
+        "organization": "Sandro Akhmeteli Theatre",
+        "coordinate": {
+            "latitude": 41.7269,
+            "longitude": 44.7985
+        }
+    },
+    {
+        "id": 303,
+        "title": "20% off on Multifunctional Public Center Services",
+        "discount": 20,
+        "organization": "Multifunctional Public Center",
+        "coordinate": {
+            "latitude": 41.7122,
+            "longitude": 44.7831
+        }
+    },
+    {
+        "id": 301,
+        "title": "20% off on Library Services",
+        "discount": 20,
+        "organization": "Tbilisi central library",
+        "coordinate": {
+            "latitude": 41.7095,
+            "longitude": 44.8016
+        }
+    },
+    {
+        "id": 299,
+        "title": "20% Off on National Youth Palace Services",
+        "discount": 20,
+        "organization": "National Youth Palace",
+        "coordinate": {
+            "latitude": 41.6977,
+            "longitude": 44.7994
+        }
+    },
+    {
+        "id": 297,
+        "title": "20% off on Tbilisi's Museums",
+        "discount": 20,
+        "organization": "Union of Tbilisi Museums",
+        "coordinate": {
+            "latitude": 41.6953,
+            "longitude": 44.8019
+        }
+    },
+    {
+        "id": 295,
+        "title": "20% Off on Theatre Performances",
+        "discount": 20,
+        "organization":
+            "Sandro Mrevlishvili Tbilisi Municipal Professional Theatre",
+        "coordinate": {
+            "latitude": 41.72,
+            "longitude": 44.792
+        }
+    },
+    {
+        "id": 293,
+        "title": "20% off on Contemporary Ballet Performances",
+        "discount": 20,
+        "organization": "Tbilisi Ballet",
+        "coordinate": {
+            "latitude": 41.716,
+            "longitude": 44.781
+        }
+    },
+    {
+        "id": 291,
+        "title": "20% Off on Fitness and Swimming",
+        "discount": 20,
+        "organization": "Isani-Samgori Complex Sports Center",
+        "coordinate": {
+            "latitude": 41.686,
+            "longitude": 44.864
+        }
+    },
+    {
+        "id": 287,
+        "title": "20% off on Gymnastics Training",
+        "discount": 20,
+        "organization": "Gymnastics Development Sports Center",
+        "coordinate": {
+            "latitude": 41.699,
+            "longitude": 44.845
+        }
+    }
+]

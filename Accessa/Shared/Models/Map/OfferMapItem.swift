@@ -18,3 +18,16 @@ struct OfferMapItem: Identifiable {
         return "-\(discount)%"
     }
 }
+
+extension OfferMapItem {
+    init(offer: Offer) {
+        self.id = offer.id
+        self.title = offer.title
+        self.discount = offer.discount
+        self.organization = offer.organization
+        self.coordinate = CLLocationCoordinate2D(
+            latitude: offer.coordinate.latitude,
+            longitude: offer.coordinate.longitude
+        )
+    }
+}

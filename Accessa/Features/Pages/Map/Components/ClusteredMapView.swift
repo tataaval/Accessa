@@ -17,11 +17,11 @@ struct ClusteredMapView: UIViewRepresentable {
         let map = MKMapView()
         context.coordinator.mapView = map
         map.delegate = context.coordinator
-        map.showsUserLocation = true
-        map.userTrackingMode = .follow
 
         map.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "offerPin")
         map.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
+
+        context.coordinator.requestLocationPermission()
 
         return map
     }
@@ -44,7 +44,6 @@ struct ClusteredMapView: UIViewRepresentable {
     }
 
     class Coordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
-
         weak var mapView: MKMapView?
         private let locationManager = CLLocationManager()
         private let onOfferTap: ((OfferMapItem) -> Void)?
@@ -55,29 +54,33 @@ struct ClusteredMapView: UIViewRepresentable {
         init(onOfferTap: ((OfferMapItem) -> Void)?) {
             self.onOfferTap = onOfferTap
             super.init()
-
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            print("Requesting location permission")
-            locationManager.requestWhenInUseAuthorization()
         }
 
-        func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-            switch manager.authorizationStatus {
+        func requestLocationPermission() {
+            let status = locationManager.authorizationStatus
+
+            switch status {
+            case .notDetermined:
+                print("Requesting location permission")
+                locationManager.requestWhenInUseAuthorization()
+
             case .authorizedWhenInUse, .authorizedAlways:
                 mapView?.showsUserLocation = true
                 mapView?.userTrackingMode = .follow
-                manager.startUpdatingLocation()
+                locationManager.startUpdatingLocation()
 
             case .denied, .restricted:
                 mapView?.showsUserLocation = false
 
-            case .notDetermined:
-                manager.requestWhenInUseAuthorization()
-
             @unknown default:
                 break
             }
+        }
+
+        func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+            requestLocationPermission()
         }
 
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

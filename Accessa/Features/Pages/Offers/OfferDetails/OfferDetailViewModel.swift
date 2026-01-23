@@ -9,7 +9,6 @@ import Combine
 import Foundation
 
 final class OfferDetailViewModel: ObservableObject {
-
     // MARK: - Published Properties
     @Published var offer: OfferDetailModel?
     @Published var media: [MediaItem] = []
