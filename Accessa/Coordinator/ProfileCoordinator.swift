@@ -18,45 +18,36 @@ final class ProfileCoordinator: Coordinator, ProfileRouter {
 
     var childCoordinators: [Coordinator] = []
     private let navigationController: UINavigationController
+    private let container: AppContainer
     private let sessionService: SessionServiceProtocol
-    private let profileService: ProfileServiceProtocol
-    private let validationService: ValidationServiceProtocol
 
     var onLogout: (() -> Void)?
 
     init(
         navigationController: UINavigationController,
-        sessionService: SessionServiceProtocol,
-        profileService: ProfileServiceProtocol,
-        validationService: ValidationServiceProtocol
+        container: AppContainer
     ) {
         self.navigationController = navigationController
-        self.sessionService = sessionService
-        self.profileService = profileService
-        self.validationService = validationService
+        self.container = container
+        
+        self.sessionService = container.container.resolve(SessionServiceProtocol.self)
     }
 
     func start() {
-        let viewModel = ProfileViewModel(profileService: profileService)
+        let viewModel = container.container.resolve(ProfileViewModel.self)
         let view = ProfileView(viewModel: viewModel, router: self)
         let vc = UIHostingController(rootView: view)
         navigationController.setViewControllers([vc], animated: false)
     }
 
     func editProfile() {
-        let viewModel = EditProfileViewModel(
-            profileService: profileService,
-            validationService: validationService
-        )
+        let viewModel = container.container.resolve(EditProfileViewModel.self)
         let view = EditProfileView(viewModel: viewModel)
         push(view)
     }
 
     func changePassword() {
-        let viewModel = ChangePasswordViewModel(
-            profileService: profileService,
-            validationService: validationService
-        )
+        let viewModel = container.container.resolve(ChangePasswordViewModel.self)
         let view = ChangePasswordView(viewModel: viewModel)
         push(view)
     }

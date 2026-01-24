@@ -78,9 +78,7 @@ final class ProfileContainerCoordinator: Coordinator {
     private func showProfileFlow() {
         let profile = ProfileCoordinator(
             navigationController: navigationController,
-            sessionService: sessionService,
-            profileService: profileService,
-            validationService: validationService
+            container: container
 
         )
 
