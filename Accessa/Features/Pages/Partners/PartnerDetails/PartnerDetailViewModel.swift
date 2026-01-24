@@ -27,7 +27,7 @@ final class PartnerDetailViewModel: ObservableObject {
     init(
         organizationPageId: Int,
         organizationItemId: Int,
-        partnerDetailService: PartnerDetailServiceProtocol = PartnerDetailService()
+        partnerDetailService: PartnerDetailServiceProtocol
     ) {
         self.organizationPageId = organizationPageId
         self.organizationItemId = organizationItemId

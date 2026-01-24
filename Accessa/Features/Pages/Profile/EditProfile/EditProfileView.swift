@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditProfileView: View {
     //MARK: StateObject
-    @StateObject private var viewModel: EditProfileViewModel = EditProfileViewModel()
+    @StateObject var viewModel: EditProfileViewModel
 
     //MARK: Body
     var body: some View {

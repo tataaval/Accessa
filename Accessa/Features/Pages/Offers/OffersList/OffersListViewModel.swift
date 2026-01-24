@@ -33,7 +33,7 @@ final class OffersListViewModel: ObservableObject {
     }
 
     // MARK: - Init
-    init(offersService: OffersServiceProtocol = OffersService()) {
+    init(offersService: OffersServiceProtocol) {
         self.offersService = offersService
         bindSearch()
     }

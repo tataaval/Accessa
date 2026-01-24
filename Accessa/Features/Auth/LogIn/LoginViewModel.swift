@@ -38,8 +38,8 @@ final class LoginViewModel: LoginViewModelType {
 
     // MARK: - Init
     init(
-        validationService: ValidationServiceProtocol = ValidationService(),
-        authService: AuthServiceProtocol = AuthService(),
+        validationService: ValidationServiceProtocol,
+        authService: AuthServiceProtocol,
         sessionService: SessionServiceProtocol
     ) {
         self.validationService = validationService

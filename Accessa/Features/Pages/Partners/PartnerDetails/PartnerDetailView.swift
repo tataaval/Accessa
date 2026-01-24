@@ -9,21 +9,10 @@ import SwiftUI
 
 struct PartnerDetailView: View {
     //MARK: - StateObject
-    @StateObject private var viewModel: PartnerDetailViewModel
+    @StateObject var viewModel: PartnerDetailViewModel
 
     // MARK: - Properties
     let router: OfferRouting
-
-    //MARK: - Init
-    init(organizationPageId: Int, organizationItemId: Int, router: OfferRouting) {
-        self.router = router
-        _viewModel = StateObject(
-            wrappedValue: PartnerDetailViewModel(
-                organizationPageId: organizationPageId,
-                organizationItemId: organizationItemId
-            )
-        )
-    }
 
     //MARK: - Body
     var body: some View {

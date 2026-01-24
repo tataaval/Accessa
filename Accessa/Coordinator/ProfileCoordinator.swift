@@ -5,9 +5,8 @@
 //  Created by Tatarella on 03.01.26.
 //
 
-
-import UIKit
 import SwiftUI
+import UIKit
 
 protocol ProfileRouter {
     func editProfile()
@@ -20,29 +19,46 @@ final class ProfileCoordinator: Coordinator, ProfileRouter {
     var childCoordinators: [Coordinator] = []
     private let navigationController: UINavigationController
     private let sessionService: SessionServiceProtocol
+    private let profileService: ProfileServiceProtocol
+    private let validationService: ValidationServiceProtocol
 
     var onLogout: (() -> Void)?
 
     init(
         navigationController: UINavigationController,
-        sessionService: SessionServiceProtocol
+        sessionService: SessionServiceProtocol,
+        profileService: ProfileServiceProtocol,
+        validationService: ValidationServiceProtocol
     ) {
         self.navigationController = navigationController
         self.sessionService = sessionService
+        self.profileService = profileService
+        self.validationService = validationService
     }
 
     func start() {
-        let view = ProfileView(router: self)
+        let viewModel = ProfileViewModel(profileService: profileService)
+        let view = ProfileView(viewModel: viewModel, router: self)
         let vc = UIHostingController(rootView: view)
         navigationController.setViewControllers([vc], animated: false)
     }
 
     func editProfile() {
-        push(EditProfileView())
+        let viewModel = EditProfileViewModel(
+            profileService: profileService,
+            validationService: validationService
+        )
+        let view = EditProfileView(viewModel: viewModel)
+        push(view)
     }
 
     func changePassword() {
-        push(ChangePasswordView())
+        let viewModel = ChangePasswordViewModel(
+            profileService: profileService,
+            validationService: validationService
+        )
+        let view = ChangePasswordView(viewModel: viewModel)
+        push(view)
     }
 
     func logout() {
@@ -57,4 +73,3 @@ final class ProfileCoordinator: Coordinator, ProfileRouter {
         )
     }
 }
-

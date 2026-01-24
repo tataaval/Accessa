@@ -9,13 +9,9 @@ import SwiftUI
 
 struct HomeView: View {
     //MARK: - Properties
-    @StateObject private var viewModel: HomeViewModel = HomeViewModel()
+    @StateObject var viewModel: HomeViewModel
+    
     let router: HomeRouter
-
-    //MARK: - Init
-    init(router: HomeRouter) {
-        self.router = router
-    }
 
     //MARK: - Body
     var body: some View {

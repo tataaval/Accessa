@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     // MARK: - StateObject
-    @StateObject private var viewModel: ProfileViewModel = ProfileViewModel()
+    @StateObject var viewModel: ProfileViewModel
 
     //MARK: - properties
     @State private var showDeleteAlert = false

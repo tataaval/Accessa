@@ -31,7 +31,7 @@ final class PartnerListViewModel: ObservableObject {
     }
 
     // MARK: - Init
-    init(partnerService: PartnerServiceProtocol = PartnerService()) {
+    init(partnerService: PartnerServiceProtocol) {
         self.partnerService = partnerService
         bindSearch()
     }

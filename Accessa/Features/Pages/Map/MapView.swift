@@ -10,7 +10,7 @@ import SwiftUI
 struct MapView: View {
 
     //MARK: - State object
-    @StateObject private var viewModel = MapViewModel()
+    @StateObject var viewModel: MapViewModel 
 
     //MARK: - properties
     @State private var selectedOffer: OfferMapItem? = nil

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChangePasswordView: View {
     //MARK: StateObject
-    @StateObject private var viewModel: ChangePasswordViewModel = ChangePasswordViewModel()
+    @StateObject var viewModel: ChangePasswordViewModel
 
     @Environment(\.dismiss) private var dismiss
 

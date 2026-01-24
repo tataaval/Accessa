@@ -13,13 +13,19 @@ final class ProfileContainerCoordinator: Coordinator {
 
     private let navigationController: UINavigationController
     private let sessionService: SessionServiceProtocol
+    private let profileService: ProfileServiceProtocol
+    private let validationService: ValidationServiceProtocol
 
     init(
         navigationController: UINavigationController,
-        sessionService: SessionServiceProtocol
+        sessionService: SessionServiceProtocol,
+        profileService: ProfileServiceProtocol = ProfileService(),
+        validationService: ValidationServiceProtocol = ValidationService()
     ) {
         self.navigationController = navigationController
         self.sessionService = sessionService
+        self.profileService = profileService
+        self.validationService = validationService
 
         NotificationCenter.default.addObserver(
             self,
@@ -61,7 +67,10 @@ final class ProfileContainerCoordinator: Coordinator {
     private func showProfileFlow() {
         let profile = ProfileCoordinator(
             navigationController: navigationController,
-            sessionService: sessionService
+            sessionService: sessionService,
+            profileService: profileService,
+            validationService: validationService
+            
         )
 
         profile.onLogout = { [weak self] in

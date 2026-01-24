@@ -37,8 +37,8 @@ final class ForgotPasswordViewModel: ForgotPasswordViewModelType {
 
     // MARK: - Init
     init(
-        validationService: ValidationServiceProtocol = ValidationService(),
-        authService: AuthServiceProtocol = AuthService()
+        validationService: ValidationServiceProtocol,
+        authService: AuthServiceProtocol
     ) {
         self.validationService = validationService
         self.authService = authService

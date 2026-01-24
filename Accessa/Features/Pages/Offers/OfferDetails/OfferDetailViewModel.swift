@@ -22,7 +22,7 @@ final class OfferDetailViewModel: ObservableObject {
     private let offerDetailService: OfferDetailServiceProtocol
 
     // MARK: - Init
-    init(offerId: Int, offerDetailService: OfferDetailServiceProtocol = OfferDetailService()) {
+    init(offerId: Int, offerDetailService: OfferDetailServiceProtocol) {
         self.offerId = offerId
         self.offerDetailService = offerDetailService
     }

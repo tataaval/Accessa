@@ -9,16 +9,7 @@ import SwiftUI
 
 struct OfferDetailView: View {
     //MARK: - StateObject
-    @StateObject private var viewModel: OfferDetailViewModel
-
-    //MARK: - Init
-    init(offerId: Int) {
-        _viewModel = StateObject(
-            wrappedValue: OfferDetailViewModel(
-                offerId: offerId
-            )
-        )
-    }
+    @StateObject var viewModel: OfferDetailViewModel
 
     //MARK: - Body
     var body: some View {

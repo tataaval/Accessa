@@ -19,7 +19,7 @@ final class ProfileViewModel: ObservableObject {
     private let profileService: ProfileServiceProtocol
 
     // MARK: - Init
-    init(profileService: ProfileServiceProtocol = ProfileService()) {
+    init(profileService: ProfileServiceProtocol) {
         self.profileService = profileService
     }
 

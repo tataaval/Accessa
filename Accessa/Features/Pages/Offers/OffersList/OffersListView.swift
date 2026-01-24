@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OffersListView: View {
     // MARK: - StateObject
-    @StateObject private var viewModel = OffersListViewModel()
+    @StateObject var viewModel: OffersListViewModel
 
     // MARK: - Properties
     let router: OfferRouting

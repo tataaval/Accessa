@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PartnerListView: View {
     // MARK: - StateObject
-    @StateObject private var viewModel = PartnerListViewModel()
+    @StateObject var viewModel: PartnerListViewModel
 
     // MARK: - Properties
     let router: PartnersRouter

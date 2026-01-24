@@ -32,8 +32,8 @@ final class EditProfileViewModel: ObservableObject {
 
     // MARK: - Init
     init(
-        profileService: ProfileServiceProtocol = ProfileService(),
-        validationService: ValidationServiceProtocol = ValidationService()
+        profileService: ProfileServiceProtocol,
+        validationService: ValidationServiceProtocol
     ) {
         self.profileService = profileService
         self.validationService = validationService
