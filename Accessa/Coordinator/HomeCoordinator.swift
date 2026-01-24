@@ -17,47 +17,34 @@ final class HomeCoordinator: Coordinator, HomeRouter, OfferRouting {
 
     var childCoordinators: [Coordinator] = []
     private let navigationController: UINavigationController
-    private let homeService: HomeServiceProtocol
-    private let offerDetailService: OfferDetailServiceProtocol
-    private let partnerDetailService: PartnerDetailServiceProtocol
+    private let container: AppContainer
 
     init(
         navigationController: UINavigationController,
-        homeService: HomeServiceProtocol = HomeService(),
-        offerDetailService: OfferDetailServiceProtocol = OfferDetailService(),
-        partnerDetailService: PartnerDetailServiceProtocol =
-            PartnerDetailService()
+        container: AppContainer
     ) {
         self.navigationController = navigationController
-        self.homeService = homeService
-        self.offerDetailService = offerDetailService
-        self.partnerDetailService = partnerDetailService
+        self.container = container
     }
 
     func start() {
-        let viewModel = HomeViewModel(homeService: homeService)
+        let viewModel = container.dependencies.resolve(HomeViewModel.self)
         let view = HomeView(viewModel: viewModel, router: self)
         let vc = UIHostingController(rootView: view)
         navigationController.setViewControllers([vc], animated: false)
     }
 
     func openOffer(id: Int) {
-        let viewModel = OfferDetailViewModel(
-            offerId: id,
-            offerDetailService: offerDetailService
-        )
+        let viewModel = container.makeOfferDetailViewModel(id: id)
         let view = OfferDetailView(viewModel: viewModel)
         push(view)
     }
 
     func openOrganization(organizationPageId: Int, organizationItemId: Int) {
-
-        let viewModel = PartnerDetailViewModel(
+        let viewModel = container.makePartnerDetailViewModel(
             organizationPageId: organizationPageId,
-            organizationItemId: organizationItemId,
-            partnerDetailService: partnerDetailService
+            organizationItemId: organizationItemId
         )
-
         let view = PartnerDetailView(
             viewModel: viewModel,
             router: self

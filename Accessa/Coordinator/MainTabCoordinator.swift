@@ -31,7 +31,7 @@ final class MainTabCoordinator: Coordinator {
 
     private func makeHome() -> UIViewController {
         let navigationContoller = UINavigationController()
-        let coordinator = HomeCoordinator(navigationController: navigationContoller)
+        let coordinator = HomeCoordinator(navigationController: navigationContoller, container: container)
         childCoordinators.append(coordinator)
         coordinator.start()
 

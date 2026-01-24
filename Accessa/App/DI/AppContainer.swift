@@ -34,6 +34,19 @@ final class AppContainer {
         dependencies.register(ProfileServiceProtocol.self) {
             ProfileService()
         }
+
+        dependencies.register(HomeServiceProtocol.self) {
+            HomeService()
+        }
+
+        dependencies.register(OfferDetailServiceProtocol.self) {
+            OfferDetailService()
+        }
+
+        dependencies.register(PartnerDetailServiceProtocol.self) {
+            PartnerDetailService()
+        }
+
     }
 
     // MARK: - ViewModels
@@ -45,7 +58,9 @@ final class AppContainer {
                 validationService: self.dependencies.resolve(
                     ValidationServiceProtocol.self
                 ),
-                authService: self.dependencies.resolve(AuthServiceProtocol.self),
+                authService: self.dependencies.resolve(
+                    AuthServiceProtocol.self
+                ),
                 sessionService: self.dependencies.resolve(
                     SessionServiceProtocol.self
                 )
@@ -100,5 +115,37 @@ final class AppContainer {
                 )
             )
         }
+
+        // MARK: - Home
+        dependencies.register(HomeViewModel.self) {
+            HomeViewModel(
+                homeService: self.dependencies.resolve(HomeServiceProtocol.self)
+            )
+        }
+
+    }
+}
+
+extension AppContainer {
+    func makeOfferDetailViewModel(id: Int) -> OfferDetailViewModel {
+        OfferDetailViewModel(
+            offerId: id,
+            offerDetailService: dependencies.resolve(
+                OfferDetailServiceProtocol.self
+            )
+        )
+    }
+
+    func makePartnerDetailViewModel(
+        organizationPageId: Int,
+        organizationItemId: Int
+    ) -> PartnerDetailViewModel {
+        PartnerDetailViewModel(
+            organizationPageId: organizationPageId,
+            organizationItemId: organizationItemId,
+            partnerDetailService: dependencies.resolve(
+                PartnerDetailServiceProtocol.self
+            )
+        )
     }
 }
