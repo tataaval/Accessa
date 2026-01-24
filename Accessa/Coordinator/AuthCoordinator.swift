@@ -11,22 +11,16 @@ final class AuthCoordinator: Coordinator {
 
     var childCoordinators: [Coordinator] = []
     private let navigationController: UINavigationController
-    private let sessionService: SessionServiceProtocol
-    private let validationService: ValidationServiceProtocol
-    private let authService: AuthServiceProtocol
+    private let container: AppContainer
 
     var onAuthSuccess: (() -> Void)?
 
     init(
         navigationController: UINavigationController,
-        sessionService: SessionServiceProtocol,
-        validationService: ValidationServiceProtocol = ValidationService(),
-        authService: AuthServiceProtocol = AuthService()
+        container: AppContainer
     ) {
         self.navigationController = navigationController
-        self.sessionService = sessionService
-        self.validationService = validationService
-        self.authService = authService
+        self.container = container
     }
 
     func start() {
@@ -34,11 +28,7 @@ final class AuthCoordinator: Coordinator {
     }
 
     private func showLogin() {
-        let viewModel = LoginViewModel(
-            validationService: validationService,
-            authService: authService,
-            sessionService: sessionService
-        )
+        let viewModel = container.container.resolve(LoginViewModel.self)
 
         let vc = LoginViewController(viewModel: viewModel)
         vc.onLoginSuccess = { [weak self] in
@@ -57,10 +47,7 @@ final class AuthCoordinator: Coordinator {
     }
 
     private func showRegister() {
-        let viewModel = RegisterViewModel(
-            validationService: validationService,
-            authService: authService
-        )
+        let viewModel = container.container.resolve(RegisterViewModel.self)
         navigationController.pushViewController(
             RegisterViewController(viewModel: viewModel),
             animated: true
@@ -68,10 +55,7 @@ final class AuthCoordinator: Coordinator {
     }
 
     private func showForgot() {
-        let viewModel = ForgotPasswordViewModel(
-            validationService: validationService,
-            authService: authService
-        )
+        let viewModel = container.container.resolve(ForgotPasswordViewModel.self)
         navigationController.pushViewController(
             ForgotPasswordViewController(viewModel: viewModel),
             animated: true

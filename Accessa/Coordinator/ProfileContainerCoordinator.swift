@@ -64,7 +64,7 @@ final class ProfileContainerCoordinator: Coordinator {
     private func showAuthFlow() {
         let auth = AuthCoordinator(
             navigationController: navigationController,
-            sessionService: sessionService
+            container: container
         )
 
         auth.onAuthSuccess = { [weak self] in

@@ -12,14 +12,15 @@ final class AppContainer {
     private let sessionService: SessionServiceProtocol = SessionService()
 
     init() {
-        registerDependencies()
+        registerServiceDependencies()
+        registerViewModelDependencies()
     }
 
-    private func registerDependencies() {
-        // MARK: - Services
-        
-        container.register(SessionServiceProtocol.self) { [unowned self] in
-            sessionService
+    // MARK: - Services
+    private func registerServiceDependencies() {
+        container.register(SessionServiceProtocol.self) { [weak self] in
+            guard let self else { fatalError("AppContainer is deallocated") }
+            return self.sessionService
         }
 
         container.register(ValidationServiceProtocol.self) {
@@ -32,6 +33,31 @@ final class AppContainer {
         
         container.register(ProfileServiceProtocol.self) {
             ProfileService()
+        }
+    }
+    
+    // MARK: - ViewModels
+    private func registerViewModelDependencies() {
+        container.register(LoginViewModel.self) {
+            LoginViewModel(
+                validationService: self.container.resolve(ValidationServiceProtocol.self),
+                authService: self.container.resolve(AuthServiceProtocol.self),
+                sessionService: self.container.resolve(SessionServiceProtocol.self)
+            )
+        }
+
+        container.register(RegisterViewModel.self) {
+            RegisterViewModel(
+                validationService: self.container.resolve(ValidationServiceProtocol.self),
+                authService: self.container.resolve(AuthServiceProtocol.self)
+            )
+        }
+
+        container.register(ForgotPasswordViewModel.self) {
+            ForgotPasswordViewModel(
+                validationService: self.container.resolve(ValidationServiceProtocol.self),
+                authService: self.container.resolve(AuthServiceProtocol.self)
+            )
         }
     }
 }
