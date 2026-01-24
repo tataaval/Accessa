@@ -28,7 +28,7 @@ final class AuthCoordinator: Coordinator {
     }
 
     private func showLogin() {
-        let viewModel = container.container.resolve(LoginViewModel.self)
+        let viewModel = container.dependencies.resolve(LoginViewModel.self)
 
         let vc = LoginViewController(viewModel: viewModel)
         vc.onLoginSuccess = { [weak self] in
@@ -47,7 +47,7 @@ final class AuthCoordinator: Coordinator {
     }
 
     private func showRegister() {
-        let viewModel = container.container.resolve(RegisterViewModel.self)
+        let viewModel = container.dependencies.resolve(RegisterViewModel.self)
         navigationController.pushViewController(
             RegisterViewController(viewModel: viewModel),
             animated: true
@@ -55,7 +55,7 @@ final class AuthCoordinator: Coordinator {
     }
 
     private func showForgot() {
-        let viewModel = container.container.resolve(ForgotPasswordViewModel.self)
+        let viewModel = container.dependencies.resolve(ForgotPasswordViewModel.self)
         navigationController.pushViewController(
             ForgotPasswordViewController(viewModel: viewModel),
             animated: true

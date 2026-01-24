@@ -15,8 +15,6 @@ final class ProfileContainerCoordinator: Coordinator {
     private let container: AppContainer
     
     private let sessionService: SessionServiceProtocol
-    private let profileService: ProfileServiceProtocol
-    private let validationService: ValidationServiceProtocol
 
     init(
         navigationController: UINavigationController,
@@ -25,14 +23,8 @@ final class ProfileContainerCoordinator: Coordinator {
         self.navigationController = navigationController
         self.container = container
 
-        self.sessionService = container.container.resolve(
+        self.sessionService = container.dependencies.resolve(
             SessionServiceProtocol.self
-        )
-        self.profileService = container.container.resolve(
-            ProfileServiceProtocol.self
-        )
-        self.validationService = container.container.resolve(
-            ValidationServiceProtocol.self
         )
 
         NotificationCenter.default.addObserver(

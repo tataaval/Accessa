@@ -7,7 +7,7 @@
 
 final class AppContainer {
 
-    let container = DependencyContainer()
+    let dependencies = DependencyContainer()
 
     private let sessionService: SessionServiceProtocol = SessionService()
 
@@ -18,20 +18,20 @@ final class AppContainer {
 
     // MARK: - Services
     private func registerServiceDependencies() {
-        container.register(SessionServiceProtocol.self) { [weak self] in
+        dependencies.register(SessionServiceProtocol.self) { [weak self] in
             guard let self else { fatalError("AppContainer is deallocated") }
             return self.sessionService
         }
 
-        container.register(ValidationServiceProtocol.self) {
+        dependencies.register(ValidationServiceProtocol.self) {
             ValidationService()
         }
 
-        container.register(AuthServiceProtocol.self) {
+        dependencies.register(AuthServiceProtocol.self) {
             AuthService()
         }
 
-        container.register(ProfileServiceProtocol.self) {
+        dependencies.register(ProfileServiceProtocol.self) {
             ProfileService()
         }
     }
@@ -40,63 +40,62 @@ final class AppContainer {
     private func registerViewModelDependencies() {
 
         // MARK: - Auth flow
-        container.register(LoginViewModel.self) {
+        dependencies.register(LoginViewModel.self) {
             LoginViewModel(
-                validationService: self.container.resolve(
+                validationService: self.dependencies.resolve(
                     ValidationServiceProtocol.self
                 ),
-                authService: self.container.resolve(AuthServiceProtocol.self),
-                sessionService: self.container.resolve(
+                authService: self.dependencies.resolve(AuthServiceProtocol.self),
+                sessionService: self.dependencies.resolve(
                     SessionServiceProtocol.self
                 )
             )
         }
 
-        container.register(RegisterViewModel.self) {
+        dependencies.register(RegisterViewModel.self) {
             RegisterViewModel(
-                validationService: self.container.resolve(
+                validationService: self.dependencies.resolve(
                     ValidationServiceProtocol.self
                 ),
-                authService: self.container.resolve(AuthServiceProtocol.self)
+                authService: self.dependencies.resolve(AuthServiceProtocol.self)
             )
         }
 
-        container.register(ForgotPasswordViewModel.self) {
+        dependencies.register(ForgotPasswordViewModel.self) {
             ForgotPasswordViewModel(
-                validationService: self.container.resolve(
+                validationService: self.dependencies.resolve(
                     ValidationServiceProtocol.self
                 ),
-                authService: self.container.resolve(AuthServiceProtocol.self)
+                authService: self.dependencies.resolve(AuthServiceProtocol.self)
             )
         }
 
         // MARK: - Profile
-
-        container.register(ProfileViewModel.self) {
+        dependencies.register(ProfileViewModel.self) {
             ProfileViewModel(
-                profileService: self.container.resolve(
+                profileService: self.dependencies.resolve(
                     ProfileServiceProtocol.self
                 )
             )
         }
 
-        container.register(EditProfileViewModel.self) {
+        dependencies.register(EditProfileViewModel.self) {
             EditProfileViewModel(
-                profileService: self.container.resolve(
+                profileService: self.dependencies.resolve(
                     ProfileServiceProtocol.self
                 ),
-                validationService: self.container.resolve(
+                validationService: self.dependencies.resolve(
                     ValidationServiceProtocol.self
                 )
             )
         }
 
-        container.register(ChangePasswordViewModel.self) {
+        dependencies.register(ChangePasswordViewModel.self) {
             ChangePasswordViewModel(
-                profileService: self.container.resolve(
+                profileService: self.dependencies.resolve(
                     ProfileServiceProtocol.self
                 ),
-                validationService: self.container.resolve(
+                validationService: self.dependencies.resolve(
                     ValidationServiceProtocol.self
                 )
             )

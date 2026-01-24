@@ -30,24 +30,24 @@ final class ProfileCoordinator: Coordinator, ProfileRouter {
         self.navigationController = navigationController
         self.container = container
         
-        self.sessionService = container.container.resolve(SessionServiceProtocol.self)
+        self.sessionService = container.dependencies.resolve(SessionServiceProtocol.self)
     }
 
     func start() {
-        let viewModel = container.container.resolve(ProfileViewModel.self)
+        let viewModel = container.dependencies.resolve(ProfileViewModel.self)
         let view = ProfileView(viewModel: viewModel, router: self)
         let vc = UIHostingController(rootView: view)
         navigationController.setViewControllers([vc], animated: false)
     }
 
     func editProfile() {
-        let viewModel = container.container.resolve(EditProfileViewModel.self)
+        let viewModel = container.dependencies.resolve(EditProfileViewModel.self)
         let view = EditProfileView(viewModel: viewModel)
         push(view)
     }
 
     func changePassword() {
-        let viewModel = container.container.resolve(ChangePasswordViewModel.self)
+        let viewModel = container.dependencies.resolve(ChangePasswordViewModel.self)
         let view = ChangePasswordView(viewModel: viewModel)
         push(view)
     }
