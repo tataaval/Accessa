@@ -12,20 +12,28 @@ final class ProfileContainerCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
 
     private let navigationController: UINavigationController
+    private let container: AppContainer
+    
     private let sessionService: SessionServiceProtocol
     private let profileService: ProfileServiceProtocol
     private let validationService: ValidationServiceProtocol
 
     init(
         navigationController: UINavigationController,
-        sessionService: SessionServiceProtocol,
-        profileService: ProfileServiceProtocol = ProfileService(),
-        validationService: ValidationServiceProtocol = ValidationService()
+        container: AppContainer
     ) {
         self.navigationController = navigationController
-        self.sessionService = sessionService
-        self.profileService = profileService
-        self.validationService = validationService
+        self.container = container
+
+        self.sessionService = container.container.resolve(
+            SessionServiceProtocol.self
+        )
+        self.profileService = container.container.resolve(
+            ProfileServiceProtocol.self
+        )
+        self.validationService = container.container.resolve(
+            ValidationServiceProtocol.self
+        )
 
         NotificationCenter.default.addObserver(
             self,
@@ -33,6 +41,10 @@ final class ProfileContainerCoordinator: Coordinator {
             name: .unauthorized,
             object: nil
         )
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     func start() {
@@ -58,7 +70,6 @@ final class ProfileContainerCoordinator: Coordinator {
         auth.onAuthSuccess = { [weak self] in
             self?.showProfileFlow()
         }
-        
 
         childCoordinators = [auth]
         auth.start()
@@ -70,7 +81,7 @@ final class ProfileContainerCoordinator: Coordinator {
             sessionService: sessionService,
             profileService: profileService,
             validationService: validationService
-            
+
         )
 
         profile.onLogout = { [weak self] in

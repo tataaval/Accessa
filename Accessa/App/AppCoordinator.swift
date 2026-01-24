@@ -10,19 +10,12 @@ import UIKit
 final class AppCoordinator {
 
     private let window: UIWindow
-    private let sessionService: SessionServiceProtocol
+    private let container: AppContainer
     private var childCoordinators: [Coordinator] = []
 
-    init(
-        window: UIWindow,
-        sessionService: SessionServiceProtocol = SessionService()
-    ) {
+    init(window: UIWindow, container: AppContainer) {
         self.window = window
-        self.sessionService = sessionService
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+        self.container = container
     }
 
     func start() {
@@ -31,7 +24,7 @@ final class AppCoordinator {
     }
 
     func showMain() {
-        let main = MainTabCoordinator(appCoordinator: self, sessionService: sessionService)
+        let main = MainTabCoordinator(appCoordinator: self, container: container)
         childCoordinators = [main]
         main.start()
         window.rootViewController = main.tabBarController

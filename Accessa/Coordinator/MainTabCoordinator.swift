@@ -12,11 +12,11 @@ final class MainTabCoordinator: Coordinator {
     let tabBarController = UITabBarController()
     var childCoordinators: [Coordinator] = []
     private weak var appCoordinator: AppCoordinator?
-    private let sessionService: SessionServiceProtocol
+    private let container: AppContainer
 
-    init(appCoordinator: AppCoordinator, sessionService: SessionServiceProtocol) {
+    init(appCoordinator: AppCoordinator, container: AppContainer) {
         self.appCoordinator = appCoordinator
-        self.sessionService = sessionService
+        self.container = container
     }
 
     func start() {
@@ -65,17 +65,17 @@ final class MainTabCoordinator: Coordinator {
         childCoordinators.append(coordinator)
         coordinator.start()
 
-        navigationContoller.tabBarItem = UITabBarItem(title: "Partners", image: UIImage(systemName: "building.2"), tag: 2)
+        navigationContoller.tabBarItem = UITabBarItem(title: "Partners", image: UIImage(systemName: "building.2"), tag: 3)
         return navigationContoller
     }
 
     private func makeProfile() -> UIViewController {
         let navigationContoller = UINavigationController()
-        let coordinator = ProfileContainerCoordinator(navigationController: navigationContoller, sessionService: sessionService)
+        let coordinator = ProfileContainerCoordinator(navigationController: navigationContoller, container: container)
         childCoordinators.append(coordinator)
         coordinator.start()
 
-        navigationContoller.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 2)
+        navigationContoller.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 4)
         return navigationContoller
     }
 }
