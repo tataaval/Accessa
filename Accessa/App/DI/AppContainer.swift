@@ -39,8 +39,16 @@ final class AppContainer {
             HomeService()
         }
 
+        dependencies.register(OffersServiceProtocol.self) {
+            OffersService()
+        }
+
         dependencies.register(OfferDetailServiceProtocol.self) {
             OfferDetailService()
+        }
+
+        dependencies.register(PartnerServiceProtocol.self) {
+            PartnerService()
         }
 
         dependencies.register(PartnerDetailServiceProtocol.self) {
@@ -121,6 +129,29 @@ final class AppContainer {
             HomeViewModel(
                 homeService: self.dependencies.resolve(HomeServiceProtocol.self)
             )
+        }
+
+        // MARK: - Offers
+        dependencies.register(OffersListViewModel.self) {
+            OffersListViewModel(
+                offersService: self.dependencies.resolve(
+                    OffersServiceProtocol.self
+                )
+            )
+        }
+
+        // MARK: - Partners
+        dependencies.register(PartnerListViewModel.self) {
+            PartnerListViewModel(
+                partnerService: self.dependencies.resolve(
+                    PartnerServiceProtocol.self
+                ),
+            )
+        }
+
+        // MARK: - Map
+        dependencies.register(MapViewModel.self) {
+            MapViewModel()
         }
 
     }

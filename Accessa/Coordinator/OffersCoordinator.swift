@@ -16,32 +16,26 @@ final class OffersCoordinator: Coordinator, OfferRouting {
     var childCoordinators: [Coordinator] = []
 
     private let navigationController: UINavigationController
-    private let offersService: OffersServiceProtocol
-    private let offerDetailService: OfferDetailServiceProtocol
+    private let container: AppContainer
 
     init(
         navigationController: UINavigationController,
-        offersService: OffersServiceProtocol = OffersService(),
-        offerDetailService: OfferDetailServiceProtocol = OfferDetailService()
+        container: AppContainer
     ) {
         self.navigationController = navigationController
-        self.offersService = offersService
-        self.offerDetailService = offerDetailService
+        self.container = container
     }
 
     func start() {
-        let viewModel = OffersListViewModel(offersService: offersService)
+        let viewModel = container.dependencies.resolve(OffersListViewModel.self)
         let view = OffersListView(viewModel: viewModel, router: self)
         let vc = UIHostingController(rootView: view)
         navigationController.setViewControllers([vc], animated: false)
     }
 
     func openOffer(id: Int) {
-        let detailViewModel = OfferDetailViewModel(
-            offerId: id,
-            offerDetailService: offerDetailService
-        )
-        let detailView = OfferDetailView(viewModel: detailViewModel)
+        let viewModel = container.makeOfferDetailViewModel(id: id)
+        let detailView = OfferDetailView(viewModel: viewModel)
         let vc = UIHostingController(rootView: detailView)
         navigationController.pushViewController(vc, animated: true)
     }

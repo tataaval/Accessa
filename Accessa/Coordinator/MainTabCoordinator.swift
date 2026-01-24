@@ -41,7 +41,7 @@ final class MainTabCoordinator: Coordinator {
 
     private func makeOffers() -> UIViewController {
         let navigationContoller = UINavigationController()
-        let coordinator = OffersCoordinator(navigationController: navigationContoller)
+        let coordinator = OffersCoordinator(navigationController: navigationContoller, container: container)
         childCoordinators.append(coordinator)
         coordinator.start()
 
@@ -51,7 +51,7 @@ final class MainTabCoordinator: Coordinator {
 
     private func makeMap() -> UIViewController {
         let navigationContoller = UINavigationController()
-        let coordinator = MapCoordinator(navigationController: navigationContoller)
+        let coordinator = MapCoordinator(navigationController: navigationContoller, container: container)
         childCoordinators.append(coordinator)
         coordinator.start()
 
@@ -61,7 +61,7 @@ final class MainTabCoordinator: Coordinator {
 
     private func makePartners() -> UIViewController {
         let navigationContoller = UINavigationController()
-        let coordinator = PartnersCoordinator(navigationController: navigationContoller)
+        let coordinator = PartnersCoordinator(navigationController: navigationContoller, container: container)
         childCoordinators.append(coordinator)
         coordinator.start()
 

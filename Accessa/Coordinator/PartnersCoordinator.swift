@@ -1,5 +1,5 @@
 //
-//  PartnersRouter.swift
+//  PartnersCoordinator.swift
 //  Accessa
 //
 //  Created by Tatarella on 13.01.26.
@@ -16,37 +16,25 @@ protocol PartnersRouter {
 final class PartnersCoordinator: Coordinator, PartnersRouter, OfferRouting {
     var childCoordinators: [Coordinator] = []
     private let navigationController: UINavigationController
-    private let partnerService: PartnerServiceProtocol
-    private let partnerDetailService: PartnerDetailServiceProtocol
-    private let offerDetailService: OfferDetailServiceProtocol
+    private let container: AppContainer
 
     init(
         navigationController: UINavigationController,
-        partnerService: PartnerServiceProtocol = PartnerService(),
-        partnerDetailService: PartnerDetailServiceProtocol =
-            PartnerDetailService(),
-        offerDetailService: OfferDetailServiceProtocol = OfferDetailService()
+        container: AppContainer
     ) {
         self.navigationController = navigationController
-        self.partnerService = partnerService
-        self.partnerDetailService = partnerDetailService
-        self.offerDetailService = offerDetailService
+        self.container = container
     }
 
     func start() {
-        let viewModel = PartnerListViewModel(partnerService: partnerService)
+        let viewModel = container.dependencies.resolve(PartnerListViewModel.self)
         let view = PartnerListView(viewModel: viewModel, router: self)
         let vc = UIHostingController(rootView: view)
         navigationController.setViewControllers([vc], animated: false)
     }
 
     func openOrganization(organizationPageId: Int, organizationItemId: Int) {
-        let viewModel = PartnerDetailViewModel(
-            organizationPageId: organizationPageId,
-            organizationItemId: organizationItemId,
-            partnerDetailService: partnerDetailService
-        )
-
+        let viewModel = container.makePartnerDetailViewModel(organizationPageId: organizationPageId, organizationItemId: organizationItemId)
         let view = PartnerDetailView(
             viewModel: viewModel,
             router: self
@@ -59,11 +47,7 @@ final class PartnersCoordinator: Coordinator, PartnersRouter, OfferRouting {
     }
 
     func openOffer(id: Int) {
-        let viewModel = OfferDetailViewModel(
-            offerId: id,
-            offerDetailService: offerDetailService
-        )
-
+        let viewModel = container.makeOfferDetailViewModel(id: id)
         let view = OfferDetailView(viewModel: viewModel)
 
         navigationController.pushViewController(
