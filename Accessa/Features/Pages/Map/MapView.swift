@@ -82,7 +82,7 @@ struct MapView: View {
         }
         .sheet(isPresented: $showFilters) {
             MapFilterSheet(filters: $viewModel.filters)
-                .presentationDetents([.medium, .large])
+                .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
                 .preferredColorScheme(.light)
                 .presentationBackground(.white)
