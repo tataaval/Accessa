@@ -88,5 +88,4 @@ struct MapView: View {
                 .presentationBackground(.white)
         }
     }
-
 }

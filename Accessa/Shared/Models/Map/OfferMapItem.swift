@@ -13,6 +13,7 @@ struct OfferMapItem: Identifiable {
     let discount: Int
     let organization: String
     let coordinate: CLLocationCoordinate2D
+    let category: OfferCategory
 
     var discountText: String {
         return "-\(discount)%"
@@ -29,5 +30,6 @@ extension OfferMapItem {
             latitude: offer.coordinate.latitude,
             longitude: offer.coordinate.longitude
         )
+        self.category = offer.category
     }
 }

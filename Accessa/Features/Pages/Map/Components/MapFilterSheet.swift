@@ -11,6 +11,12 @@ struct MapFilterSheet: View {
     //MARK: - Properties
     @Binding var filters: MapFilters
 
+    private let categoryColumns: [GridItem] = [
+        GridItem(.flexible(), spacing: 10),
+        GridItem(.flexible(), spacing: 10),
+        GridItem(.flexible(), spacing: 10),
+    ]
+
     //MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -39,42 +45,42 @@ struct MapFilterSheet: View {
 
                 HStack(spacing: 10) {
                     ForEach(DiscountFilter.allCases) { item in
-                        let isSelected = filters.discountFilter == item
-
-                        Button {
+                        CategoryChip(
+                            title: item.rawValue,
+                            isSelected: filters.discountFilter == item
+                        ) {
                             filters.discountFilter = item
-                        } label: {
-                            Text(item.rawValue)
-                                .font(.app(size: .sm, weight: .bold))
-                                .foregroundStyle(
-                                    isSelected
-                                        ? Color.white : Color.colorGray900
-                                )
-                                .padding(.vertical, 10)
-                                .padding(.horizontal, 14)
-                                .background(
-                                    isSelected
-                                        ? Color.colorPrimary : Color.white
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 999)
-                                        .stroke(
-                                            isSelected
-                                                ? Color.clear
-                                                : Color.colorGray300,
-                                            lineWidth: 1
-                                        )
-                                )
-                                .clipShape(Capsule())
                         }
-                        .buttonStyle(.plain)
                     }
-
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Category")
+                    .font(.app(size: .base, weight: .bold))
+                    .foregroundStyle(.colorGray900)
+
+                LazyVGrid(columns: categoryColumns, spacing: 10) {
+                    CategoryChip(
+                        title: "All",
+                        isSelected: filters.category == nil
+                    ) {
+                        filters.category = nil
+                    }
+
+                    ForEach(OfferCategory.allCases) { item in
+                        CategoryChip(
+                            title: item.title,
+                            isSelected: filters.category == item
+                        ) {
+                            filters.category = item
+                        }
+                    }
+                }
+            }
 
             Spacer()
 

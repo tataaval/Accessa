@@ -9,29 +9,6 @@ import Combine
 import CoreLocation
 import Foundation
 
-enum DiscountFilter: String, CaseIterable, Identifiable {
-    case all = "All"
-    case low = "10%+"
-    case medium = "20%+"
-    case high = "50%+"
-
-    var id: String { rawValue }
-
-    func matches(discount: Int) -> Bool {
-        switch self {
-        case .all: return true
-        case .low: return discount >= 10
-        case .medium: return discount >= 20
-        case .high: return discount >= 50
-        }
-    }
-}
-
-struct MapFilters {
-    var searchText: String = ""
-    var discountFilter: DiscountFilter = .all
-}
-
 final class MapViewModel: ObservableObject {
     //MARK: - Published Properties
     @Published var offers: [OfferMapItem] = []
@@ -55,8 +32,12 @@ final class MapViewModel: ObservableObject {
                }()
 
                let matchesDiscount = filters.discountFilter.matches(discount: offer.discount)
+               let matchesCategory: Bool = {
+                   guard let selectedCategory = filters.category else { return true }
+                   return offer.category == selectedCategory
+               }()
 
-               return matchesSearch && matchesDiscount
+               return matchesSearch && matchesDiscount && matchesCategory
            }
        }
 

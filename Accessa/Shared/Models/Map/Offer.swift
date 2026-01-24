@@ -12,4 +12,5 @@ struct Offer: Codable {
     let discount: Int
     let organization: String
     let coordinate: Coordinate
+    let category: OfferCategory
 }

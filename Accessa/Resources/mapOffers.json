@@ -7,7 +7,8 @@
         "coordinate": {
             "latitude": 41.7151,
             "longitude": 44.8271
-        }
+        },
+        "category": "shopping"
     },
     {
         "id": 285,
@@ -17,17 +18,8 @@
         "coordinate": {
             "latitude": 41.7325,
             "longitude": 44.8012
-        }
-    },
-    {
-        "id": 341,
-        "title": "giorgis shetavazeba",
-        "discount": 60,
-        "organization": "giorgis kompania",
-        "coordinate": {
-            "latitude": 41.705,
-            "longitude": 44.79
-        }
+        },
+        "category": "sport"
     },
     {
         "id": 311,
@@ -37,7 +29,8 @@
         "coordinate": {
             "latitude": 41.7202,
             "longitude": 44.7834
-        }
+        },
+        "category": "travelling"
     },
     {
         "id": 307,
@@ -47,7 +40,8 @@
         "coordinate": {
             "latitude": 41.7916,
             "longitude": 44.8337
-        }
+        },
+        "category": "sport"
     },
     {
         "id": 305,
@@ -57,7 +51,8 @@
         "coordinate": {
             "latitude": 41.7269,
             "longitude": 44.7985
-        }
+        },
+        "category": "going-out"
     },
     {
         "id": 303,
@@ -67,7 +62,8 @@
         "coordinate": {
             "latitude": 41.7122,
             "longitude": 44.7831
-        }
+        },
+        "category": "sport"
     },
     {
         "id": 301,
@@ -77,7 +73,8 @@
         "coordinate": {
             "latitude": 41.7095,
             "longitude": 44.8016
-        }
+        },
+        "category": "learning"
     },
     {
         "id": 299,
@@ -87,7 +84,8 @@
         "coordinate": {
             "latitude": 41.6977,
             "longitude": 44.7994
-        }
+        },
+        "category": "learning"
     },
     {
         "id": 297,
@@ -97,7 +95,8 @@
         "coordinate": {
             "latitude": 41.6953,
             "longitude": 44.8019
-        }
+        },
+        "category": "travelling"
     },
     {
         "id": 295,
@@ -108,7 +107,8 @@
         "coordinate": {
             "latitude": 41.72,
             "longitude": 44.792
-        }
+        },
+        "category": "going-out"
     },
     {
         "id": 293,
@@ -118,7 +118,8 @@
         "coordinate": {
             "latitude": 41.716,
             "longitude": 44.781
-        }
+        },
+        "category": "going-out"
     },
     {
         "id": 291,
@@ -128,7 +129,8 @@
         "coordinate": {
             "latitude": 41.686,
             "longitude": 44.864
-        }
+        },
+        "category": "sport"
     },
     {
         "id": 287,
@@ -138,6 +140,7 @@
         "coordinate": {
             "latitude": 41.699,
             "longitude": 44.845
-        }
+        },
+        "category": "sport"
     }
 ]
