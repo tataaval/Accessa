@@ -14,6 +14,12 @@ struct ClusteredMapView: UIViewRepresentable {
     var onOfferTap: ((OfferMapItem) -> Void)? = nil
     
     @Binding var selectedOffer: OfferMapItem?
+    
+    private let defaultRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 41.7151, longitude: 44.8271),
+        latitudinalMeters: 8000,
+        longitudinalMeters: 8000
+    )
 
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
@@ -47,19 +53,21 @@ struct ClusteredMapView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(onOfferTap: onOfferTap)
+        Coordinator(onOfferTap: onOfferTap, defaultRegion: defaultRegion)
     }
 
     class Coordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
         weak var mapView: MKMapView?
         private let locationManager = CLLocationManager()
         private let onOfferTap: ((OfferMapItem) -> Void)?
+        private let defaultRegion: MKCoordinateRegion
 
         private var didCenterOnUser = false
         var lastOfferIDs: [Int] = []
 
-        init(onOfferTap: ((OfferMapItem) -> Void)?) {
+        init(onOfferTap: ((OfferMapItem) -> Void)?, defaultRegion: MKCoordinateRegion) {
             self.onOfferTap = onOfferTap
+            self.defaultRegion = defaultRegion
             super.init()
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -80,6 +88,8 @@ struct ClusteredMapView: UIViewRepresentable {
 
             case .denied, .restricted:
                 mapView?.showsUserLocation = false
+                mapView?.userTrackingMode = .none
+                mapView?.setRegion(defaultRegion, animated: true)
 
             @unknown default:
                 break
