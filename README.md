@@ -16,6 +16,19 @@ To redeem and use discounts, the user must have an **active account**.
 he project is modular, scalable, and easy to extend with new tabs, screens, and flows.
 
 ---
+## Screenshots
+<p>
+  <img src="Screenshots/log_in.png" width="220" />
+  <img src="Screenshots/home.png" width="220" />
+  <img src="Screenshots/offers_list.png" width="220" />
+  <img src="Screenshots/offer_detail.png" width="220" />
+  <img src="Screenshots/map.png" width="220" />
+  <img src="Screenshots/partners_list.png" width="220" />
+  <img src="Screenshots/partner_detail.png" width="220" />
+  <img src="Screenshots/profile.png" width="220" />
+</p>
+
+---
 
 ## Tech Stack
 
@@ -43,6 +56,16 @@ This project follows:
 --- 
 
 ## App Entry & Flow
+---
+
+### Architecture Diagrams
+
+| High-Level Flow | DI + Services + Network Flow | Unauthorized (401) Flow |
+|---|---|---|
+| <img src="Screenshots/general.png" width="300" /> | <img src="Screenshots/services_di.png" width="300" /> | <img src="Screenshots/unauthorized_flow.png" width="300" /> |
+
+
+---
 
 ### App Launch
 The app starts from `SceneDelegate` and initializes the root coordinator:
