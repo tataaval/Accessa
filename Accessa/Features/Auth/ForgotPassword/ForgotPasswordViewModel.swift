@@ -70,7 +70,6 @@ extension ForgotPasswordViewModel: ForgotPasswordViewModelInput {
                 self.output?.sendInstructionsDidFail(
                     error: error.localizedDescription
                 )
-                print(error)
             }
         }
 

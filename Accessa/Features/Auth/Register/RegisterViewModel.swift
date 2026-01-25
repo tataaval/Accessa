@@ -104,7 +104,6 @@ extension RegisterViewModel: RegisterViewModelInput {
             } catch {
                 self.output?.setLoading(false)
                 self.output?.registerDidFail(error: error.localizedDescription)
-                print(error)
             }
         }
 

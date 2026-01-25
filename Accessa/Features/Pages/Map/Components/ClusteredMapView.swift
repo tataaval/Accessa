@@ -78,7 +78,6 @@ struct ClusteredMapView: UIViewRepresentable {
 
             switch status {
             case .notDetermined:
-                print("Requesting location permission")
                 locationManager.requestWhenInUseAuthorization()
 
             case .authorizedWhenInUse, .authorizedAlways:

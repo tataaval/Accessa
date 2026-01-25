@@ -35,7 +35,6 @@ final class ProfileViewModel: ObservableObject {
 
         } catch {
             errorMessage = error.localizedDescription
-            print(error)
         }
 
         isLoading = false
