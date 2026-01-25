@@ -61,7 +61,6 @@ struct PartnerListView: View {
     }
 
     // MARK: - Helper View
-    //TODO: - ამის გაჯენერიქებაც შეიძლება ვიუბილდერით, ოფერების ლისტიც მსაგვსია
     private var resultsListView: some View {
         VStack {
             FoundResultsText(

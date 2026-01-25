@@ -12,11 +12,3 @@ protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     func start()
 }
-
-
-//TODO: sheidzleba wavshalo mere
-extension Coordinator {
-    func removeChild(_ coordinator: Coordinator) {
-        childCoordinators.removeAll { $0 === coordinator }
-    }
-}
