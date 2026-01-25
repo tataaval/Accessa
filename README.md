@@ -181,6 +181,28 @@ When `NetworkService` receives **401 Unauthorized**, it posts:
 - switches back to Auth flow inside Profile tab
 
 ---
+## Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone [https://github.com/tataaval/Accessa.git](https://github.com/tataaval/Accessa.git)
+
+2. **Open the project**
+   - Double-click `Accessa.xcodeproj`  
+   **or**
+   - Open Xcode → **File → Open** → select `Accessa.xcodeproj`
+
+3. **Resolve dependencies**
+   Xcode should automatically resolve Swift Package Manager (SPM) dependencies.  
+   If not:
+   - **File → Packages → Resolve Package Versions**
+
+4. **Run the app**
+   - Select a simulator or a connected device  
+   - Press **Cmd + R**
+
+   
+---
 
 ## Configuration (BASE_URL)
 
