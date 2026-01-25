@@ -1,5 +1,12 @@
 # Accessa
 
+![iOS](https://img.shields.io/badge/iOS-17.6%2B-blue)
+![Swift](https://img.shields.io/badge/Swift-5.9%2B-orange)
+![UIKit](https://img.shields.io/badge/UI-UIKit%20%2B%20SwiftUI-purple)
+![Architecture](https://img.shields.io/badge/Architecture-Coordinator%20%2B%20MVVM-success)
+![SPM](https://img.shields.io/badge/Dependency-SPM-black)
+![Networking](https://img.shields.io/badge/Networking-URLSession%20%2B%20Async%2FAwait-brightgreen)
+
 **Accessa** is an iOS application designed for browsing discounts and promotional offers from partner organizations.
 
 The app allows users to:
