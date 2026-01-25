@@ -45,7 +45,7 @@ extension DiscountsAPI: Endpoint {
         }
     }
 
-    var requiresAuth: Bool { true }
+    var requiresAuth: Bool { false }
 
     var parameters: [String: Any]? {
         switch self {

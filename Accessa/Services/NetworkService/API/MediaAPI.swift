@@ -26,7 +26,7 @@ extension MediaAPI: Endpoint {
 
     var hasQueryParameters: Bool { false }
 
-    var requiresAuth: Bool { true }
+    var requiresAuth: Bool { false }
 
     var parameters: [String: Any]? {
         switch self {

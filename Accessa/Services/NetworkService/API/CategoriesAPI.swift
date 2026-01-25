@@ -16,6 +16,6 @@ extension CategoriesAPI: Endpoint {
     var method: HTTPMethod { .post }
     var headers: [String: String]? { nil }
     var hasQueryParameters: Bool { false }
-    var requiresAuth: Bool { true }
+    var requiresAuth: Bool { false }
     var parameters: [String: Any]? { nil }
 }

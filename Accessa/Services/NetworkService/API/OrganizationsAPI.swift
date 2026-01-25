@@ -40,7 +40,7 @@ extension OrganizationsAPI: Endpoint {
         }
     }
 
-    var requiresAuth: Bool { true }
+    var requiresAuth: Bool { false }
 
     var parameters: [String: Any]? {
         switch self {
