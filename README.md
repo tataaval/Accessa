@@ -13,7 +13,6 @@ The app allows users to:
 
 Users can explore offers without an account to preview available discounts.  
 To redeem and use discounts, the user must have an **active account**.
-he project is modular, scalable, and easy to extend with new tabs, screens, and flows.
 
 ---
 ## Screenshots
