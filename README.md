@@ -13,7 +13,19 @@ The app allows users to:
 
 Users can explore offers without an account to preview available discounts.  
 To redeem and use discounts, the user must have an **active account**.
-he project is modular, scalable, and easy to extend with new tabs, screens, and flows.
+
+---
+## Screenshots
+<p>
+  <img src="Screenshots/log_in.png" width="220" />
+  <img src="Screenshots/home.png" width="220" />
+  <img src="Screenshots/offers_list.png" width="220" />
+  <img src="Screenshots/offer_detail.png" width="220" />
+  <img src="Screenshots/map.png" width="220" />
+  <img src="Screenshots/partners_list.png" width="220" />
+  <img src="Screenshots/partner_detail.png" width="220" />
+  <img src="Screenshots/profile.png" width="220" />
+</p>
 
 ---
 
@@ -43,6 +55,16 @@ This project follows:
 --- 
 
 ## App Entry & Flow
+---
+
+### Architecture Diagrams
+
+| High-Level Flow | DI + Services + Network Flow | Unauthorized (401) Flow |
+|---|---|---|
+| <img src="Screenshots/general.png" width="300" /> | <img src="Screenshots/services_di.png" width="300" /> | <img src="Screenshots/unauthorized_flow.png" width="300" /> |
+
+
+---
 
 ### App Launch
 The app starts from `SceneDelegate` and initializes the root coordinator:
@@ -158,6 +180,28 @@ When `NetworkService` receives **401 Unauthorized**, it posts:
 - clears the session (`SessionService.clearSession()`)
 - switches back to Auth flow inside Profile tab
 
+---
+## Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone [https://github.com/tataaval/Accessa.git](https://github.com/tataaval/Accessa.git)
+
+2. **Open the project**
+   - Double-click `Accessa.xcodeproj`  
+   **or**
+   - Open Xcode → **File → Open** → select `Accessa.xcodeproj`
+
+3. **Resolve dependencies**
+   Xcode should automatically resolve Swift Package Manager (SPM) dependencies.  
+   If not:
+   - **File → Packages → Resolve Package Versions**
+
+4. **Run the app**
+   - Select a simulator or a connected device  
+   - Press **Cmd + R**
+
+   
 ---
 
 ## Configuration (BASE_URL)
